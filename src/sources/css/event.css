@@ -1,0 +1,19 @@
+#hoverBtn:hover{
+    border: 2px solid black;
+}
+.page_itms{
+    background-color:#f6f5efb3
+}
+.page_itms:hover{
+    --tw-text-opacity: 1;
+    background-color: rgb(77 124 15 / varW(--tw-text-opacity));
+    color: white;
+}
+
+.btn_salelist, .btn_delete{
+    background-color: #f6f5efb3;
+}
+
+.btn_salelist:hover, .btn_delete:hover{
+    background-color:#f3f0e1
+}

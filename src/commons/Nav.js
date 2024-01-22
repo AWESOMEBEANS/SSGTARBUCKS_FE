@@ -1,0 +1,158 @@
+import { Link } from "react-router-dom";
+import "../sources/css/nav.css";
+import { useState } from "react";
+
+
+export default function Nav(){
+    let [isActive, setIsActive] = useState(false);
+    let [masterData, setMasterData] = useState(false);
+    let [wareHousing, setWareHousing] = useState(false);
+    let [inventory, setInventory] = useState(false);
+    let [factory, setFactory] = useState(false);
+
+    return(
+        <>
+            <nav style={(isActive ? {width : "3%"} : {width : "10%"})}>
+                <div className="content">
+                    <div id="menu">
+                        <a className="menu_link" onClick={()=>{setMasterData(!masterData)
+                                                                setWareHousing(false)
+                                                                setInventory(false)
+                                                                setFactory(false)}}>
+                            <div className="menu_itm">
+                                <i className="fa-solid fa-qrcode fa-lg menu_icon"></i>
+                                { !isActive && 
+                                <span className="menu_name" >
+                                    기준정보
+                                </span>
+                                }
+                            </div>
+                        </a>
+                        {isActive ? null : (masterData ? <MasterData/> : null)}
+                        <a className="menu_link" onClick={()=>{setWareHousing(!wareHousing)
+                                                                setMasterData(false)
+                                                                setInventory(false)
+                                                                setFactory(false)}}>
+                            <div className="menu_itm">
+                                <i className="fa-solid fa-truck fa-lg menu_icon"></i>
+                                { !isActive &&
+                                <span className="menu_name">
+                                    입고관리
+                                </span>
+                                }
+                            </div>
+                        </a>
+                        {isActive ? null : (wareHousing ? <WareHousing/> : null)}
+                        <a className="menu_link" onClick={()=>{setInventory(!inventory)
+                                                                setMasterData(false)
+                                                                setWareHousing(false)
+                                                                setFactory(false)}}>
+                            <div className="menu_itm">
+                                <i className="fa-solid fa-warehouse fa-lg menu_icon"></i>
+                                { !isActive &&
+                                    <span className="menu_name">
+                                        재고관리
+                                    </span>
+                                }
+                            </div>
+                        </a> 
+                        {isActive ? null : (inventory ? <Inventory/> : null)}
+                        <a className="menu_link" onClick={()=>{setFactory(!factory)
+                                                                setMasterData(false)
+                                                                setWareHousing(false)
+                                                                setInventory(false)}}>
+                            <div className="menu_itm">
+                                <i className="fa-solid fa-arrow-left fa-lg menu_icon"></i>
+                                { !isActive &&
+                                    <span className="menu_name">
+                                        출고관리
+                                    </span>
+                                }
+                            </div>
+                        </a>
+                        {isActive ? null : (factory ? <Factory/> : null)}
+                        <Link to="/myshop" className="menu_link">
+                            <div className="menu_itm">
+                                <i className="fa-solid fa-house fa-lg menu_icon"></i>
+                                { !isActive &&
+                                    <span className="menu_name">
+                                        지점정보
+                                    </span>
+                                }
+                            </div>
+                        </Link>
+                    </div>
+                    <hr style={{width:"100%", margin:"30px 0px"}}></hr>
+                    <div onClick={
+                        ()=>{
+                            // let parent = e.target.parentNode.parentNode;
+                            // parent.parentNode.setAttribute("style", "width : 3%");
+                            setIsActive(isActive=>!isActive);
+                        }
+                    } style={{ marginTop : "20px", backgroundColor:"#d5d5d5"}} className="shadow-lg w-7 h-7 text-center flex items-center justify-center rounded-full">
+                        <i className={`fa-solid fa-caret-${(isActive ? "right" : "left")} fa-lg toggle_icon` } style={{color:"#343e36"}} ></i>
+                    </div>
+                    { !isActive && !masterData && !wareHousing && !inventory && !factory &&
+                    <>
+                        <hr style={{width:"100%", margin:"42vh 0px 10px", color:"#d5d5d5" }}></hr>
+                            <div>
+                                <a href="#">
+                                    <span className="menu_name">
+                                        로그아웃
+                                    </span>
+                                </a>
+                            </div>
+                    </>
+                    }
+                </div>
+            </nav>
+        </>
+    )
+}
+
+
+function MasterData(){
+    return(
+        <>
+            <div className="menu_name_itm">
+                <Link to="/set_position" className="menu_name menu_name_itms">장소등록</Link>
+                <Link to="/view_position" className="menu_name menu_name_itms">장소조회</Link>
+            </div>
+        </>
+    )
+}
+
+function WareHousing(){
+    return(
+        <>
+            <div className="menu_name_itm">
+                <Link to="/history" className="menu_name menu_name_itms">입고내역</Link>
+                <Link to="/warehousing" className="menu_name menu_name_itms">입고하기</Link>
+                <Link to="/register" className="menu_name menu_name_itms">검수상품등록</Link>
+            </div>
+        </>
+    )
+}
+
+function Inventory(){
+    return(
+        <>
+            <div className="menu_name_itm">
+                <Link to="/view" className="menu_name menu_name_itms">재고조회</Link>
+                <Link to="/store" className="menu_name menu_name_itms">보관장소등록</Link>
+                <Link to="/inventory" className="menu_name menu_name_itms">상품이동</Link>
+            </div>
+        </>
+    )
+}
+
+function Factory(){
+    return(
+        <>
+            <div className="menu_name_itm">
+                <Link to="/release" className="menu_name menu_name_itms">출고/폐기등록</Link>
+                <Link to="/salelist" className="menu_name menu_name_itms">판매갱신</Link>
+            </div>
+        </>
+    )
+}
