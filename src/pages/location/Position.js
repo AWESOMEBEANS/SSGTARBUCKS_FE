@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import '../sources/css/position.css'
-import Nav from "./../commons/Nav";
-import Search from "./../commons/Search.js";
+import '../../sources/css/position.css'
+import Nav from "../../commons/Nav.js";
+import Search from "../../commons/Search.js";
 import axios from "axios";
 import { Form, redirect, useNavigation } from "react-router-dom";
-import { getAuthToken } from "../util/auth.js";
+import { getAuthToken } from "../../util/auth.js";
 
 
 export default function Position() {

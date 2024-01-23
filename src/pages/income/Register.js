@@ -1,8 +1,8 @@
-import Search from "../commons/Search"
-import Nav from "../commons/Nav"
+import Search from "../../commons/Search"
+import Nav from "../../commons/Nav"
 import { useEffect, useState } from "react"
 import axios from "axios";
-import "../sources/css/event.css"
+import "../../sources/css/event.css"
 
 export default function Regiter(){
     const [datas, setDatas] = useState([]);

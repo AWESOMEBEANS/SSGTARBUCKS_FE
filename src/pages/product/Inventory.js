@@ -1,7 +1,5 @@
 import React from "react";
-import Nav from "../commons/Nav";
-import Search from "../commons/Search"
-import '../sources/css/scanner.css'
+import '../../sources/css/scanner.css'
 
 
 export default function Inventory(){

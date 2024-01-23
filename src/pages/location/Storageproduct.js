@@ -1,9 +1,9 @@
 import React, {useState } from "react";
-import Nav from "./../commons/Nav";
-import Search from "./../commons/Search";
-import '../sources/css/storageproduct.css'
-import Modal from "./../commons/Modal";
-import { getAuthToken } from "../util/auth";
+import Nav from "../../commons/Nav";
+import Search from "../../commons/Search";
+import '../../sources/css/storageproduct.css'
+import Modal from "../../commons/Modal";
+import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
 

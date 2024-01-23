@@ -1,9 +1,9 @@
-import Search from "../commons/Search"
-import Nav from "../commons/Nav"
+import Search from "../../commons/Search"
+import Nav from "../../commons/Nav"
 import { useEffect, useState } from "react"
 import axios from "axios";
-import "../sources/css/event.css"
-import Pagination from "../commons/Pagination";
+import "../../sources/css/event.css"
+import Pagination from "../../commons/Pagination";
 
 
 export default function View(){

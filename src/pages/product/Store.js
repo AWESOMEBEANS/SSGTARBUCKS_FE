@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Nav from "./../commons/Nav.js";
-import Search from "./../commons/Search.js"
-import Pagination from "../commons/Pagination.js";
+import Nav from "../../commons/Nav.js";
+import Search from "../../commons/Search.js"
+import Pagination from "../../commons/Pagination.js";
 import axios from "axios";
 
 
