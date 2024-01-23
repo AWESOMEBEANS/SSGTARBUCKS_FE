@@ -28,15 +28,12 @@ export default function Warehousing(){
 
     return(
         <>
-        <Search/>
-        <div className="low-opacity-bg-image flex">
-            <Nav/>
             <div className="w-full flex">
                 <div className="w-2/6 h-1/2 my-auto">
                     <div className="box_btn_inn text-center">
                         <h1 className="btn_name" >입고하기</h1>
                         <button className="w-96 h-96 shadow-slate-700 shadow-xl rounded-3xl" id="qrbtn" onClick={()=> setModalOpen(true)}></button>
-                        <h3 className="text-lg text-red-700 font-bold my-3">※ 카메라를 켜주세요</h3>
+                        <h3 className="text-lg text-red-700 font-bold my-3" style={{fontFamily:'Pretendard-Regular'}}>※ 카메라를 켜주세요</h3>
                     </div>
                 </div>
                 <div className="w-4/6">
@@ -44,15 +41,15 @@ export default function Warehousing(){
                         
                         {datas.map(function(r,i){
                             return(
-                            <div className="flex h-16 my-2 w-11/12 mx-auto">
+                            <div className="flex h-16 my-2 w-11/12 mx-auto" style={{fontFamily:'Pretendard-Regular'}}>
                                 <div style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}} 
                                     className="w-11/12 my-3 mx-auto flex justify-between items-center text-xl shadow-lg px-4">
                                     <input type="checkbox" className="w-20"></input>
-                                    <h6 className="grow text-center text-xl">ID : {r.outcome_id}</h6>
-                                    <p className="grow text-center text-xl">{r.outcome_code}</p>
-                                    <p className="grow text-center text-xl">수량 : {r.outcome_amount}</p>
-                                    <p className={`grow text-center text-xl ${r.outcome_status === "입고완료" ? "bg-lime-700" : (r.outcome_status === "검수전" ? "bg-violet-700" : "bg-yellow-600")} w-10 text-white rounded-xl border border-black border-solid`}>{r.outcome_status}</p>
-                                    <p className="grow text-end text-xl">{r.outcome_date}</p>
+                                    <h6 className="grow text-center text-lg">ID : {r.outcome_id}</h6>
+                                    <p className="grow text-center text-lg">{r.outcome_code}</p>
+                                    <p className="grow text-center text-lg">수량 : {r.outcome_amount}</p>
+                                    <p className={`grow text-center text-lg ${r.outcome_status === "입고완료" ? "bg-lime-700" : (r.outcome_status === "검수전" ? "bg-violet-700" : "bg-yellow-600")} w-10 text-white rounded-xl border border-black border-solid`}>{r.outcome_status}</p>
+                                    <p className="grow text-end text-lg">{r.outcome_date}</p>
                                 </div>
                                 <button style={{border:"1px solid #d5d5d5", borderRadius:"7px", height:"100%"}} onClick={()=> setModalOpen(true)}
                                     className="w-16 my-3 mx-auto flex items-center justify-center text-xl shadow-lg btn_delete">
@@ -68,7 +65,6 @@ export default function Warehousing(){
                     </div>
                 </div>
             </div>
-        </div>
         {modalOpen && (
         <Modal 
             onSubmit={handleButtonClick}

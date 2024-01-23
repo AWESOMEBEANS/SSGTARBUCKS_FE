@@ -90,76 +90,72 @@ export default function View(){
 
     return(
         <>
-            <Search />
-            <div className="low-opacity-bg-image" style={{display:"flex"}}>
-                <Nav />
-                <div style={{ height:"92vh"}} className="w-full mx-auto my-auto  overflow-scroll text-center">
-                    <div style={{height:"7%"}} 
-                            className="w-3/5 my-1 mx-auto flex justify-between items-center text-2xl">
-                        <div className="w-4/6 flex justify-around h-12">
-                            <select className="text-center text-xl w-56 font-bold shadow-lg" 
-                                style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}
-                                >
-                                <option>보관유형</option>
-                                <option>매장</option>
-                                <option>창고</option>
-                            </select>
-                            <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
-                                <option>보관장소</option>
-                                <option>상부장</option>
-                                <option>하부장</option>
-                                <option>냉장고</option>
-                                <option>냉동고</option>
-                                <option>쇼케이스</option>
-                                <option>매대</option>
-                                <option>진열대</option>
-                                <option>다용도랙</option>
-                                <option>기타</option>
-                            </select>
-                            <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
-                                <option>소분류</option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
-                        </div>
-                        <input type="button" value="선택이동" className="text-center text-xl w-28 font-bold shadow-lg" onClick={()=>{setModalOpen(true)}}
-                        style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}/>
+            <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
+                <div style={{height:"7%"}} 
+                        className="w-3/5 my-1 mx-auto flex justify-between items-center text-2xl">
+                    <div className="w-4/6 flex justify-around h-12">
+                        <select className="text-center text-xl w-56 font-bold shadow-lg" 
+                            style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}
+                            >
+                            <option>보관유형</option>
+                            <option>매장</option>
+                            <option>창고</option>
+                        </select>
+                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
+                            <option>보관장소</option>
+                            <option>상부장</option>
+                            <option>하부장</option>
+                            <option>냉장고</option>
+                            <option>냉동고</option>
+                            <option>쇼케이스</option>
+                            <option>매대</option>
+                            <option>진열대</option>
+                            <option>다용도랙</option>
+                            <option>기타</option>
+                        </select>
+                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
+                            <option>소분류</option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                            <option></option>
+                        </select>
                     </div>
-                    {currentItems.map(function(r,i){
-                        return(
-                        <div style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"6.8%"}} 
-                            className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4"
-                            key={i} >
-                            <input type="checkbox" className="w-20"></input>
-                                <span className="w-1/6">{r.product_id}</span>
-                                <span className="w-2/6">{r.product_name}</span>
-                                <span className="w-1/6">{r.product_standard}</span>
-                                <span className="w-1/6">{r.product_unit}</span>
-                            <div className="w-1/6">
-                                <input type='hidden' value={r.income_id} />
-                                <button /*onClick={() => handleQuantityChange(i, 1, r.income_id)} */ className="border w-8 h-8">+</button>
-                                    <span>{r.product_quantity}</span>
-                                <button /*onClick={() => handleQuantityChange(i, -1, r.income_id)} */ className="border w-8 h-8">-</button>
-                            </div>
-                        </div>
-                        )
-                    })}
-                        <Pagination
-                            itemsPerPage={itemsPerPage}
-                            totalItems={datas.length}
-                            currentPage={currentPage}
-                            onPageChange={handlePageChange}
-                            onPrevClick={handlePrevClick}
-                            onNextClick={handleNextClick}
-                        />
+                    <input type="button" value="선택이동" className="text-center text-xl w-28 font-bold shadow-lg" onClick={()=>{setModalOpen(true)}}
+                    style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}/>
                 </div>
+                {currentItems.map(function(r,i){
+                    return(
+                    <div style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"6.8%"}} 
+                        className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4"
+                        key={i} >
+                        <input type="checkbox" className="w-20"></input>
+                            <span className="w-1/6">{r.product_id}</span>
+                            <span className="w-2/6">{r.product_name}</span>
+                            <span className="w-1/6">{r.product_standard}</span>
+                            <span className="w-1/6">{r.product_unit}</span>
+                        <div className="w-1/6">
+                            <input type='hidden' value={r.income_id} />
+                            <button /*onClick={() => handleQuantityChange(i, 1, r.income_id)} */ className="border w-8 h-8">+</button>
+                                <span>{r.product_quantity}</span>
+                            <button /*onClick={() => handleQuantityChange(i, -1, r.income_id)} */ className="border w-8 h-8">-</button>
+                        </div>
+                    </div>
+                    )
+                })}
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={datas.length}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        onPrevClick={handlePrevClick}
+                        onNextClick={handleNextClick}
+                    />
             </div>
             { modalOpen &&
                 <Modal onSubmit={onSubmit} onCancel={onCancel}/>

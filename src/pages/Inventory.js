@@ -8,10 +8,7 @@ export default function Inventory(){
 
     return(
         <>
-        <Search/>
-        <div className="low-opacity-bg-image flex">
-        <Nav/>
-            <div className="bg_btnpage">
+            <div className="bg_btnpage" style={{ fontFamily:'Pretendard-Regular'}}>
                 <div className="box_btn flex">
                     <div className="box_btn_inn">
                         <h1 className="btn_name">보관상품</h1>
@@ -26,8 +23,6 @@ export default function Inventory(){
                     </div>
                 </div>
             </div>
-
-        </div>
         </>
 
     )

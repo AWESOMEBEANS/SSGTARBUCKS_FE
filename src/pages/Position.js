@@ -58,7 +58,7 @@ export default function Position() {
 
     return (
         <>
-            <div style={{ height: "92vh" }} className="w-full my-auto overflow-scroll">
+            <div style={{ height: "92vh" ,fontFamily:'Pretendard-Regular'}} className="w-full my-auto overflow-scroll" >
                 <div style={{ margin: "2% auto", width: "70%" }}>
                     <Form method="POST">
                         <table>
@@ -80,7 +80,7 @@ export default function Position() {
                             <tbody id="text">
                                 {rows.map((row, index) => (
                                     <div style={{ height: "20%" }}>
-                                        <tr key={index} className="tbody">
+                                        <tr key={index} className="tbody" >
                                             <div className="w-full flex justify-around items-center px-5">
                                                 <td className="w-1/3 text-center text-lg">
                                                     <select className="table_select border text-center" name="location_area" value={row.location_area} onChange={(e) => handleInputChange(index, 'location_area', e.target.value)}>

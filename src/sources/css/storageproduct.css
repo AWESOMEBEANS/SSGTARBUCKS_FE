@@ -3,7 +3,7 @@
     border: 1px solid #d5d5d5;
     box-shadow: 0px 10px 15px -3px rgb(0,0,0,0.1);
 }
-.btn_2,.btn_3,.btn_4{
+.btn_3,.btn_4{
     border: 1px solid #d5d5d5;
     width: 10vh;
     height: 5vh;
@@ -14,11 +14,15 @@
 .tbody{
     margin-top: 1%;
     border: 1px solid #d5d5d5;
-    background: #f6f5efb3;
+    background: #f2f1ecb3;
     border-radius: 7px;
     display: flex;
-    height: 8vh;
+    height: 7vh;
     align-items: center;
     justify-content:space-around;
     box-shadow: 0px 10px 15px -3px rgb(0,0,0,0.1);
+}
+
+.btn_2:hover,.btn_3:hover,.btn_4:hover{
+    background-color: antiquewhite;
 }
