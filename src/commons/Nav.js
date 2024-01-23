@@ -71,7 +71,7 @@ export default function Nav(){
                             </div>
                         </a>
                         {isActive ? null : (factory ? <Factory/> : null)}
-                        <Link to="/myshop" className="menu_link">
+                        <Link to="/branch/info" className="menu_link">
                             <div className="menu_itm">
                                 <i className="fa-solid fa-house fa-lg menu_icon"></i>
                                 { !isActive &&

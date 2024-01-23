@@ -17,7 +17,7 @@ import View from './pages/View';
 import Store from './pages/Store';
 import SearchList from './pages/SearchList';
 import Sort from './pages/Sort';
-import Storageproduct from './pages/Storageproduct';
+import Storageproduct, {loader as stockLocationLoader} from './pages/Storageproduct';
 import ViewManager from './pages/ViewManager';
 import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
@@ -44,7 +44,18 @@ const router = createBrowserRouter([
     children : [
       {path: "main", element:<Main />, loader:mainLoader, index:true},
       {path: "logout", action:logoutAction },
-      {path: "location/new", element:<Position />,action:RegisterLocationAction }
+      {path: "location/new", element:<Position />,action:RegisterLocationAction },
+      {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
+      {path: "income/list", element:<History />},
+      {path: "income/inspection", element:<Warehousing />},
+      {path: "income/new", element:<Register />},
+      {path: "product/list", element:<View />},
+      {path: "product/inspection", element:<Store />},
+      {path: "product/move", element:<Inventory />},
+      {path: "discard/product", element:<Release />},
+      {path: "sale/product", element:<Salelist />},
+      {path: "branch/info", element:<Myshop />},
+      {path: "search/list", element:<SearchList/> },
     ]
   }
 ])

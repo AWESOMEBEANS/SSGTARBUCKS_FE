@@ -9,30 +9,36 @@ export default function Main(){
 
     const loaderDataMain = useLoaderData();
     console.log("loaderDataMain >>>>>" , loaderDataMain);
+    let {expDataList, remainDataList} = loaderDataMain;
 
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
+    const branch_name = localStorage.getItem("branch_name");
 
     return(
         <>
             <div className="w-full">
                 <div className="h-full text-center flex items-center flex-col">
                     <h1 className="text-5xl h-1/5 mt-5" style={{fontFamily: 'SUITE-Regular'}}>
-                        SSGTARBUCKS에 오신것을 환영합니다 :)
-                        <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{localStorage.getItem("branch_name")}</span> 입니다 </p>
+                        SSGTARBUCKS에 오신 것을 환영합니다 :)
+                        <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{branch_name}</span> 입니다 </p>
                     </h1>
                     <div className="w-11/12 h-2/6 mt-12 text-start flex justify-center flex-col">
-                        <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-2 my-2 flex items-center"
+                        <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center"
                             >
                             유통기한 임박 목록
                         </h3>
+                        {expDataList.length ? 
                         <Table1 onLoadData={loaderDataMain} />
+                        : <h1 className="text-xl">불러올 데이터가 없습니다.</h1>}
                     </div>
                     <div className="w-11/12 h-2/6 text-start flex justify-center flex-col">
-                        <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-2 my-2 flex items-center">
+                        <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center">
                             발주추천 목록
                         </h3>
+                        {remainDataList.length ? 
                         <Table2 onLoadData={loaderDataMain}/>
+                        : <h1 className="text-xl">불러올 데이터가 없습니다.</h1>}
                     </div>
                 </div>
             </div>
@@ -91,11 +97,11 @@ let {expDataList, remainDataList} = onLoadData;
                                     <td className="px-1">
                                         {r.item_id}
                                     </td>
-                                    <td className="px-1 w-28 text-white ">
-                                        <span className=" bg-red-600 text-lg">{r.item_exp}</span>
+                                    <td className="px-1 w-28 ">
+                                        <span style={{boxShadow: "inset 0 -20px 0 rgb(255, 200, 200)"}}className=" text-lg">{r.item_exp}</span>
                                     </td>
-                                    <td className="px-1 text-white">
-                                        <span className=" bg-yellow-500 text-lg">{r.item_status}</span>
+                                    <td className="px-1">
+                                        <span className=" text-lg" style={{boxShadow: "inset 0 -20px 0 rgb(255, 245, 160)"}}>{r.item_status}</span>
                                     </td>
                                     <td className="px-1">
                                         {r.location_code}
@@ -141,6 +147,7 @@ function Table2({onLoadData}){
                                 <th className="px-1">수량</th>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             {remainDataList.map(function(r,i){
                                 return(
@@ -166,7 +173,7 @@ function Table2({onLoadData}){
                                         </td>
                                     </tr>
                                 )
-                            })}
+                            })} 
                         </tbody>
                     </table>
                 </div>

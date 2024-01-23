@@ -55,9 +55,6 @@ export default function SearchList(){
     console.log(datas);
     return(
         <>
-        <Search/>
-        <div className="low-opacity-bg-image" style={{display:"flex"}}>
-            <Nav/>
             <div style={{ height:"92vh"}} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div style={{height:"7%"}} 
                         className="w-4/5 mx-auto flex justify-between items-center text-2xl">
@@ -120,9 +117,6 @@ export default function SearchList(){
                         onNextClick={handleNextClick}
                     />
             </div>
-
-        </div>
-        
         </>
     )
 }

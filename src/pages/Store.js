@@ -46,10 +46,7 @@ export default function Store(){
 
     return(
         <>
-        <Search/>
-        <div className="low-opacity-bg-image" style={{display:"flex"}}>
-            <Nav/>
-            <div style={{ height:"92vh"}} className="w-full mx-auto my-auto  overflow-scroll text-center">
+            <div style={{ height:"92vh" ,fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div style={{height:"7%"}} 
                         className="w-3/5 mx-auto flex justify-between items-center text-2xl">
                     <div className="text-center text-xl w-14 font-bold " style={{borderBottom:"3px solid black",  height:"50%"}}>
@@ -93,9 +90,6 @@ export default function Store(){
                         onNextClick={handleNextClick}
                     />
             </div>
-
-        </div>
-        
         </>
     )
 }
