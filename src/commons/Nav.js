@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import "../sources/css/nav.css";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ export default function Nav(){
 
     return(
         <>
-            <nav style={(isActive ? {width : "3%"} : {width : "10%"})}>
+            <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
                     <div id="menu">
                         <a className="menu_link" onClick={()=>{setMasterData(!masterData)
@@ -96,11 +96,11 @@ export default function Nav(){
                     <>
                         <hr style={{width:"100%", margin:"42vh 0px 10px", color:"#d5d5d5" }}></hr>
                             <div>
-                                <a href="#">
+                                <Form action="/logout" method="POST">
                                     <span className="menu_name">
-                                        로그아웃
+                                        <button>로그아웃</button>
                                     </span>
-                                </a>
+                                </Form>
                             </div>
                     </>
                     }
@@ -115,8 +115,8 @@ function MasterData(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/set_position" className="menu_name menu_name_itms">장소등록</Link>
-                <Link to="/view_position" className="menu_name menu_name_itms">장소조회</Link>
+                <Link to="/location/new" className="menu_name menu_name_itms">장소등록</Link>
+                <Link to="/location/list" className="menu_name menu_name_itms">장소조회</Link>
             </div>
         </>
     )
@@ -126,9 +126,9 @@ function WareHousing(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/history" className="menu_name menu_name_itms">입고내역</Link>
-                <Link to="/warehousing" className="menu_name menu_name_itms">입고하기</Link>
-                <Link to="/register" className="menu_name menu_name_itms">검수상품등록</Link>
+                <Link to="/income/list" className="menu_name menu_name_itms">입고내역</Link>
+                <Link to="/income/inspection" className="menu_name menu_name_itms">입고하기</Link>
+                <Link to="/income/new" className="menu_name menu_name_itms">검수상품등록</Link>
             </div>
         </>
     )
@@ -138,9 +138,9 @@ function Inventory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/view" className="menu_name menu_name_itms">재고조회</Link>
-                <Link to="/store" className="menu_name menu_name_itms">보관장소등록</Link>
-                <Link to="/inventory" className="menu_name menu_name_itms">상품이동</Link>
+                <Link to="/product/list" className="menu_name menu_name_itms">재고조회</Link>
+                <Link to="/product/inspection" className="menu_name menu_name_itms">보관장소등록</Link>
+                <Link to="/product/move" className="menu_name menu_name_itms">상품이동</Link>
             </div>
         </>
     )
@@ -150,8 +150,8 @@ function Factory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/release" className="menu_name menu_name_itms">출고/폐기등록</Link>
-                <Link to="/salelist" className="menu_name menu_name_itms">판매갱신</Link>
+                <Link to="/discard/product" className="menu_name menu_name_itms">출고/폐기등록</Link>
+                <Link to="/sale/product" className="menu_name menu_name_itms">판매갱신</Link>
             </div>
         </>
     )
