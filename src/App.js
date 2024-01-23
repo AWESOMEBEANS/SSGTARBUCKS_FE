@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import { Routes, Route, Link } from "react-router-dom";
-import Login from './pages/Login';
+import { Routes, Route, Link, createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login ,{action as authAction}from './pages/Login';
 import FindPwd from './pages/FindPwd';
-import Main from './pages/Main';
+import Main ,{loader as mainLoader}from './pages/Main';
 import History from './pages/History';
-import Position from './pages/Position';
+import Position, {action as RegisterLocationAction} from './pages/Position';
 import Goodin from './pages/Goodin';
 import Warehousing from './pages/Warehousing';
 import Inventory from './pages/Inventory';
@@ -19,31 +19,38 @@ import SearchList from './pages/SearchList';
 import Sort from './pages/Sort';
 import Storageproduct from './pages/Storageproduct';
 import ViewManager from './pages/ViewManager';
+import ErrorPage from './pages/ErrorPage';
+import { tokenLoader } from './util/auth';
+import RootLayout from './commons/RootLayout';
+import {action as logoutAction} from "./pages/Logout";
+
+const router = createBrowserRouter([
+  {
+    path:"/auth",
+    element:<Login />,
+    errorElement:<ErrorPage />,
+    action: authAction
+  },
+  {
+    path:"/find",
+    element:<FindPwd />,
+    errorElement:<ErrorPage />
+  },
+  {
+    path:"/",
+    element:<RootLayout />,
+    errorElement:<ErrorPage />,
+    loader: tokenLoader,
+    children : [
+      {path: "main", element:<Main />, loader:mainLoader, index:true},
+      {path: "logout", action:logoutAction },
+      {path: "location/new", element:<Position />,action:RegisterLocationAction }
+    ]
+  }
+])
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path='/' element={<Login/>}/>
-        <Route path='/find' element={<FindPwd/>}/>
-        <Route path='/Main' element={<Main/>}/>
-        <Route path='/set_position' element={<Position/>}/>
-        <Route path='/view_position' element={<Storageproduct/>}/>
-        <Route path='/history' element={<History />}/>
-        <Route path='/warehousing' element={<Warehousing />}/>
-        <Route path='/register' element={<Register />}/>
-        <Route path='/view' element={<View />}/>
-        <Route path='/store' element={<Store />}/>
-        <Route path='/inventory' element={<Inventory />}/>
-        <Route path='/release' element={<Release />}/>
-        <Route path='/salelist' element={<Salelist />}/>
-        <Route path='/myshop' element={<Myshop />}/>
-        <Route path='/searchlist' element={<SearchList />}/>
-        <Route path='/sort' element={<Sort />}/>
-        <Route path='/view_manager' element={<ViewManager />} />
-      </Routes>
-    </>
-  );
+  return <RouterProvider router={router} />
 }
 
 export default App;

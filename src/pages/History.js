@@ -8,7 +8,7 @@ export default function History(){
     const [datas, setDatas] = useState([]);
 
     useEffect(()=>{
-        axios.get("https://gonookim.github.io/income.json")
+        axios.get("http://localhost:8000/api/v1/income/list/bid001")
         .then((response) => { 
             console.log("check : ", response);
             setDatas(response.data);
@@ -28,8 +28,9 @@ export default function History(){
                                 className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4">
                                 <i className="fa-solid fa-angle-down fa-fade fa-lg grow-0 w-1/6" onClick={()=>{setToggle(!toggle)}}></i>
                                 <span className="w-1/6">{r.income_id}</span>
-                                <span className="w-2/6">{r.income_code}</span>
+                                <span className="w-1/6">{r.income_code}</span>
                                 <span className="w-1/6">{r.income_amount} 개</span>
+                                <span className="w-1/6">{r.income_status}</span>
                                 <span className="w-1/6">{r.income_date}</span>
                             </div>
                             {toggle ? <Detail /> : null}
