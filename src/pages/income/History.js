@@ -46,16 +46,21 @@ export default function History() {
                     <span className="w-1/12">입고상품번호</span>
                     <span className="w-2/12">입고상품유통기한</span>
                 </div>
-                {true && groupedListkeys.map((key, index) =>{
+                {groupedListkeys.map((key, index) => {
+                    const isToggled = toggle === key; // 현재 키에 해당하는 아이템이 펼쳐져 있는지 여부
                     return (
                         <>
-                            <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
-                                className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
-                                <i className="fa-solid fa-angle-down fa-fade fa-lg grow-0 w-8" 
-                                onClick={() => { 
-                                    setToggle(!toggle);
-                                    setIncomeId(groupedList[key][0].income_id);
-                                }}></i>
+                            <div
+                                style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
+                                className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center"
+                            >
+                                <i
+                                    className={`fa-solid fa-angle-${isToggled ? 'up' : 'down'} fa-fade fa-lg grow-0 w-8`}
+                                    onClick={() => {
+                                        setToggle(isToggled ? null : key); // 클릭 시 현재 상태의 반대로 토글
+                                        setIncomeId(isToggled ? 0 : groupedList[key][0].income_id);
+                                    }}
+                                ></i>
                                 <span className="w-1/12">{groupedList[key][0].income_id}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
@@ -64,7 +69,7 @@ export default function History() {
                                 <span className="w-1/12">{groupedList[key][0].item_id}</span>
                                 <span className="w-2/12">{groupedList[key][0].item_exp}</span>
                             </div>
-                                {toggle ? <Detail id={groupedList[key][0].income_id}/> : null}
+                            {isToggled && <Detail id={groupedList[key][0].income_id} />} {/* 토글된 경우에만 Detail 컴포넌트 렌더링 */}
                         </>
                     )
                 })}

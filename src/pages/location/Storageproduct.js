@@ -124,6 +124,13 @@ export default function Storageproduct() {
             setSelectedLocationAlias('');
         }
 
+        if (selectedStorageType && !selectedStorageLocation &&selectedLocationAlias) {
+            // 보관유형은 정하고 보관구역을 정하지 않고 소분류만 보는 것은 안됨
+            alert('보관구역을 선택하세요.');
+            setSelectedLocationAlias('');
+            return; // 필터링을 하지 않고 종료
+        }
+
 
         if (selectedStorageType) {
             filteredList = filteredList.filter(stockItem => getLocationType(stockItem.location_area) === selectedStorageType);
