@@ -26,24 +26,31 @@ export default function Position() {
     const deleteRow = (event) => {
         event.preventDefault(); // 폼 전송 방지
         if (rows.length > 1) {
-        const newRows = [...rows];
-        newRows.pop(); // Remove the last row
-        setRows(newRows);
+            const newRows = [...rows];
+            newRows.pop(); // Remove the last row
+            setRows(newRows);
         }
     };
 
     const handleRegisterLocation = (event) => {
-        console.log('유효성 검사');
+        //console.log('유효성 검사');
         for (const row of rows) {
-            if (!row.location_area || !row.location_section_name) {
-            console.warn('필수 정보를 입력하세요.');
-            event.preventDefault(); // 폼 전송 방지
-            return;
+            if (!row.location_area || !row.location_section_name || !row.location_alias) {
+                alert('필수 정보를 입력하세요.');
+                event.preventDefault(); // 폼 전송 방지
+                return;
             }
-            if (!/^[가-힣]+$/.test(row.location_area) || !/^[가-힣]+$/.test(row.location_section_name) ) {
-            console.warn('입력 형식이 올바르지 않습니다.');
-            event.preventDefault(); // 폼 전송 방지
-            return;
+            if (row.location_area === "보관유형") {
+                alert("보관유형을 선택해주세요.");
+            }
+            if (row.location_section_name === "보관장소") {
+                alert("보관장소를 선택해주세요.");
+            }
+
+            if (!/^[가-힣a-zA-Z0-9]+$/.test(row.location_alias)) {
+                alert('입력 형식이 올바르지 않습니다. 한글, 영어, 숫자만 입력해주세요.');
+                event.preventDefault(); // 폼 전송 방지
+                return;
             }
         }
         const locations = rows.map(row => {
@@ -58,7 +65,7 @@ export default function Position() {
 
     return (
         <>
-            <div style={{ height: "92vh" ,fontFamily:'Pretendard-Regular'}} className="w-full my-auto overflow-scroll" >
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll" >
                 <div style={{ margin: "2% auto", width: "70%" }}>
                     <Form method="POST">
                         <table>
@@ -79,41 +86,37 @@ export default function Position() {
                             </div>
                             <tbody id="text">
                                 {rows.map((row, index) => (
-                                    <div style={{ height: "20%" }}>
-                                        <tr key={index} className="tbody" >
-                                            <div className="w-full flex justify-around items-center px-5">
-                                                <td className="w-1/3 text-center text-lg">
-                                                    <select className="table_select border text-center" name="location_area" value={row.location_area} onChange={(e) => handleInputChange(index, 'location_area', e.target.value)}>
-                                                        <option value="구역">구역</option>
-                                                        <option value="매장">매장</option>
-                                                        <option value="창고">창고</option>
-                                                    </select>
-                                                </td>
-                                                <td className="w-1/3 text-center">
-                                                    <select className="table_select text-lg border text-center" name="location_section_name" value={row.location_section_name} onChange={(e) => handleInputChange(index, 'location_section_name', e.target.value)}>
-                                                        <option value="보관장소">보관장소 </option>
-                                                        <option value="상부장">상부장</option>
-                                                        <option value="하부장">하부장</option>
-                                                        <option value="냉장고">냉장고</option>
-                                                        <option value="냉동고">냉동고</option>
-                                                        <option value="쇼케이스">쇼케이스</option>
-                                                        <option value="다용도랙">다용도랙</option>
-                                                        <option value="진열대">진열대</option>
-                                                        <option value="매대">매대</option>
-                                                        <option value="기타">기타</option>
-                                                    </select>
-                                                </td>
-                                                <td className="w-1/3 text-center text-lg">
-                                                    <input className="table_input border text-center" type="text" name="location_alias" placeholder="소분류(명칭)" value={row.location_alias} onChange={(e) => handleInputChange(index, 'location_alias', e.target.value)}/>
-                                                </td>
-                                            </div>
-                                        </tr>
-                                    </div>
+                                    <tr key={index} className="tbody">
+                                        <td className="w-1/3 text-center text-lg">
+                                            <select className="table_select border text-center" name="location_area" value={row.location_area} onChange={(e) => handleInputChange(index, 'location_area', e.target.value)}>
+                                                <option value="보관유형">보관유형</option>
+                                                <option value="매장">매장</option>
+                                                <option value="창고">창고</option>
+                                            </select>
+                                        </td>
+                                        <td className="w-1/3 text-center">
+                                            <select className="table_select text-lg border text-center" name="location_section_name" value={row.location_section_name} onChange={(e) => handleInputChange(index, 'location_section_name', e.target.value)}>
+                                                <option value="보관장소">보관장소 </option>
+                                                <option value="상부장">상부장</option>
+                                                <option value="하부장">하부장</option>
+                                                <option value="냉장고">냉장고</option>
+                                                <option value="냉동고">냉동고</option>
+                                                <option value="쇼케이스">쇼케이스</option>
+                                                <option value="다용도렉">다용도렉</option>
+                                                <option value="진열대">진열대</option>
+                                                <option value="매대">매대</option>
+                                                <option value="기타">기타</option>
+                                            </select>
+                                        </td>
+                                        <td className="w-1/3 text-center text-lg">
+                                            <input className="table_input border text-center" type="text" name="location_alias" placeholder="소분류(명칭)" value={row.location_alias} onChange={(e) => handleInputChange(index, 'location_alias', e.target.value)} />
+                                        </td>
+                                    </tr>
                                 ))}
                             </tbody>
                             <div className="my-14 flex justify-end items-center">
-                                <div><button className="btn_2 text-lg border-2" id="hoverBtn"onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button></div>
-                                <div><button className="btn_3 text-lg border-2" id="hoverBtn"type="reset" disabled={isSubmitting}>취소</button></div>
+                                <div><button className="btn_2 text-lg border-2" id="hoverBtn" onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button></div>
+                                <div><button className="btn_3 text-lg border-2" id="hoverBtn" type="reset" disabled={isSubmitting}>취소</button></div>
                                 <h2>{isSubmitting ? '전송중...' : null}</h2>
                             </div>
                         </table>

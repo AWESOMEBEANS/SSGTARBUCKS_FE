@@ -16,17 +16,17 @@ export default function FindPwd(){
             <h4>비밀번호 찾기</h4>
         
             <div className="form">
-                <input type="text" placeholder="사원번호"/>
-                <input type="e-mail" placeholder="e-mail"/>
+                <input type="text" placeholder="사원번호" required/>
+                <input type="e-mail" placeholder="e-mail " required/>
                 <button type="submit" onClick={()=>{setModal(!modal);}}>인증번호 발송</button>
             </div>
             <div className={modal ? "form" : "form1"}>
-                <input type="text" placeholder="인증번호"/>
+                <input type="text" placeholder="인증번호" required/>
                 <button type="submit" onClick={()=>{setModal2(!modal2);}}>인증번호 확인</button>
             </div>
             <form className={modal2 ? "form" : "form2" }>
-                <input type="password" placeholder="비밀번호"/>
-                <input type="password" placeholder="비밀번호 확인"/><button type="submit" >비밀번호 변경</button>
+                <input type="password" placeholder="비밀번호" required/>
+                <input type="password" placeholder="비밀번호 확인"/><button type="submit" required>비밀번호 변경</button>
             </form>
             <footer>
             <a className="backbutton " type="submit" href="/" >BACK</a>
