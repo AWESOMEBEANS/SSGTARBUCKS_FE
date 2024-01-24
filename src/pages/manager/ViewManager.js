@@ -1,5 +1,5 @@
-import Search from "../commons/SearchManager"
-import Nav from "../commons/NavManager"
+import Search from "../../commons/SearchManager"
+import Nav from "../../commons/NavManager"
 import { useEffect, useState } from "react"
 import axios from "axios";
 

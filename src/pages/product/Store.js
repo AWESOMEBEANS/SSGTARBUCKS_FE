@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Nav from "./../commons/Nav.js";
-import Search from "./../commons/Search.js"
-import Pagination from "../commons/Pagination.js";
+import Nav from "../../commons/Nav.js";
+import Search from "../../commons/Search.js"
+import Pagination from "../../commons/Pagination.js";
 import axios from "axios";
 
 
@@ -73,11 +73,9 @@ export default function Store(){
                                 <span className="w-1/6">{r.product_unit}</span>
                                 <span className="w-1/6">{r.product_quantity}</span>
                             </div>
-                            <div className="text-center text-xl w-48 font-bold flex justify-center items-center shadow-lg" style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}>
-                                <button>
-                                    <i className="fa-solid fa-expand fa-xl" ></i>
-                                </button>
-                            </div>
+                            <button className="text-center text-xl w-48 font-bold flex justify-center items-center shadow-lg" id="hoverBtn" style={{border:"1px solid #d5d5d5", borderRadius:"7px", height:"70%"}}>
+                                <i className="fa-solid fa-expand fa-xl" ></i>
+                            </button>
                         </div>
                     )
                 })}

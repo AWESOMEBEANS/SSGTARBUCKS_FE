@@ -1,13 +1,14 @@
+#hoverBtn{
+    background-color:#f6f5efb3;
+}
 #hoverBtn:hover{
-    border: 2px solid black;
+    background-color:#f3f0e1
 }
 .page_itms{
     background-color:#f6f5efb3
 }
 .page_itms:hover{
-    --tw-text-opacity: 1;
-    background-color: rgb(77 124 15 / varW(--tw-text-opacity));
-    color: white;
+    background-color:#f3f0e1
 }
 
 .btn_salelist, .btn_delete{

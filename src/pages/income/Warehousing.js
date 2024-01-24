@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Nav from "../commons/Nav";
-import Search from "../commons/Search"
-import "../sources/css/scanner.css"
+import Nav from "../../commons/Nav";
+import Search from "../../commons/Search"
+import "../../sources/css/scanner.css"
 import axios from "axios";
-import Modal from "../commons/Modal";
+import Modal from "../../commons/Modal";
 
 
 export default function Warehousing(){

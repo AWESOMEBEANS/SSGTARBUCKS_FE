@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import '../sources/css/position.css'
-import Nav from "./../commons/Nav";
-import Search from "./../commons/Search.js";
+import '../../sources/css/position.css'
+import Nav from "../../commons/Nav.js";
+import Search from "../../commons/Search.js";
 import axios from "axios";
 import { Form, redirect, useNavigation } from "react-router-dom";
-import { getAuthToken } from "../util/auth.js";
+import { getAuthToken } from "../../util/auth.js";
 
 
 export default function Position() {
@@ -70,10 +70,10 @@ export default function Position() {
                                 </tr>
                             </thead>
                             <div className="w-full flex justify-center items-center">
-                                <div className="btn m-2 text-bold" onClick={addRow}>
+                                <div className="btn m-2 text-bold w-1/2" onClick={addRow}>
                                     <button className="text-lg" >+</button>
                                 </div>
-                                <div className="btn m-2 text-bold" onClick={deleteRow}>
+                                <div className="btn m-2 text-bold w-1/2" onClick={deleteRow}>
                                     <button className="text-lg" >-</button>
                                 </div>
                             </div>
@@ -112,8 +112,8 @@ export default function Position() {
                                 ))}
                             </tbody>
                             <div className="my-14 flex justify-end items-center">
-                                <div><button className="btn_2 text-lg border-2" onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button></div>
-                                <div><button className="btn_3 text-lg border-2" type="reset" disabled={isSubmitting}>취소</button></div>
+                                <div><button className="btn_2 text-lg border-2" id="hoverBtn"onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button></div>
+                                <div><button className="btn_3 text-lg border-2" id="hoverBtn"type="reset" disabled={isSubmitting}>취소</button></div>
                                 <h2>{isSubmitting ? '전송중...' : null}</h2>
                             </div>
                         </table>

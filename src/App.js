@@ -4,21 +4,19 @@ import { Routes, Route, Link, createBrowserRouter, RouterProvider } from "react-
 import Login ,{action as authAction}from './pages/Login';
 import FindPwd from './pages/FindPwd';
 import Main ,{loader as mainLoader}from './pages/Main';
-import History from './pages/History';
-import Position, {action as RegisterLocationAction} from './pages/Position';
-import Goodin from './pages/Goodin';
-import Warehousing from './pages/Warehousing';
-import Inventory from './pages/Inventory';
+import History, {loader as incomeLoader} from './pages/income/History';
+import Position, {action as RegisterLocationAction} from './pages/location/Position';
+import Warehousing from './pages/income/Warehousing';
+import Inventory from './pages/product/Inventory';
 import Release from './pages/Release';
 import Salelist from './pages/Salelist';
 import Myshop from './pages/Myshop';
-import Register from './pages/Register';
-import View from './pages/View';
-import Store from './pages/Store';
+import Register from './pages/income/Register';
+import View from './pages/product/View';
+import Store from './pages/product/Store';
 import SearchList from './pages/SearchList';
-import Sort from './pages/Sort';
-import Storageproduct, {loader as stockLocationLoader} from './pages/Storageproduct';
-import ViewManager from './pages/ViewManager';
+import Storageproduct, {loader as stockLocationLoader} from './pages/location/Storageproduct';
+import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
 import RootLayout from './commons/RootLayout';
@@ -46,7 +44,7 @@ const router = createBrowserRouter([
       {path: "logout", action:logoutAction },
       {path: "location/new", element:<Position />,action:RegisterLocationAction },
       {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
-      {path: "income/list", element:<History />},
+      {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Register />},
       {path: "product/list", element:<View />},

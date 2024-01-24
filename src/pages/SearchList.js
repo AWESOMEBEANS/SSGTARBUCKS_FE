@@ -55,9 +55,9 @@ export default function SearchList(){
     console.log(datas);
     return(
         <>
-            <div style={{ height:"92vh"}} className="w-full mx-auto my-auto  overflow-scroll text-center">
+            <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div style={{height:"7%"}} 
-                        className="w-4/5 mx-auto flex justify-between items-center text-2xl">
+                        className="w-4/5 mx-auto flex justify-between items-center">
                     <div className="text-center text-lg w-1/12 flex justify-center items-center shadow-lg" 
                         style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}
                         onClick={changeCategoryOrder}>
@@ -83,7 +83,7 @@ export default function SearchList(){
                             보관장소
                             <i className="fa-solid fa-sort mx-2"></i>
                         </span>
-                        <span className="w-1/4">
+                        <span className="w-1/4 mr-3">
                             유통기한
                             <i className="fa-solid fa-sort mx-2"></i>
                         </span>
@@ -103,7 +103,7 @@ export default function SearchList(){
                             </div>
                             <div className="text-center text-lg w-2/5 flex justify-center items-center shadow-lg" style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}>
                                 <span className="w-3/4">보관장소</span>
-                                <span className="w-1/4 bg-red-600 border rounded-2xl text-white">2024-01-25</span>
+                                <span className="w-1/4 bg-red-400 mr-3">2024-01-25</span>
                             </div>
                         </div>
                     )
