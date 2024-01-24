@@ -14,7 +14,7 @@ import Myshop, {loader as myDataLoader} from './pages/MyPage';
 import Register from './pages/income/Register';
 import View from './pages/product/View';
 import Store from './pages/product/Store';
-import SearchList from './pages/SearchList';
+import SearchList, {loader as searchListLoader} from './pages/SearchList';
 import Storageproduct, {loader as stockLocationLoader} from './pages/location/Storageproduct';
 import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />},
       {path: "branch/info", element:<MyPage />, loader:myDataLoader},
-      {path: "search/list", element:<SearchList/> },
+      {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
     ]
   }
 ])
