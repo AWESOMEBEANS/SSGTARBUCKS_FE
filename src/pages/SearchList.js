@@ -19,11 +19,9 @@ export default function SearchList(){
     },[]);
     
     const changeCategoryOrder = () => {
-        setDatas(
-            [...datas].sort(function (a, b) {
-            return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
-            })
-        );
+        let sortedDatas = [...datas];
+        sortedDatas = sortedDatas.toSorted();
+        setDatas(sortedDatas);
     };
     
     // 현재 페이지의 데이터 계산
@@ -64,7 +62,7 @@ export default function SearchList(){
                         카테고리
                         <i className="fa-solid fa-sort mx-2"></i>
                     </div>
-                    <div className="text-lg w-1/2 flex justify-around items-center shadow-lg" style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}>
+                    <div className="text-lg w-1/2 flex justify-around items-center shadow-lg" style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}} onClick={changeCategoryOrder}>
                         <span className="w-3/6">
                             상품명
                             <i className="fa-solid fa-sort mx-2"></i>
