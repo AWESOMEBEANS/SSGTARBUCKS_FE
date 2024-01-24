@@ -92,16 +92,16 @@ export default function View(){
         <>
             <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div style={{height:"7%"}} 
-                        className="w-3/5 my-1 mx-auto flex justify-between items-center text-2xl">
+                        className="w-2/3 my-1 mx-auto flex justify-between items-center text-2xl">
                     <div className="w-4/6 flex justify-around h-12">
                         <select className="text-center text-xl w-56 font-bold shadow-lg" 
-                            style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}
+                            style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"100%"}}
                             >
                             <option>보관유형</option>
                             <option>매장</option>
                             <option>창고</option>
                         </select>
-                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
+                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"100%"}}>
                             <option>보관장소</option>
                             <option>상부장</option>
                             <option>하부장</option>
@@ -113,7 +113,7 @@ export default function View(){
                             <option>다용도랙</option>
                             <option>기타</option>
                         </select>
-                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}}>
+                        <select className="text-center text-xl w-56 font-bold shadow-lg" style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"100%"}}>
                             <option>소분류</option>
                             <option></option>
                             <option></option>
@@ -126,13 +126,17 @@ export default function View(){
                             <option></option>
                         </select>
                     </div>
+                    <input type="button" value="상품스캔" className="text-center text-xl w-28 font-bold shadow-lg" id="hoverBtn"
+                    style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", height:"70%"}}/>
+                    <input type="button" value="장소스캔" className="text-center text-xl w-28 font-bold shadow-lg" id="hoverBtn"
+                    style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", height:"70%"}}/>
                     <input type="button" value="선택이동" className="text-center text-xl w-28 font-bold shadow-lg" id="hoverBtn" onClick={()=>{setModalOpen(true)}}
-                    style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", height:"70%"}}/>
+                    style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", height:"70%"}}/>
                 </div>
                 {currentItems.map(function(r,i){
                     return(
-                    <div style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"6.8%"}} 
-                        className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4"
+                    <div style={{border:"0.1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"6.8%"}} 
+                        className="w-2/3 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4"
                         key={i} >
                         <input type="checkbox" className="w-20"></input>
                             <span className="w-1/6">{r.product_id}</span>

@@ -73,10 +73,10 @@ export default function Nav(){
                         {isActive ? null : (factory ? <Factory/> : null)}
                         <Link to="/branch/info" className="menu_link">
                             <div className="menu_itm">
-                                <i className="fa-solid fa-house fa-lg menu_icon"></i>
+                                <i className="fa-solid fa-user fa-lg menu_icon"></i>
                                 { !isActive &&
                                     <span className="menu_name">
-                                        지점정보
+                                        내 정보
                                     </span>
                                 }
                             </div>
@@ -126,9 +126,9 @@ function WareHousing(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/income/list" className="menu_name menu_name_itms">입고내역</Link>
-                <Link to="/income/inspection" className="menu_name menu_name_itms">입고하기</Link>
-                <Link to="/income/new" className="menu_name menu_name_itms">검수상품등록</Link>
+                <Link to="/income/list" className="menu_name menu_name_itms">검수내역</Link>
+                <Link to="/income/inspection" className="menu_name menu_name_itms">검수하기</Link>
+                <Link to="/income/new" className="menu_name menu_name_itms">보관장소등록</Link>
             </div>
         </>
     )
@@ -139,8 +139,7 @@ function Inventory(){
         <>
             <div className="menu_name_itm">
                 <Link to="/product/list" className="menu_name menu_name_itms">재고조회</Link>
-                <Link to="/product/inspection" className="menu_name menu_name_itms">보관장소등록</Link>
-                <Link to="/product/move" className="menu_name menu_name_itms">상품이동</Link>
+                <Link to="/product/inspection" className="menu_name menu_name_itms">상품조회</Link>
             </div>
         </>
     )

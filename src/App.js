@@ -10,7 +10,7 @@ import Warehousing from './pages/income/Warehousing';
 import Inventory from './pages/product/Inventory';
 import Release from './pages/Release';
 import Salelist from './pages/Salelist';
-import Myshop from './pages/Myshop';
+import Myshop, {loader as myDataLoader} from './pages/MyPage';
 import Register from './pages/income/Register';
 import View from './pages/product/View';
 import Store from './pages/product/Store';
@@ -21,6 +21,7 @@ import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
 import RootLayout from './commons/RootLayout';
 import {action as logoutAction} from "./pages/Logout";
+import MyPage from './pages/MyPage';
 
 const router = createBrowserRouter([
   {
@@ -46,13 +47,13 @@ const router = createBrowserRouter([
       {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
-      {path: "income/new", element:<Register />},
+      {path: "income/new", element:<Store />},
       {path: "product/list", element:<View />},
       {path: "product/inspection", element:<Store />},
       {path: "product/move", element:<Inventory />},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />},
-      {path: "branch/info", element:<Myshop />},
+      {path: "branch/info", element:<MyPage />, loader:myDataLoader},
       {path: "search/list", element:<SearchList/> },
     ]
   }
