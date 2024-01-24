@@ -2,33 +2,50 @@ import Search from "../../commons/Search"
 import Nav from "../../commons/Nav"
 import { useEffect, useState } from "react"
 import axios from "axios";
+import { json, useLoaderData } from "react-router-dom";
+import { getAuthToken } from "../../util/auth";
 
 export default function History(){
     let [toggle, setToggle] = useState(false);
     const [datas, setDatas] = useState([]);
 
-    useEffect(()=>{
-        axios.get("http://localhost:8000/api/v1/income/list/bid001")
-        .then((response) => { 
-            console.log("check : ", response);
-            setDatas(response.data);
-        })
-    },[]);
+    const incomeList = useLoaderData();
+    console.log("incomeList >>>>" , incomeList);
 
     return(
         <>
-            <div style={{ height:"92vh"}} className="w-full my-auto overflow-scroll">
-                {datas.map(function(r,i){
+            <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full my-auto overflow-scroll">
+
+                <div style={{border:"1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"5%" }} 
+                    className="w-11/12 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
+                    <i className="w-8"></i>
+                    <span className="w-1/12">입고번호</span>
+                    <span className="w-2/12">입고코드</span>
+                    <span className="w-1/12">입고일자</span>
+                    <span className="w-1/12">입고 총 개수</span>
+                    <span className="w-1/12">입고상태</span>
+                    <span className="w-1/12">입고목록번호</span>
+                    <span className="w-1/12">입고상품개수</span>
+                    <span className="w-1/12">입고상품번호</span>
+                    <span className="w-1/12">입고상품유통기한</span>
+                    <span className="w-2/12" >입고상품명</span>
+                </div>
+                {incomeList.map(function(r,i){
                     return(
                     <>
-                        <div style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"6.5%"}} 
-                            className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4">
-                            <i className="fa-solid fa-angle-down fa-fade fa-lg grow-0 w-1/6" onClick={()=>{setToggle(!toggle)}}></i>
-                            <span className="w-1/6">{r.income_id}</span>
-                            <span className="w-1/6">{r.income_code}</span>
-                            <span className="w-1/6">{r.income_amount} 개</span>
-                            <span className="w-1/6">{r.income_status}</span>
-                            <span className="w-1/6">{r.income_date}</span>
+                        <div style={{border:"1px solid #d5d5d5", borderRadius:"3px", background:"#f6f5efb3", height:"6.5%"}} 
+                            className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
+                            <i className="fa-solid fa-angle-down fa-fade fa-lg grow-0 w-8" onClick={()=>{setToggle(!toggle)}}></i>
+                            <span className="w-1/12">{r.income_id}</span>
+                            <span className="w-2/12">{r.income_code}</span>
+                            <span className="w-1/12">{r.income_date}</span>
+                            <span className="w-1/12">{r.income_amount}</span>
+                            <span className="w-1/12">{r.income_status}</span>
+                            <span className="w-1/12">{r.income_list_id}</span>
+                            <span className="w-1/12">{r.income_list_quantity}</span>
+                            <span className="w-1/12">{r.item_id}</span>
+                            <span className="w-1/12">{r.item_exp}</span>
+                            <span className="w-2/12">{r.product_name}</span>
                         </div>
                         {toggle ? <Detail /> : null}
                     </>
@@ -43,7 +60,7 @@ function Detail(){
 
     return(
         <>
-            <div className="bg-neutral-300 w-3/5 p-2 mx-auto">
+            <div className="bg-green-50 w-11/12 p-2 mx-auto">
                 <div style={{border:"1px solid #d5d5d5", borderRadius:"5px", background:"white", height:"5vh"}} 
                     className="w-11/12 my-2 mx-auto flex justify-between items-center text-lg shadow-lg px-4">
                         <span className="w-1/6">{1}</span>
@@ -80,3 +97,34 @@ function Detail(){
         </>
     )
 }
+
+export async function loader({ request }) {
+    console.log("IncomeListPage,loader>>>>>>>>>>>>.", request)
+    const token = getAuthToken();
+    const branch_id = localStorage.getItem("branch_id");
+    console.log("token:", token);
+    console.log("branch_id:", branch_id);
+  
+    const response = await axios({
+      method: "GET",
+      url: "http://localhost:8000/api/v1/income/list/",
+      headers: {
+        'Content-Type': 'application/json',
+        'jwtauthtoken': token
+      },
+      params: {
+        branch_id: branch_id
+      }
+    });
+  
+    console.log("IncomeListPage.response >>>>>>>>>>>..", response);
+  
+    if (response.status !== 200) {
+      throw json({ message: 'Could not save event.' }, { status: 500 });
+    }
+  
+    const resData = response.data;
+    console.log("resData", resData);
+    return resData;
+  }
+  

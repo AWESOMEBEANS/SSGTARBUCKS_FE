@@ -126,8 +126,8 @@ export default function View(){
                             <option></option>
                         </select>
                     </div>
-                    <input type="button" value="선택이동" className="text-center text-xl w-28 font-bold shadow-lg" onClick={()=>{setModalOpen(true)}}
-                    style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"70%"}}/>
+                    <input type="button" value="선택이동" className="text-center text-xl w-28 font-bold shadow-lg" id="hoverBtn" onClick={()=>{setModalOpen(true)}}
+                    style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", height:"70%"}}/>
                 </div>
                 {currentItems.map(function(r,i){
                     return(

@@ -34,7 +34,7 @@ export default function Regiter(){
                     </div>
                     )
                 })}
-                <button style={{ borderRadius:"7px", height:"5%", backgroundColor:"#f6f5efb3", fontFamily:'Pretendard-Regular'}} 
+                <button style={{ borderRadius:"7px", height:"5%", fontFamily:'Pretendard-Regular'}} 
                         className="text-lg shadow-lg w-32 text-slate-950 font-bold " id="hoverBtn">
                         검수하기
                 </button>

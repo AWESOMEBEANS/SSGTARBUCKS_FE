@@ -4,7 +4,7 @@ import { Routes, Route, Link, createBrowserRouter, RouterProvider } from "react-
 import Login ,{action as authAction}from './pages/Login';
 import FindPwd from './pages/FindPwd';
 import Main ,{loader as mainLoader}from './pages/Main';
-import History from './pages/income/History';
+import History, {loader as incomeLoader} from './pages/income/History';
 import Position, {action as RegisterLocationAction} from './pages/location/Position';
 import Warehousing from './pages/income/Warehousing';
 import Inventory from './pages/product/Inventory';
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       {path: "logout", action:logoutAction },
       {path: "location/new", element:<Position />,action:RegisterLocationAction },
       {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
-      {path: "income/list", element:<History />},
+      {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Register />},
       {path: "product/list", element:<View />},
