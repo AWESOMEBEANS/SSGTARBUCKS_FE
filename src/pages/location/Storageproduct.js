@@ -201,20 +201,20 @@ export default function Storageproduct() {
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
-                <div style={{ margin: "2% auto", width: "80%" }}>
+                <div style={{ margin: "1.5% auto", width: "80%" }}>
                     <table>
                         <thead>
-                            <tr className="h-full flex justify-between items-center" style={{ backgroundColor: "#f6f5efb3" }}>
+                            <tr className="h-14 flex justify-between items-center border shadow-md" style={{ backgroundColor: "#f6f5efb3" }}>
                                 <th className="w-1/5 text-lg text-center">
-                                    <select className="text-lg" style={{ backgroundColor: "#f6f5efb3" }}
+                                    <select className="text-lg text-center" style={{ backgroundColor: "#f6f5efb3" }} 
                                         onChange={(e) => handleSelectedStorageTypeChange(e.target.value)}>
                                         <option value="보관유형">보관유형</option>
                                         <option value="매장">매장</option>
                                         <option value="창고">창고</option>
                                     </select>
                                 </th>
-                                <th className="w-1/5 text-xl text-center">
-                                    <select style={{ backgroundColor: "#f6f5efb3" }}
+                                <th className="w-1/5 text-lg text-center">
+                                    <select style={{ backgroundColor: "#f6f5efb3" }} className="text-center"
                                         onChange={(e) => handleSelectedLocationChange(e.target.value === '구역선택' ? '' : e.target.value)}>
                                         <option value="보관구역">보관구역 </option>
                                         {locationList.map((row, index) => (
@@ -223,7 +223,7 @@ export default function Storageproduct() {
                                     </select>
                                 </th>
                                 <th className="w-1/5 text-lg text-center">
-                                    <select style={{ backgroundColor: "#f6f5efb3" }}
+                                    <select style={{ backgroundColor: "#f6f5efb3" }} className="text-center"
                                         onChange={(e) => handleSelectedLocationAliasChange(e.target.value)}>
                                         <option>소분류</option>
                                         {aliasList.map((alias, index) => (
