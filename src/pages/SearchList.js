@@ -41,7 +41,7 @@ export default function SearchList() {
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center ">
-                <div style={{ height: "7%" }}
+                <div style={{ height: "8%" }}
                     className="w-5/6 mx-auto flex justify-between items-center mt-5">
                     <div className="text-center text-lg w-10 flex justify-center items-center shadow-lg font-bold"
                         style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}
@@ -91,13 +91,13 @@ export default function SearchList() {
                             </div>
                             <div className="text-lg w-7/12 flex justify-around items-center shadow-lg text-center" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                                 <span className="w-1/4"
-                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through red 2px'} : null}>{r.category_name}</span>
+                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{r.category_name}</span>
                                 <span className="w-3/6"
-                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through red 2px'} : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
+                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 120, 50) 2px'} : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
                                 <span className="w-1/12"
                                 >{r.product_spec}</span>
                                 <span className="w-1/6 mx-3" 
-                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through red 2px'} : (imminentExpiration(r.item_exp) ? {boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)'} : null)}>
+                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : (imminentExpiration(r.item_exp) ? {boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)'} : null)}>
                                         {r.item_exp}
                                 </span>
                                 <span className="w-1/6 mr-3" style={{boxShadow: "inset 0 -30px 0 rgb(255, 245, 160)"}}>{r.item_status}</span>
