@@ -7,7 +7,7 @@ import Main ,{loader as mainLoader}from './pages/Main';
 import History, {loader as incomeLoader} from './pages/income/History';
 import Position, {action as RegisterLocationAction} from './pages/location/Position';
 import Warehousing from './pages/income/Warehousing';
-import Inventory from './pages/stock/Inventory';
+import Inventory, {loader as inventoryLoader} from './pages/stock/Inventory';
 import Release from './pages/Release';
 import Salelist from './pages/Salelist';
 import Myshop, {loader as myDataLoader} from './pages/MyPage';
@@ -25,7 +25,7 @@ import MyPage from './pages/MyPage';
 
 const router = createBrowserRouter([
   {
-    path:"/auth",
+    path:"/login",
     element:<Login />,
     errorElement:<ErrorPage />,
     action: authAction
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
       {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
-      {path: "stock/product/list", element:<Inventory />},
+      {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />},
       {path: "branch/info", element:<MyPage />, loader:myDataLoader},

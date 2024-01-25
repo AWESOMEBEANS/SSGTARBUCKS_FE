@@ -24,6 +24,7 @@ export default function SearchList() {
     console.log("현재시각 : ", dayjs());
     console.log(dayjs().isAfter(dayjs("2024-01-23").format("YYYY-MM-DD")));
 
+    // 유통기한 계산
     function isExpired(date){
         return dayjs().isAfter(dayjs(date).format("YYYY-MM-DD"));
     }
@@ -74,7 +75,7 @@ export default function SearchList() {
                             저장장소
                         </span>
                         <span className="w-1/4">
-                            저장별칭
+                            저장명칭
                         </span>
                         <span className="w-1/4 mx-2">
                             수량

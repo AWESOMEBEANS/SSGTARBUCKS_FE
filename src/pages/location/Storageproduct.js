@@ -120,12 +120,12 @@ export default function Storageproduct() {
         if (selectedStorageLocation === "보관구역") {
             setSelectedLocation('');
         }
-        if (selectedLocationAlias === "소분류") {
+        if (selectedLocationAlias === "보관명칭") {
             setSelectedLocationAlias('');
         }
 
         if (selectedStorageType && !selectedStorageLocation &&selectedLocationAlias) {
-            // 보관유형은 정하고 보관구역을 정하지 않고 소분류만 보는 것은 안됨
+            // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
             alert('보관구역을 선택하세요.');
             setSelectedLocationAlias('');
             return; // 필터링을 하지 않고 종료
@@ -142,7 +142,7 @@ export default function Storageproduct() {
                 console.log("구역 필터링된 리스트", filteredList);
                 if (selectedLocationAlias) {
                     filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
-                    console.log("소분류 필터링된 리스트", filteredList);
+                    console.log("보관명칭 필터링된 리스트", filteredList);
                 }
             }
         }
@@ -153,13 +153,13 @@ export default function Storageproduct() {
             console.log("구역 필터링된 리스트", filteredList);
             if (selectedLocationAlias) {
                 filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
-                console.log("소분류 필터링된 리스트", filteredList);
+                console.log("보관명칭 필터링된 리스트", filteredList);
             }
         }
         
         else if (selectedLocationAlias) {
             filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
-            console.log("소분류 필터링된 리스트", filteredList);
+            console.log("보관명칭 필터링된 리스트", filteredList);
         }
         // 필터링이 완료된 데이터로 tmpStockList 갱신
         setTmpStockList(filteredList);
@@ -182,7 +182,7 @@ export default function Storageproduct() {
         }
     };
 
-    /* 필터링된 소분류 카테고리  */
+    /* 필터링된 보관명칭 카테고리  */
     const aliasCategoryList = (filteredList) => {
         try {
             if (Array.isArray(filteredList) && filteredList.length > 0) {
@@ -225,7 +225,7 @@ export default function Storageproduct() {
                                 <th className="w-1/5 text-lg text-center">
                                     <select style={{ backgroundColor: "#f6f5efb3" }} className="text-center"
                                         onChange={(e) => handleSelectedLocationAliasChange(e.target.value)}>
-                                        <option>소분류</option>
+                                        <option>보관명칭</option>
                                         {aliasList.map((alias, index) => (
                                             <option key={index}>{alias}</option>
                                         ))}

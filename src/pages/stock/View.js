@@ -100,7 +100,7 @@ export default function View() {
                 <div style={{ height: "7%" }}
                     className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl">
                     <div className="w-4/6 flex justify-around h-12">
-                        <select className="text-center text-xl w-56 shadow-lg"
+                        <select className="text-center text-xl w-56 shadow-lg "
                             style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
                         >
                             <option>보관유형</option>
@@ -120,7 +120,7 @@ export default function View() {
                             <option>기타</option>
                         </select>
                         <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}>
-                            <option>소분류</option>
+                            <option>보관명칭</option>
                             <option></option>
                             <option></option>
                             <option></option>
@@ -145,11 +145,10 @@ export default function View() {
                         <span className="w-10">번호</span>
                         <span className="w-1/12">보관유형</span>
                         <span className="w-1/12">보관장소</span>
-                        <span className="w-2/12">보관명칭(소분류)</span>
-                        <span className="w-1/12">보관번호</span>
-                        <span className="w-1/12">보관개수</span>
+                        <span className="w-2/12">보관명칭</span>
                         <span className="w-2/12">보관상품명</span>
                         <span className="w-1/12">유통기한</span>
+                        <span className="w-1/12">보관개수</span>
                 </div>
                 {currentItems.map(function (r, i) {
                     return (
@@ -161,13 +160,6 @@ export default function View() {
                             <span className="w-1/12">{r.location_area === 'FR' ? '매장' : (r.location_area === 'BA' ? '창고' : '')}</span>
                             <span className="w-1/12">{r.location_section_name}</span>
                             <span className="w-2/12">{r.location_alias}</span>
-                            <span className="w-1/12">{r.stock_id}</span>
-                            <div className="w-1/12">
-                                <input type='hidden' value={r.item_id} />
-                                <button onClick={() => handleQuantityChange(i, -1, r.item_id)}  className="border w-8 h-8">-</button>
-                                <span>{r.stock_quantity}</span>
-                                <button onClick={() => handleQuantityChange(i, 1, r.item_id)}  className="border w-8 h-8">+</button>
-                            </div>
                             <span className="w-2/12"
                                 style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>
                                 {`${r.product_name} (${r.product_standard})`}
@@ -176,6 +168,12 @@ export default function View() {
                                 style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : (imminentExpiration(r.item_exp) ? {boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)'} : null)}>
                                 {r.item_exp}
                             </span>
+                            <div className="w-1/12">
+                                <input type='hidden' value={r.item_id} />
+                                <button onClick={() => handleQuantityChange(i, -1, r.item_id)}  className="border w-8 h-8 mr-2 shadow-md page_itms">-</button>
+                                <span>{r.stock_quantity}</span>
+                                <button onClick={() => handleQuantityChange(i, 1, r.item_id)}  className="border w-8 h-8 ml-2 shadow-md page_itms">+</button>
+                            </div>
                         </div>
                     )
                 })}
@@ -230,7 +228,7 @@ function Modal({ onSubmit, onCancel }) {
                                     </div>
                                     <div className="w-1/3">
                                         <select className="text-center text-lg w-full font-normal" style={{  background: "#f6f5efb3"}}>
-                                            <option>소분류</option>
+                                            <option>보관명칭</option>
                                             <option></option>
                                             <option></option>
                                             <option></option>

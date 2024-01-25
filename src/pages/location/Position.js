@@ -73,7 +73,7 @@ export default function Position() {
                                 <tr className="flex items-center h-16 border-2 shadow-md rounded-sm">
                                     <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>보관유형</th>
                                     <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>보관장소</th>
-                                    <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>소분류</th>
+                                    <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>보관명칭</th>
                                 </tr>
                             </thead>
                             <div className="w-full flex justify-center items-center">
@@ -109,7 +109,7 @@ export default function Position() {
                                             </select>
                                         </td>
                                         <td className="w-1/3 text-center text-lg">
-                                            <input className="table_input border text-center" type="text" name="location_alias" placeholder="소분류(명칭)" value={row.location_alias} onChange={(e) => handleInputChange(index, 'location_alias', e.target.value)} />
+                                            <input className="table_input border text-center" type="text" name="location_alias" placeholder="보관명칭" value={row.location_alias} onChange={(e) => handleInputChange(index, 'location_alias', e.target.value)} />
                                         </td>
                                     </tr>
                                 ))}
