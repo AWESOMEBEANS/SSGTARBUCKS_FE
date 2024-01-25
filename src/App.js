@@ -12,10 +12,10 @@ import Release from './pages/Release';
 import Salelist from './pages/Salelist';
 import Myshop, {loader as myDataLoader} from './pages/MyPage';
 import Register from './pages/income/Register';
-import View from './pages/stock/View';
+import View, {loader as stockLocationLoader} from './pages/stock/View';
 import Store, {loader as storeLoader} from './pages/stock/Store';
 import SearchList, {loader as searchListLoader} from './pages/SearchList';
-import Storageproduct, {loader as stockLocationLoader} from './pages/location/Storageproduct';
+import Storageproduct, {loader as storageLoader} from './pages/location/Storageproduct';
 import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
@@ -44,11 +44,11 @@ const router = createBrowserRouter([
       {path: "main", element:<Main />, loader:mainLoader, index:true},
       {path: "logout", action:logoutAction },
       {path: "location/new", element:<Position />,action:RegisterLocationAction },
-      {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
+      {path: "location/list", element:<Storageproduct />, loader:storageLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
-      {path: "stock/location/list", element:<View />},
+      {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />},
