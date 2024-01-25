@@ -11,7 +11,6 @@ export default function SearchList() {
     const initialData = useLoaderData();
     //정렬을 위해 쓸 데이터 (변경O)
     const [sortedSearchResult, setSortedSearchResult] = useState(useLoaderData());
-
     const [isExpAscending, setIsExpAscending] = useState(true);
     const [isQtyAscending, setIsQtyAscending] = useState(true);
 
@@ -34,6 +33,14 @@ export default function SearchList() {
 
     //////////////////////////////////////////////////////////////////////////////
     /* 유통기한&수량별 상품 정렬 */
+    useEffect(() => {
+        sortExpSearchResult();
+    }, [initialData]);
+
+    useEffect(() => {
+        sortQtySearchResult();
+    }, [initialData]);
+
     const handleExpButtonClick = () => {
         console.log("유통기한순 정렬(오름차순 유무) : ", isExpAscending);
         setIsExpAscending(!isExpAscending);
@@ -59,17 +66,14 @@ export default function SearchList() {
 
     const sortQtySearchResult = () => {
         const sortedResult = [...initialData].sort((a, b) => {
-          const qtyComparison = isQtyAscending ? a.stock_quantity - b.stock_quantity : b.stock_quantity - a.stock_quantity;
-          return qtyComparison;
+            const qtyComparison = isQtyAscending ? a.stock_quantity - b.stock_quantity : b.stock_quantity - a.stock_quantity;
+            return qtyComparison;
         });
-      
-        setSortedSearchResult([...sortedResult]);
-      };
 
+        setSortedSearchResult([...sortedResult]);
+    };
 
     ////////////////////////////////////////////////////////////////////////////////
-    console.log("여기>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SearchListReLoad()");
-    console.log(sortedSearchResult);
     return (
 
         <>
@@ -126,7 +130,7 @@ export default function SearchList() {
                                 <span className="w-1/4"
                                     style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.category_name}</span>
                                 <span className="w-3/6"
-                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
+                                    style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
                                 <span className="w-1/12"
                                 >{r.product_spec}</span>
                                 <span className="w-1/6 mx-3"
