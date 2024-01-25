@@ -4,78 +4,103 @@ import Search from "../commons/Search"
 import '../sources/css/salelist.css';
 import axios from 'axios';
 import Pagination from "../commons/Pagination";
+import { getAuthToken } from "../util/auth";
+import { json, useLoaderData } from "react-router";
 
 
-export default function Salelist(){
-    const [datas, setDatas] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
+export default function Salelist() {
+    const [datas, setDatas] = useState(useLoaderData());
 
-    useEffect(()=>{
-        axios.get("https://gonookim.github.io/outcome.json")
-        .then((a) => { 
-            console.log("check : ", a);
-            setDatas(a.data);
-        })
-    },[]);
+    const handleSaleListUpdate = async () => {
+        try {
+            const token = getAuthToken();
+            const branch_id = localStorage.getItem("branch_id");
 
-    // 현재 페이지의 데이터 계산
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
+            const response = await axios({
+                method: "PUT",
+                url: `http://localhost:8000/api/v1/stock/sale/product`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'jwtauthtoken': token
+                },
+                params: {
+                    branch_id: branch_id
+                }
+            });
 
-    // 페이지 변경 핸들러
-    const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+            console.log("Update Quantity Response:", response.data);
+
+            // Reload the page
+            window.location.reload();
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+        }
     };
 
-    // 이전 페이지로 이동
-    const handlePrevClick = () => {
-    if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-    }
-    };
-
-  // 다음 페이지로 이동
-    const handleNextClick = () => {
-    const totalPages = Math.ceil(datas.length / itemsPerPage);
-    if (currentPage < totalPages) {
-        setCurrentPage(currentPage + 1);
-    }
-    };
-
-    return(
+    return (
         <>
-            <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
-                <div style={{height:"7%"}} 
-                        className="w-3/5 my-1 mx-auto flex justify-end items-center text-2xl">
-                    <input type="button" value="갱신하기" className="text-center text-xl w-28 font-bold shadow-lg btn_salelist" style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", height:"60%"}}/>
+        <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
+                <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-xl h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
+                    <span className="w-1/12">번호</span>
+                    <span className="w-2/12">상품명</span>
+                    <span className="w-1/12">상품번호</span>
+                    <span className="w-2/12">판매번호</span>
+                    <span className="w-1/12">판매개수</span>
+                    <span className="w-2/12">판매날짜</span>
+                    <span className="w-1/12">판매상태</span>
                 </div>
-                {currentItems.map(function(r,i){
-                    return(
-                    <div style={{height:"6.8%"}} 
-                        className="w-3/5 my-3 mx-auto flex justify-center items-center text-2xl"
-                        key={i} >
-                        <div style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}} 
-                        className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
-                            <input type="checkbox" className="w-1/6"></input>
-                            <span className="w-1/6">{r.outcome_id}</span>
-                            <span className="w-2/6">CODE : {r.outcome_code}</span>
-                            <span className="w-1/6">수량 : {r.outcome_amount}</span>
-                            <span className="w-1/6">{r.outcome_date}</span>
+                { datas.length === 0 ? <h1 className="text-3xl mt-20">갱신할 판매목록이 없습니다.</h1> : 
+                <>
+                {datas.map(function (r, i) {
+                    return (
+                        <div style={{ height: "6.8%" }}
+                            className="w-2/3 my-3 mx-auto flex justify-center items-center text-2xl"
+                            key={i} >
+                            <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "7px", background: "#f6f5efb3", height: "100%" }}
+                                className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
+                                <span className="w-1/12">{i+1}</span>
+                                <span className="w-2/12">{r.product_name}</span>
+                                <span className="w-1/12">{r.item_id}</span>
+                                <span className="w-2/12">{r.sale_code}</span>
+                                <span className="w-1/12">{r.sale_list_quantity}</span>
+                                <span className="w-2/12">{r.sale_date}</span>
+                                <span className="w-1/12">{r.sale_status}</span>
+                            </div>
                         </div>
-                    </div>
                     )
                 })}
-                    <Pagination
-                        itemsPerPage={itemsPerPage}
-                        totalItems={datas.length}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                        onPrevClick={handlePrevClick}
-                        onNextClick={handleNextClick}
-                    />
+                <div className="w-3/5 my-5 mx-auto flex justify-center items-center text-2xl h-10">
+                    <input type="button" value="갱신하기" className="text-center text-xl w-28 shadow-lg border rounded-md h-full btn_salelist "/>
+                </div>
+                </>
+                }
             </div>
         </>
     )
+}
+
+export async function loader({ request }) {
+    console.log("OutcomeListPage,loader>>>>>>>>>>>>.", request)
+    const token = getAuthToken();
+    const branch_id = localStorage.getItem("branch_id");
+    console.log("token:", token);
+    console.log("branch_id:", branch_id);
+    const response = await axios({
+        method: "GET",
+        url: "http://localhost:8000/api/v1/stock/sale/list",
+        headers: {
+            'Content-Type': 'application/json',
+            'jwtauthtoken': token
+        },
+        params: {
+            branch_id: branch_id
+        }
+    });
+    console.log("OutcomeListPage.response >>>>>>>>>>>..", response);
+    if (response.status !== 200) {
+        throw json({ message: 'Could not save event.' }, { status: 500 });
+    }
+    const resData = response.data;
+    console.log("resData", resData);
+    return resData;
 }

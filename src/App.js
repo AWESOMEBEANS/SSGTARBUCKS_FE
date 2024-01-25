@@ -9,7 +9,7 @@ import Position, {action as RegisterLocationAction} from './pages/location/Posit
 import Warehousing from './pages/income/Warehousing';
 import Inventory, {loader as inventoryLoader} from './pages/stock/Inventory';
 import Release from './pages/Release';
-import Salelist from './pages/Salelist';
+import Salelist, {loader as salelistLoader} from './pages/Salelist';
 import Myshop, {loader as myDataLoader} from './pages/MyPage';
 import Register from './pages/income/Register';
 import View, {loader as stockLocationLoader} from './pages/stock/View';
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
-      {path: "sale/product", element:<Salelist />},
+      {path: "sale/product", element:<Salelist />, loader:salelistLoader},
       {path: "branch/info", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
     ]

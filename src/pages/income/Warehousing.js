@@ -84,14 +84,13 @@ export default function Warehousing() {
                     )
                 })} */}
             </div>
-            {modalOpen&& <QRScanner onScan={handleScanWebCam}/>}
             {scanResult}
-            {/* {modalOpen && (
+            {modalOpen && (
                 <Modal
                     onSubmit={handleModalOpen}
                     onCancel={handleModalOpen}
                     onScan={handleScanWebCam}>
-                </Modal>)} */}
+                </Modal>)}
         </>
 
     )
