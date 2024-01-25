@@ -35,10 +35,10 @@ export default function History() {
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
 
-                <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "5%" }}
-                    className="w-3/4 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
+                <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
+                    className="w-3/4 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                     <i className="w-8"></i>
-                    <span className="w-1/12">입고번호</span>
+                    <span className="w-1/12" >입고번호</span>
                     <span className="w-2/12">입고일자</span>
                     <span className="w-1/12">입고 총 개수</span>
                     <span className="w-1/12">입고상태</span>
@@ -89,16 +89,16 @@ function Detail({id}) {
 
     return (
         <>
-            <div className="bg-green-50 w-3/4 p-2 mx-auto">
+            <div className= "w-3/4 p-2 mx-auto" style={{backgroundColor : "#f0f0f0aa"}}>
                 {true && groupedDetailList[id].map((row, index) => 
-                        <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "5vh" }}
-                            className="w-11/12 my-2 mx-auto flex justify-between items-center text-lg shadow-lg px-4">
-                            <span className="w-1/6">{index+1}</span>
-                            <span className="w-2/6">{row.product_name}</span>
-                            <span className="w-1/6">{row.income_list_result}</span>
-                            <span className="w-1/6">{row.income_status}</span>
-                            <span className="w-1/6">{row.item_exp}</span>
-                        </div>
+                    <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
+                        className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4">
+                        <span className="w-1/6">{index+1}</span>
+                        <span className="w-2/6">{row.product_name}</span>
+                        <span className="w-1/6">{row.income_list_result}</span>
+                        <span className="w-1/6">{row.income_status}</span>
+                        <span className="w-1/6">{row.item_exp}</span>
+                    </div>
                 )}
             </div>
         </>

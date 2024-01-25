@@ -138,8 +138,8 @@ function Inventory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/product/list" className="menu_name menu_name_itms">재고조회</Link>
-                <Link to="/product/inspection" className="menu_name menu_name_itms">상품조회</Link>
+                <Link to="/stock/location/list" className="menu_name menu_name_itms">재고조회</Link>
+                <Link to="/stock/product/list" className="menu_name menu_name_itms">상품조회</Link>
             </div>
         </>
     )

@@ -201,7 +201,7 @@ export default function Storageproduct() {
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
-                <div style={{ margin: "1.5% auto", width: "80%" }}>
+                <div style={{ margin: "0 auto", width: "80%" }} className="my-4">
                     <table>
                         <thead>
                             <tr className="h-14 flex justify-between items-center border shadow-md" style={{ backgroundColor: "#f6f5efb3" }}>
@@ -237,7 +237,7 @@ export default function Storageproduct() {
                         </thead>
                         <tbody>
                             {tmpStockList.map((row, index) => (
-                                <tr className="tbody flex justify-between items-center" key={`${row.product_id}-${index}`}>
+                                <tr className="tbody flex justify-between items-center my-3" key={`${row.product_id}-${index}`}>
                                     <td className="text-lg w-1/5 text-center">{getLocationType(row.location_area)}</td>
                                     <td className="text-lg w-1/5 text-center">{getLocationSection(row.location_section)}</td>
                                     <td className="text-lg w-1/5 text-center">{row.location_alias}</td>

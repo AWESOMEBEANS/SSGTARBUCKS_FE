@@ -3,75 +3,107 @@ import Nav from "../../commons/Nav";
 import Search from "../../commons/Search"
 import "../../sources/css/scanner.css"
 import axios from "axios";
-import Modal from "../../commons/Modal";
+import { json, useNavigate } from "react-router";
+import { getAuthToken } from "../../util/auth";
+import QRScanner from "../../commons/QRScanner";
 
 
-export default function Warehousing(){
+export default function Warehousing() {
+    const [scanResult, setScanResult] = useState('');
     const [datas, setDatas] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
+    const navigate = useNavigate();
 
-    const handleButtonClick = () => {
-        setModalOpen(false);
+    const handleModalOpen = () => {
+        setModalOpen(!modalOpen);
+    };
+    const handleScanWebCam = (result) => {
+        setScanResult(result);
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!scanResult) {
+                return;
+            }
+            try {
+                console.log("스캔결과값----------------->", scanResult);
+                const token = getAuthToken();
+                const response = await axios.get(
+                    `http://localhost:8000/api/v1/income/inspection/`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'jwtauthtoken': token
+                        }, params: {
+                            scanResult: scanResult
+                        },
+                    }
+                );
+                console.log("SearchPage.response >>>>>>>>>>>..", response);
+                if (response.status !== 200) {
+                    throw json({ message: '검색에 실패했습니다.' }, { status: 500 });
+                }
+                const resData = response.data;
+                console.log("resData", resData);
+                //navigate('/income/list/inspection', { prams: { incomeId: resData } });
+                navigate(`/income/inspection/${resData}`);
+            } catch (error) {
+                console.error("Error during fetchData:", error);
+                //navigate('/error', { state: { errorMessage: '조회시 없음' } });
+            }
+        };
+        if (scanResult) {
+            fetchData();
+        }
+    }, [scanResult, navigate]);
 
-    useEffect(()=>{
-        axios.get("https://gonookim.github.io/outcome.json")
-            .then((a) => { 
-                console.log("check : ", a);
-                setDatas(a.data);
-            })
-        },[])
-
-    // const result = datas.filter((data)=>data.income_status === "입고전");
-    // console.log("result >>>>>" ,result);
-
-    return(
+    return (
         <>
-            <div className="w-full flex">
-                <div className="w-2/6 h-1/2 my-auto">
-                    <div className="box_btn_inn text-center">
-                        <h1 className="btn_name" >입고하기</h1>
-                        <button className="w-96 h-96 shadow-slate-700 shadow-xl rounded-3xl" id="qrbtn" onClick={()=> setModalOpen(true)}></button>
-                        <h3 className="text-lg text-red-700 font-bold my-3" style={{fontFamily:'Pretendard-Regular'}}>※ 카메라를 켜주세요</h3>
-                    </div>
+            <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
+                <div style={{height:"7%"}} 
+                        className="w-3/5 my-1 mx-auto flex justify-end items-center text-2xl">
+                    <input type="button" value="입고내역서 스캔" className="text-center text-xl w-40 font-bold shadow-lg btn_salelist"
+                        style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", height:"60%"}}
+                        onClick={handleModalOpen}/>
                 </div>
-                <div className="w-4/6">
-                    <div style={{ height:"92vh"}} className="w-full mx-auto  overflow-scroll text-center">
-                        
-                        {datas.map(function(r,i){
-                            return(
-                            <div className="flex h-16 my-2 w-11/12 mx-auto" style={{fontFamily:'Pretendard-Regular'}}>
-                                <div style={{border:"1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}} 
-                                    className="w-11/12 my-3 mx-auto flex justify-between items-center text-xl shadow-lg px-4">
-                                    <input type="checkbox" className="w-20"></input>
-                                    <h6 className="grow text-center text-lg">ID : {r.outcome_id}</h6>
-                                    <p className="grow text-center text-lg">{r.outcome_code}</p>
-                                    <p className="grow text-center text-lg">수량 : {r.outcome_amount}</p>
-                                    <p className={`grow text-center text-lg ${r.outcome_status === "입고완료" ? "bg-lime-700" : (r.outcome_status === "검수전" ? "bg-violet-700" : "bg-yellow-600")} w-10 text-white rounded-xl border border-black border-solid`}>{r.outcome_status}</p>
-                                    <p className="grow text-end text-lg">{r.outcome_date}</p>
-                                </div>
-                                <button style={{border:"1px solid #d5d5d5", borderRadius:"7px", height:"100%"}} onClick={()=> setModalOpen(true)}
-                                    className="w-16 my-3 mx-auto flex items-center justify-center text-xl shadow-lg btn_delete">
-                                    <img width={"30px"} src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAxklEQVR4nMVVwQ3DIAy8J38Goo+s4tGSAfrtgxWyQtkjSoVkVanjpBBMe9L9zF04xxj4IW4AJgCPDangHIkzWSNo4guAp4FBYq0Pk4nFHdrh2CRrvhGZVohSTzOQPaGDWLTMvxpoPaEDAy3znQEJgZqeOCVzqbdDbU9ibQ+7G9yZverhmeb1uWhopD8zGAGsjRxLbjAzh0Ju6/1f/iJSBi1ZDpr8gsDjn6yeCu2Koedj14oo9Woyv7RwtMxNVyaUzE2Xfje8AK9VhW+0XHTWAAAAAElFTkSuQmCC" />
-                                </button>
-                            </div>
-                            )
-                        })}
-                        <button style={{ borderRadius:"7px", height:"5%", backgroundColor:"#f6f5efb3" }} 
-                                className="text-xl shadow-lg w-32 text-slate-950 font-bold my-3" id="hoverBtn">
-                                입고하기
-                        </button>
+                {/* {datas.map(function(r,i){
+                    return(
+                    <div style={{height:"6.8%"}} 
+                        className="w-3/5 my-3 mx-auto flex justify-center items-center text-2xl"
+                        key={i} >
+                        <div style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", background:"#f6f5efb3", height:"100%"}} 
+                        className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
+                            <input type="checkbox" className="w-1/6"></input>
+                            <span className="w-1/6">{r.outcome_id}</span>
+                            <span className="w-2/6">CODE : {r.outcome_code}</span>
+                            <span className="w-1/6">수량 : {r.outcome_amount}</span>
+                            <span className="w-1/6">{r.outcome_date}</span>
+                        </div>
                     </div>
-                </div>
+                    )
+                })} */}
             </div>
-        {modalOpen && (
-        <Modal 
-            onSubmit={handleButtonClick}
-            onCancel={handleButtonClick}>
-        </Modal>)}
+            {modalOpen&& <QRScanner onScan={handleScanWebCam}/>}
+            {scanResult}
+            {/* {modalOpen && (
+                <Modal
+                    onSubmit={handleModalOpen}
+                    onCancel={handleModalOpen}
+                    onScan={handleScanWebCam}>
+                </Modal>)} */}
         </>
 
     )
 }
 
+function Modal({ onSubmit, onCancel, onScan}){
+
+    return(
+        <div className="modal-container">
+            <div className="madal-main">
+                <QRScanner onScan={onScan} style={{width:"400px", height:"500px"}}/>
+            </div>
+        </div>
+    )
+}
