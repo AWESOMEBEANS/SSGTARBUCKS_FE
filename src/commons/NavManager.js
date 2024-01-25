@@ -15,12 +15,12 @@ export default function Nav(){
             <nav style={(isActive ? {width : "3%"} : {width : "10%"})}>
                 <div className="content">
                     <div id="menu">
-                        <a >
+                        <a>
                             <div className="menu_itm">
                                 <i className="fa-solid fa-house fa-lg menu_icon"></i>
                                 { !isActive && 
-                                <span className="menu_name" >
-                                    지점정보
+                                <span className="menu_name">
+                                    <Link to="manager/solstice">지점정보</Link>
                                 </span>
                                 }
                             </div>
@@ -30,7 +30,7 @@ export default function Nav(){
                                 <i className="fa-solid fa-house fa-lg menu_icon"></i>
                                 { !isActive &&
                                     <span className="menu_name">
-                                        내정보
+                                        <Link to="manager/shop">내정보</Link>
                                     </span>
                                 }
                             </div>
