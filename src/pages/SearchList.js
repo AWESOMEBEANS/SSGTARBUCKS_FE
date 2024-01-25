@@ -125,7 +125,7 @@ export default function SearchList() {
                                 <span className="w-1/4"
                                     style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.category_name}</span>
                                 <span className="w-3/6"
-                                    style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 120, 50) 2px' } : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
+                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{`${r.product_name} (${r.product_standard} , ${r.product_unit})`}</span>
                                 <span className="w-1/12"
                                 >{r.product_spec}</span>
                                 <span className="w-1/6 mx-3"
