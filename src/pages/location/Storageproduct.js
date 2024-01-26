@@ -236,7 +236,8 @@ export default function Storageproduct() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tmpStockList.map((row, index) => (
+                            { tmpStockList.length === 0 ? <h1 className="text-3xl mt-20">불러올 데이터가 없습니다.</h1> :
+                            tmpStockList.map((row, index) => (
                                 <tr className="tbody flex justify-between items-center my-3" key={`${row.product_id}-${index}`}>
                                     <td className="text-lg w-1/5 text-center">{getLocationType(row.location_area)}</td>
                                     <td className="text-lg w-1/5 text-center">{getLocationSection(row.location_section)}</td>

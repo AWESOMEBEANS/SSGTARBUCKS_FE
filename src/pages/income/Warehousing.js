@@ -61,13 +61,14 @@ export default function Warehousing() {
     return (
         <>
             <div style={{ height:"92vh", fontFamily:'Pretendard-Regular'}} className="w-full mx-auto my-auto  overflow-scroll text-center">
-                <div style={{height:"7%"}} 
-                        className="w-3/5 my-1 mx-auto flex justify-end items-center text-2xl">
-                    <input type="button" value="입고내역서 스캔" className="text-center text-xl w-40 font-bold shadow-lg btn_salelist"
-                        style={{border:"0.1px solid #d5d5d5", borderRadius:"7px", height:"60%"}}
-                        onClick={handleModalOpen}/>
+                { !modalOpen &&
+                <div className="w-3/5 my-1 mx-auto flex justify-center items-center text-2xl h-20">
+                    <input type="button" value="입고내역서 스캔" 
+                    className="mt-56 text-xl w-80 font-bold shadow-lg border rounded-md h-full btn_salelist"
+                    onClick={handleModalOpen}/>
                 </div>
-                {/* {datas.map(function(r,i){
+                }               
+                {datas.map(function(r,i){
                     return(
                     <div style={{height:"6.8%"}} 
                         className="w-3/5 my-3 mx-auto flex justify-center items-center text-2xl"
@@ -82,7 +83,7 @@ export default function Warehousing() {
                         </div>
                     </div>
                     )
-                })} */}
+                })}
             </div>
             {scanResult}
             {modalOpen && (

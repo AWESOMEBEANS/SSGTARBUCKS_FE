@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { json, useLoaderData } from "react-router-dom";
+import { json, useLoaderData, useParams } from "react-router-dom";
 import { getAuthToken } from "../util/auth.js";
 import dayjs from "dayjs";
 
@@ -9,6 +9,7 @@ export default function SearchList() {
 
     //초기 검색 데이터(변경X)
     const initialData = useLoaderData();
+    const { searchWord } = useParams();
     //정렬을 위해 쓸 데이터 (변경O)
     const [sortedSearchResult, setSortedSearchResult] = useState(useLoaderData());
     const [isExpAscending, setIsExpAscending] = useState(true);
@@ -78,8 +79,9 @@ export default function SearchList() {
 
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center ">
-                <div style={{ height: "8%" }}
-                    className="w-5/6 mx-auto flex justify-between items-center mt-5">
+                <h1 className="text-3xl mt-3 text-start ml-32">" {searchWord} " 검색결과</h1>
+                <div
+                    className="w-5/6 mx-auto flex justify-between items-center mt-3 h-14">
                     <div className="text-center text-lg w-10 flex justify-center items-center shadow-lg font-bold"
                         style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}
                     >
@@ -119,7 +121,8 @@ export default function SearchList() {
                         </span>
                     </div>
                 </div>
-                {sortedSearchResult.map(function (r, i) {
+                {sortedSearchResult.length === 0 ? <h1 className="text-3xl mt-20">검색결과가 없습니다.</h1> :
+                sortedSearchResult.map(function (r, i) {
                     return (
                         <div style={{ height: "8.5%" }}
                             className="w-5/6 mx-auto flex justify-between items-center text-2xl" key={`${r.product_id}-${i}`}>
