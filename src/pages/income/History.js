@@ -18,17 +18,8 @@ export default function History() {
     }, {});
 
     console.log("groupedList >>>", groupedList);
-
-
-    ////////////////////////
-    let groupedListkeys = Object.keys(groupedList);
-    console.log("groupedListkeys >>>",groupedListkeys);
-    groupedListkeys.map(key=>{console.log(groupedList[key][0]);})
-
-    //////////////////////
-    let emptyArray = [];
-    emptyArray[5] = true;
-    console.log("emptyArray >>",emptyArray);
+    let groupedListkeys = Object.keys(groupedList).reverse();
+    const resultArray = groupedListkeys.map(key => groupedList[key][0]);
 
     return (
         <>
