@@ -94,12 +94,12 @@ export default function Inventory() {
                     </div>
                     <div className="text-lg w-11/12 flex border rounded-md justify-around items-center shadow-lg h-full" style={{ background: "#f6f5efb3" }}>
                         <span className="w-2/12">상품명</span>
-                        <span className="w-16">상품규격</span>
-                        <span className="w-16">상품단위</span>
-                        <span className="w-16">상품상세</span>
-                        <span className="w-1/12">입고일</span>
-                        <span className="w-10">개수</span>
+                        <span className="w-16">규격</span>
+                        <span className="w-16">단위</span>
+                        <span className="w-16">옵션</span>
+                        <span className="w-1/12">수량</span>
                         <span className="w-1/12">유통기한</span>
+                        <span className="w-1/12">입고일자</span>
                     </div>
                 </div>
                 {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 상품이 없습니다.</h1> :
@@ -114,12 +114,13 @@ export default function Inventory() {
                                     <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_standard}</span>
                                     <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_unit}</span>
                                     <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.product_spec}</span>
-                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_date}</span>
-                                    <span className="w-10" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_quantity}</span>
+                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_quantity}</span>
                                     <span className="w-1/12"
                                         style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
                                         {r.item_exp}
                                     </span>
+                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_date}</span>
+                                   
                                 </div>
                             </div>
                         )
