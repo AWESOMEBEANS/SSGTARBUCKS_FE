@@ -142,12 +142,11 @@ export default function View() {
                 <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
                     className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center font-bold">
                         <span className="w-10"></span>
-                        <span className="w-10">번호</span>
                         <span className="w-1/12">보관유형</span>
                         <span className="w-1/12">보관장소</span>
                         <span className="w-2/12">보관명칭</span>
-                        <span className="w-2/12">보관상품명</span>
-                        <span className="w-1/12">유통기한</span>
+                        <span className="w-4/12">상품명</span>
+                        <span className="w-2/12">유통기한</span>
                         <span className="w-1/12">보관개수</span>
                 </div>
                 { currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
@@ -157,15 +156,14 @@ export default function View() {
                             className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center"
                             key={i} >
                             <input type="checkbox" className="w-10" />
-                            <span className="w-10">{i+1}</span>
                             <span className="w-1/12">{r.location_area === 'FR' ? '매장' : (r.location_area === 'BA' ? '창고' : '')}</span>
                             <span className="w-1/12">{r.location_section_name}</span>
                             <span className="w-2/12">{r.location_alias}</span>
-                            <span className="w-2/12"
+                            <span className="w-4/12"
                                 style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>
-                                {`${r.product_name} (${r.product_standard})`}
+                                {`${r.product_name} (${r.product_standard},${r.product_unit})`}
                             </span>
-                            <span className="w-1/12"
+                            <span className="w-2/12"
                                 style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : (imminentExpiration(r.item_exp) ? {boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)'} : null)}>
                                 {r.item_exp}
                             </span>
