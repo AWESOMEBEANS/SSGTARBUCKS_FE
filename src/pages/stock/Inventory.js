@@ -72,7 +72,8 @@ export default function Inventory() {
                         <span className="w-1/12">유통기한</span>
                     </div>
                 </div>
-                {currentItems.map(function (r, i) {
+                {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 상품이 없습니다.</h1> :
+                currentItems.map(function (r, i) {
                     return (
                         <div style={{ height: "6.5%" }} className="w-5/6 mx-auto flex justify-between items-center my-3">
                             <div className="text-center text-lg w-40 flex justify-center items-center shadow-lg border rounded-md h-full" style={{ background: "#f6f5efb3" }}>

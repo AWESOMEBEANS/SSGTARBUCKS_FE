@@ -150,7 +150,8 @@ export default function View() {
                         <span className="w-1/12">유통기한</span>
                         <span className="w-1/12">보관개수</span>
                 </div>
-                {currentItems.map(function (r, i) {
+                { currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
+                currentItems.map(function (r, i) {
                     return (
                         <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
                             className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center"

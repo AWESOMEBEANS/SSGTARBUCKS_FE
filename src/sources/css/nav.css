@@ -63,10 +63,8 @@ nav{
     font-size : 18px; 
     font-weight : 600;
 }
-.toggle_icon{
-    color: white;
-}
-.menu_icon:hover, .menu_name:hover, .toggle_icon:hover{
+
+.menu_icon:hover, .menu_name:hover{
     color: #738b78;
 }
 .menu_name_itm{

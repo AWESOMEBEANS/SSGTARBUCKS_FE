@@ -89,7 +89,7 @@ export default function Nav(){
                             // parent.parentNode.setAttribute("style", "width : 3%");
                             setIsActive(isActive=>!isActive);
                         }
-                    } style={{ marginTop : "20px", backgroundColor:"#d5d5d5"}} className="shadow-lg w-7 h-7 text-center flex items-center justify-center rounded-full">
+                    } style={{ marginTop : "20px"}} className="shadow-lg w-7 h-7 text-center flex items-center justify-center rounded-full bg-slate-300">
                         <i className={`fa-solid fa-caret-${(isActive ? "right" : "left")} fa-lg toggle_icon` } style={{color:"#343e36"}} ></i>
                     </div>
                     { !isActive && !masterData && !wareHousing && !inventory && !factory &&
