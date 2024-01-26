@@ -94,7 +94,7 @@ export default function Store() {
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                         <span className="w-14">번호</span>
-                        <span className="w-16">입고번호</span>
+                        <span className="w-16">입고코드</span>
                         <span className="w-1/12">입고일자</span>
                         <span className="w-2/12">입고상품명</span>
                         <span className="w-1/12">입고상품개수</span>
