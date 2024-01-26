@@ -7,14 +7,43 @@ import dayjs from "dayjs";
 
 
 export default function Inventory() {
-    const [datas, setDatas] = useState(useLoaderData());
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
 
+    const initialProductList = useLoaderData(); //DB에서 조회한 상품 리스트
+    const [productList, setProductList] = useState(initialProductList); //필터링된 Product List
+    const [selectedProductCategory, setSelectedProductCategory] = useState("카테고리");
+    const categoryNames = new Set(initialProductList.map(product => product.category_name));
+    const [categoryList, setCategoryList] = useState( [...categoryNames]);
+    ////////////////////////////////////////////////////////////////////////////////
+    /* 카테고리 필터 */
+    const handleSelectedProductCategoryChange = (value) => {
+        setSelectedProductCategory(value);
+    };
+
+    // 선택한 보관유형 변경, data 재로딩 시 처리
+    useEffect(() => {
+        doFilter();
+    }, [selectedProductCategory,initialProductList]);
+
+    const doFilter = () => {
+        console.log("doFilter  시작>>>", selectedProductCategory);
+        let filteredList = initialProductList; //필터링할 리스트 받아오기
+        
+        if (selectedProductCategory === "카테고리") {
+        } else {
+            filteredList = filteredList.filter(item => item.category_name === selectedProductCategory);
+            // 필터링이 완료된 데이터로 tmpStockList 갱신
+        }
+        setProductList(filteredList);
+        setCurrentPage(1);
+    };
+    ////////////////////////////////////////////////////////////////////////////////
+    /* 페이지네이션 */
     // 현재 페이지의 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
 
     // 페이지 변경 핸들러
     const handlePageChange = (pageNumber) => {
@@ -30,35 +59,37 @@ export default function Inventory() {
 
     // 다음 페이지로 이동
     const handleNextClick = () => {
-        const totalPages = Math.ceil(datas.length / itemsPerPage);
+        const totalPages = Math.ceil(productList.length / itemsPerPage);
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
-
-        // 유통기한 계산
-        function isExpired(date){
-            return dayjs().isAfter(dayjs(date).format("YYYY-MM-DD"));
+    ////////////////////////////////////////////////////////////////////////////////
+    // 유통기한 계산
+    function isExpired(date) {
+        return dayjs().isAfter(dayjs(date).format("YYYY-MM-DD"));
+    }
+    function imminentExpiration(date) {
+        let compareDate = dayjs(date).diff(dayjs(), "day", true);
+        if (compareDate < 7 && compareDate > 0) {
+            return true;
         }
-        function imminentExpiration(date){
-            let compareDate = dayjs(date).diff(dayjs(), "day", true);
-            if(compareDate <7 && compareDate > 0){
-                return true;
-            }
-        }
+    }
 
-    console.log(datas);
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div className="w-5/6 mx-auto flex justify-between items-center font-bold h-14 my-4">
                     <div className="text-center text-lg w-40 flex justify-center items-center shadow-lg h-full border rounded-md"
                         style={{ backgroundColor: "#f6f5efb3" }}>
-                        <select className="text-center" style={{ backgroundColor: "#f6f5efb3" }}>
-                            <option value="">카테고리</option>
-                            { currentItems.map(function (r, i) {
-                                return <option value={r.category_name}>{r.category_name}</option>
-                            })}
+                        <select className="text-center" style={{ backgroundColor: "#f6f5efb3" }}
+                            onChange={(e) => handleSelectedProductCategoryChange(e.target.value)}>
+                            <option value="카테고리">카테고리</option>
+                            {categoryList.map((categoryName, i) => (
+                                <option key={i} value={categoryName}>
+                                    {categoryName}
+                                </option>
+                                ))}
                         </select>
                     </div>
                     <div className="text-lg w-11/12 flex border rounded-md justify-around items-center shadow-lg h-full" style={{ background: "#f6f5efb3" }}>
@@ -66,38 +97,36 @@ export default function Inventory() {
                         <span className="w-16">상품규격</span>
                         <span className="w-16">상품단위</span>
                         <span className="w-16">상품상세</span>
-                        <span className="w-1/12">상품번호</span>
                         <span className="w-1/12">입고일</span>
                         <span className="w-10">개수</span>
                         <span className="w-1/12">유통기한</span>
                     </div>
                 </div>
                 {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 상품이 없습니다.</h1> :
-                currentItems.map(function (r, i) {
-                    return (
-                        <div style={{ height: "6.5%" }} className="w-5/6 mx-auto flex justify-between items-center my-3">
-                            <div className="text-center text-lg w-40 flex justify-center items-center shadow-lg border rounded-md h-full" style={{ background: "#f6f5efb3" }}>
-                                {r.category_name}
+                    currentItems.map(function (r, i) {
+                        return (
+                            <div style={{ height: "6.5%" }} className="w-5/6 mx-auto flex justify-between items-center my-3">
+                                <div className="text-center text-lg w-40 flex justify-center items-center shadow-lg border rounded-md h-full" style={{ background: "#f6f5efb3" }}>
+                                    {r.category_name}
+                                </div>
+                                <div className="text-lg w-11/12 flex justify-around items-center shadow-lg border rounded-md text-center h-full" style={{ background: "#f6f5efb3" }}>
+                                    <span className="w-2/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_name}</span>
+                                    <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_standard}</span>
+                                    <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_unit}</span>
+                                    <span className="w-16" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.product_spec}</span>
+                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_date}</span>
+                                    <span className="w-10" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_quantity}</span>
+                                    <span className="w-1/12"
+                                        style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
+                                        {r.item_exp}
+                                    </span>
+                                </div>
                             </div>
-                            <div className="text-lg w-11/12 flex justify-around items-center shadow-lg border rounded-md text-center h-full" style={{ background: "#f6f5efb3" }}>
-                                <span className="w-2/12" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null} >{r.product_name}</span>
-                                <span className="w-16" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null} >{r.product_standard}</span>
-                                <span className="w-16" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null} >{r.product_unit}</span>
-                                <span className="w-16" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{r.product_spec}</span>
-                                <span className="w-1/12" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{r.item_id}</span>
-                                <span className="w-1/12" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{r.stock_date}</span>
-                                <span className="w-10" style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : null}>{r.stock_quantity}</span>
-                                <span className="w-1/12"
-                                style={isExpired(r.item_exp) ?  {textDecoration: 'line-through rgb(255, 80, 80) 2px'} : (imminentExpiration(r.item_exp) ? {boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)'} : null)}>
-                                    {r.item_exp}
-                                </span>
-                            </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
                 <Pagination
                     itemsPerPage={itemsPerPage}
-                    totalItems={datas.length}
+                    totalItems={productList.length}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}
                     onPrevClick={handlePrevClick}
