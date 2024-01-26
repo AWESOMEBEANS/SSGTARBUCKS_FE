@@ -8,14 +8,26 @@ import { getAuthToken } from "../../util/auth";
 import { json, useLoaderData } from "react-router";
 import dayjs from "dayjs";
 
-
 export default function View() {
     const [datas, setDatas] = useState(useLoaderData());
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
+    const [itemsPerPage] = useState(8); // 페이지 당 아이템 수
     const [modalOpen, setModalOpen] = useState(false);
+    //////////////////////////////////////////////////////////////////////////
+    const loaderDataStorage = useLoaderData();
+    //DB에서 조회한 전체 StockList(변경되면안됨)
+    const [stockList, setStockList] = useState(loaderDataStorage);
+    //카테고리 조회하는 임시 Stock List
+    const [tmpStockList, setTmpStockList] = useState(loaderDataStorage);
+    const [selectedStorageType, setSelectedStorageType] = useState('');
+    const [selectedStorageLocation, setSelectedLocation] = useState('');
+    const [selectedLocationAlias, setSelectedLocationAlias] = useState('');
+    const [locationList, setLocationList] = useState([]);
+    const [aliasList, setAliasList] = useState([]);
 
-    //보관개수수정
+    //console.log("stockList>>>", stockList);
+
+    /*보관개수 수정*/
     const handleQuantityChange = async (index, delta,itemId) => {
         try {
             const updatedStockList = [...datas];
@@ -50,7 +62,7 @@ export default function View() {
         console.error('Error updating quantity:', error);
         }
     };
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // 유통기한 표시 계산
     function isExpired(date){
         return dayjs().isAfter(dayjs(date).format("YYYY-MM-DD"));
@@ -61,11 +73,12 @@ export default function View() {
             return true;
         }
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /* 페이지네이션 */
     // 현재 페이지의 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = tmpStockList.slice(indexOfFirstItem, indexOfLastItem);
 
     // 페이지 변경 핸들러
     const handlePageChange = (pageNumber) => {
@@ -81,7 +94,7 @@ export default function View() {
 
     // 다음 페이지로 이동
     const handleNextClick = () => {
-        const totalPages = Math.ceil(datas.length / itemsPerPage);
+        const totalPages = Math.ceil(tmpStockList.length / itemsPerPage);
         if (currentPage < totalPages) {
             setCurrentPage(currentPage + 1);
         }
@@ -93,7 +106,132 @@ export default function View() {
     const onCancel = () => {
         setModalOpen(false)
     }
+    /////////////////////////////////////////////////////////////////////////////////
+    /* 카테고리 필터 */
+    useEffect(() => {
+        doFilter();
+       
+    }, [selectedStorageType, selectedStorageLocation, selectedLocationAlias]);
 
+    const getLocationType = (area) => {
+        switch (area) {
+            case 'FR':
+                return "매장";
+            case 'BA':
+                return "창고";
+            default:
+                return area;
+        }
+    };
+
+     // 선택한 보관유형 변경 시 처리
+     const handleSelectedStorageTypeChange = (value) => {
+        setSelectedStorageType(value);
+        setSelectedLocation('');
+        setSelectedLocationAlias(''); // 별칭 초기화
+    };
+    // 선택한 보관구역 변경시 처리
+    const handleSelectedLocationChange = (value) => {
+        setSelectedLocation(value);
+        setSelectedLocationAlias(''); // 별칭 초기화
+    }
+
+    // 선택한 보관장소 변경 시 처리
+    const handleSelectedLocationAliasChange = (value) => {
+        setSelectedLocationAlias(value);
+    };
+
+    const doFilter = () => {
+        console.log("doFilter  시작>>>", selectedStorageType, ", ", selectedStorageLocation, " , ", selectedLocationAlias);
+        let filteredList = stockList;  // stockList로부터 필터링을 시작합니다.
+        let filterTypeList = stockList; //보관유형까지 필터링된 데이터
+        let filteredSectionList = stockList;  // 보관장소까지 필터링된 데이터
+        
+        if (selectedStorageType === "보관유형") {
+            setSelectedStorageType('');
+        }
+        if (selectedStorageLocation === "보관구역") {
+            setSelectedLocation('');
+        }
+        if (selectedLocationAlias === "보관명칭") {
+            setSelectedLocationAlias('');
+        }
+
+        if (selectedStorageType && !selectedStorageLocation &&selectedLocationAlias) {
+            // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
+            alert('보관구역을 선택하세요.');
+            setSelectedLocationAlias('');
+            return; // 필터링을 하지 않고 종료
+        }
+
+
+        if (selectedStorageType) {
+            filteredList = filteredList.filter(stockItem =>  getLocationType(stockItem.location_area)=== selectedStorageType);
+            filterTypeList =  filteredList.filter(stockItem => getLocationType(stockItem.location_area) === selectedStorageType);
+            console.log("유형 필터링된 리스트", filteredList);
+            if (selectedStorageLocation) {
+                filteredList = filteredList.filter(stockItem => stockItem.location_section_name === selectedStorageLocation);
+                filteredSectionList = filteredList.filter(stockItem => stockItem.location_section_name === selectedStorageLocation);
+                console.log("구역 필터링된 리스트", filteredList);
+                if (selectedLocationAlias) {
+                    filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
+                    console.log("보관명칭 필터링된 리스트", filteredList);
+                }
+            }
+        }
+
+        else if (selectedStorageLocation) {
+            filteredList = filteredList.filter(stockItem => stockItem.location_section_name === selectedStorageLocation);
+            filteredSectionList = filteredList.filter(stockItem => stockItem.location_section_name === selectedStorageLocation);
+            console.log("구역 필터링된 리스트", filteredList);
+            if (selectedLocationAlias) {
+                filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
+                console.log("보관명칭 필터링된 리스트", filteredList);
+            }
+        }
+        
+        else if (selectedLocationAlias) {
+            filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
+            console.log("보관명칭 필터링된 리스트", filteredList);
+        }
+        // 필터링이 완료된 데이터로 tmpStockList 갱신
+        setCurrentPage(1);
+        setTmpStockList(filteredList);
+        locationCategoryList(filterTypeList);
+        aliasCategoryList(filteredSectionList);
+    };
+
+    /* 필터링된 구역 카테고리  */
+    const locationCategoryList = (filteredList) => {
+        try {
+            if (Array.isArray(filteredList) && filteredList.length > 0) {
+                const uniqueLocation = [...new Set(filteredList.map(item => item.location_section_name))];
+                setLocationList(uniqueLocation);
+            } else {
+                setLocationList([]);
+            }
+        } catch (error) {
+            console.error("Error in locationCategoryList:", error);
+            setLocationList([]);
+        }
+    };
+
+    /* 필터링된 보관명칭 카테고리  */
+    const aliasCategoryList = (filteredList) => {
+        try {
+            if (Array.isArray(filteredList) && filteredList.length > 0) {
+                const uniqueAliases = [...new Set(filteredList.map(item => item.location_alias))];
+                setAliasList(uniqueAliases);
+            } else {
+                setAliasList([]);
+            }
+        } catch (error) {
+            console.error("Error in aliasCategoryList:", error);
+            setAliasList([]);
+        }
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
@@ -102,52 +240,42 @@ export default function View() {
                     <div className="w-4/6 flex justify-around h-12">
                         <select className="text-center text-xl w-56 shadow-lg "
                             style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
-                        >
-                            <option>보관유형</option>
-                            <option>매장</option>
-                            <option>창고</option>
+                            onChange={(e) => handleSelectedStorageTypeChange(e.target.value)}>
+                            <option value="보관유형">보관유형</option>
+                            <option value="매장">매장</option>
+                            <option value="창고">창고</option>
                         </select>
-                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}>
-                            <option>보관장소</option>
-                            <option>상부장</option>
-                            <option>하부장</option>
-                            <option>냉장고</option>
-                            <option>냉동고</option>
-                            <option>쇼케이스</option>
-                            <option>매대</option>
-                            <option>진열대</option>
-                            <option>다용도랙</option>
-                            <option>기타</option>
-                        </select>
-                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}>
-                            <option>보관명칭</option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
-                            <option></option>
+                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
+                        onChange={(e) => handleSelectedLocationChange(e.target.value === '구역선택' ? '' : e.target.value)}>
+                            <option value="보관구역">보관구역 </option>
+                                {locationList.map((row, index) => (
+                                    <option key={index}>{row}</option>
+                                ))}                                
+                            </select>
+                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
+                            onChange={(e) => handleSelectedLocationAliasChange(e.target.value)}>
+                        <option>보관명칭</option>
+                            {aliasList.map((alias, index) => (
+                                <option key={index}>{alias}</option>
+                            ))}
                         </select>
                     </div>
-                    <input type="button" value="상품스캔" className="text-center text-lg w-28 shadow-lg" id="hoverBtn"
-                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
-                    <input type="button" value="장소스캔" className="text-center text-lg w-28 shadow-lg" id="hoverBtn"
+                    <input type="button" value="QR이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" 
                         style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
                     <input type="button" value="선택이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={() => { setModalOpen(true) }}
+                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
+                    <input type="button" value="선택취소" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" 
                         style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
                 </div>
                 <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
                     className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center font-bold">
                         <span className="w-10"></span>
                         <span className="w-1/12">보관유형</span>
-                        <span className="w-1/12">보관장소</span>
+                        <span className="w-1/12">보관구역</span>
                         <span className="w-2/12">보관명칭</span>
                         <span className="w-4/12">상품명</span>
                         <span className="w-2/12">유통기한</span>
-                        <span className="w-1/12">보관개수</span>
+                        <span className="w-1/12">수량</span>
                 </div>
                 { currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
                 currentItems.map(function (r, i) {
@@ -178,7 +306,7 @@ export default function View() {
                 })}
                 <Pagination
                     itemsPerPage={itemsPerPage}
-                    totalItems={datas.length}
+                    totalItems={tmpStockList.length}
                     currentPage={currentPage}
                     onPageChange={handlePageChange}
                     onPrevClick={handlePrevClick}
