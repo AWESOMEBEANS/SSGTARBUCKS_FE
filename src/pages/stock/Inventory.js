@@ -21,7 +21,7 @@ export default function Inventory() {
         setSelectedProductCategory(value);
     };
 
-    // 선택한 보관유형 변경 시 처리
+    // 선택한 보관유형 변경, data 재로딩 시 처리
     useEffect(() => {
         doFilter();
     }, [selectedProductCategory,initialProductList]);
@@ -34,7 +34,6 @@ export default function Inventory() {
         } else {
             filteredList = filteredList.filter(item => item.category_name === selectedProductCategory);
             // 필터링이 완료된 데이터로 tmpStockList 갱신
-           
         }
         setProductList(filteredList);
         setCurrentPage(1);
