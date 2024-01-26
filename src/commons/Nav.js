@@ -96,7 +96,7 @@ export default function Nav(){
                     <>
                         <hr style={{width:"100%", margin:"42vh 0px 10px", color:"#d5d5d5" }}></hr>
                             <div>
-                                <Form action="/logout" method="POST">
+                                <Form action="/branch/logout" method="POST">
                                     <span className="menu_item_color text-lg font-semibold">
                                         <button>로그아웃</button>
                                     </span>

@@ -6,5 +6,5 @@ export function action() {
     localStorage.removeItem('branch_name');
     localStorage.removeItem('user_type');
     localStorage.removeItem('user_id');
-    return redirect('/auth');
+    return redirect('/');
 }
