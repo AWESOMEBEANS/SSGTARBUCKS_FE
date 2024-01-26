@@ -108,7 +108,7 @@ export default function Store() {
                                 <span className="w-14">{i+1}</span>
                                 <span className="w-16">{r.income_code}</span>
                                 <span className="w-1/12">{r.income_date}</span>
-                                <span className="w-2/12">{r.product_name} (규격, 단위)</span>
+                                <span className="w-2/12">{r.product_name} ({r.product_standard},{r.product_unit})</span>
                                 <span className="w-1/12">{r.income_list_quantity}</span>
                                 <span className="w-1/12">{r.item_exp}</span>
                                 <button className="w-16 h-10 border shadow-md rounded-md" id="hoverBtn" onClick={handleclick} >
