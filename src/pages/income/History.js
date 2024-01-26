@@ -28,7 +28,7 @@ export default function History() {
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-3/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                     <i className="w-8"></i>
-                    <span className="w-1/16">번호</span>
+                    <span className="w-16">번호</span>
                     <span className="w-1/12">입고코드</span>
                     <span className="w-1/12">입고총량</span>
                     <span className="w-2/12">입고일자</span>
@@ -50,7 +50,7 @@ export default function History() {
                                         setIncomeId(isToggled ? 0 : groupedList[key][0].income_id);
                                     }}
                                 ></i>
-                                <span className="w-1/16">{index+1}</span>
+                                <span className="w-16">{index+1}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_code}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>

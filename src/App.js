@@ -22,6 +22,10 @@ import { tokenLoader } from './util/auth';
 import RootLayout from './commons/RootLayout';
 import {action as logoutAction} from "./pages/Logout";
 import MyPage from './pages/MyPage';
+import M_RootLayout from './commons/M_RootLayout';
+import Manager from './pages/manager/Manager';
+import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
+import Managershop from './pages/manager/Managershop';
 
 const router = createBrowserRouter([
   { 
@@ -54,6 +58,18 @@ const router = createBrowserRouter([
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
       {path: "info", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
+    ]
+  },
+  {
+    path:"/admin",
+    element:<M_RootLayout />,
+    errorElement:<ErrorPage />,
+    loader:tokenLoader,
+    children : [
+      {path: "main", element:<Manager />},
+      {path: "branch/list", element:<Managersolstice />, loader:managerListLoader},
+      {path: "mypage", element:<Managershop />},
+      {path: "logout", action:logoutAction },
     ]
   }
 ])
