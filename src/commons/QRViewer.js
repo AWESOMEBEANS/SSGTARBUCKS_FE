@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
 
-const QRImgReader = ({ onSendLocationQRValue }) => {
+const QRViewer = ({ onSendLocationQRValue }) => {
     const [qrcodeValue, setQrcodeValue] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
@@ -47,4 +47,4 @@ const QRImgReader = ({ onSendLocationQRValue }) => {
         </>
     );
 };
-export default QRImgReader;
+export default QRViewer;
