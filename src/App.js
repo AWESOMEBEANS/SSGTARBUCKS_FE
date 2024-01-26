@@ -25,7 +25,7 @@ import MyPage from './pages/MyPage';
 
 const router = createBrowserRouter([ 
   { 
-    path:"/login",
+    path:"/",
     element:<Login />,
     errorElement:<ErrorPage />,
     action: authAction
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     errorElement:<ErrorPage />
   },
   {
-    path:"/",
+    path:"/branch",
     element:<RootLayout />,
     errorElement:<ErrorPage />,
     loader: tokenLoader,
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
-      {path: "branch/info", element:<MyPage />, loader:myDataLoader},
+      {path: "info", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
     ]
   }
