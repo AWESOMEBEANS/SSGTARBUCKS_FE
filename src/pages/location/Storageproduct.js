@@ -6,6 +6,7 @@ import Modal from "../../commons/Modal";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
+import Modal_list from "../../commons/Modal_list";
 
 export default function Storageproduct() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -253,10 +254,10 @@ export default function Storageproduct() {
                 </div>
             </div>
             {modalOpen && (
-                <Modal
+                <Modal_list
                     onSubmit={handleButtonClick}
                     onCancel={handleButtonClick}>
-                </Modal>)}
+                </Modal_list>)}
         </>
     );
 }
