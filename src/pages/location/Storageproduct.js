@@ -6,7 +6,6 @@ import Modal from "../../commons/Modal";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
-import Modal_list from "../../commons/Modal_list";
 
 export default function Storageproduct() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -84,7 +83,7 @@ export default function Storageproduct() {
             console.error('Error during location deletion:', error);
         }
     };
-    //////////////////////////////////////////////////////////////////////////////////////
+
     /* 카테고리 정렬 */
     useEffect(() => {
         doFilter();
@@ -255,10 +254,10 @@ export default function Storageproduct() {
                 </div>
             </div>
             {modalOpen && (
-                <Modal_list
+                <Modal
                     onSubmit={handleButtonClick}
                     onCancel={handleButtonClick}>
-                </Modal_list>)}
+                </Modal>)}
         </>
     );
 }
