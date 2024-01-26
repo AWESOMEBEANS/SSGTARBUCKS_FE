@@ -65,6 +65,6 @@ export async function action({ request }) {
       console.log("error:", error);
       throw new Error("error 발생되었습니다");
     }
-    return redirect('/main');
+    return redirect('/branch/main');
   }
   
