@@ -11,7 +11,7 @@ export default function Searching(){
 
     function handleSearch(){
         console.log("search :", searchQuery);
-        const searchUrl = `/search/list/${searchQuery}`;
+        const searchUrl = `/branch/search/list/${searchQuery}`;
         navigate(searchUrl);
     };
 

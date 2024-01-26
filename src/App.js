@@ -23,7 +23,7 @@ import RootLayout from './commons/RootLayout';
 import {action as logoutAction} from "./pages/Logout";
 import MyPage from './pages/MyPage';
 
-const router = createBrowserRouter([ 
+const router = createBrowserRouter([
   { 
     path:"/",
     element:<Login />,
