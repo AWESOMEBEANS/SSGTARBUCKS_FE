@@ -66,17 +66,16 @@ const getLocationType = (area) => {
                     <thead >
                         <tr className="text-center" style={{backgroundColor:"#f6f5efb3"}} >
                             <th className="px-1">번호</th>
+                            <th className="px-1">카테고리</th>
                             <th className="px-1">상품명</th>
                             <th className="px-1">규격</th>
                             <th className="px-1">단위</th>
                             <th className="px-1">옵션</th>
-                            <th className="px-1">카테고리</th>
-                            <th className="px-1">상품고유번호</th>
                             <th className="px-1">유통기한</th>
-                            <th className="px-1">상품상태</th>
-                            <th className="px-1">저장유형</th>
-                            <th className="px-1">저장구역</th>
-                            <th className="px-1">저장명칭</th>
+                            <th className="px-1">재고상태</th>
+                            <th className="px-1">보관유형</th>
+                            <th className="px-1">보관장소</th>
+                            <th className="px-1">보관명칭</th>
                             <th className="px-1">수량</th>
                         </tr>
                     </thead>
@@ -86,6 +85,9 @@ const getLocationType = (area) => {
                                 <tr className="h-10 text-center" style={{borderBottom:"1px dashed black", fontFamily:'Pretendard-Regular'}} key={`${r.product_id}-${i}`}>
                                     <td className="px-1">
                                         {i+1}
+                                    </td>
+                                    <td className="px-1">
+                                        {r.category_name}
                                     </td>
                                     <td className="px-1"> 
                                         {r.product_name}
@@ -98,12 +100,6 @@ const getLocationType = (area) => {
                                     </td>
                                     <td className="px-1">
                                         {r.product_spec}
-                                    </td>
-                                    <td className="px-1">
-                                        {r.category_name}
-                                    </td>
-                                    <td className="px-1">
-                                        {r.item_id}
                                     </td>
                                     <td className="px-1 w-28 ">
                                         <span style={{boxShadow: "inset 0 -20px 0 rgb(255, 200, 200)"}}className=" text-lg">{r.item_exp}</span>
@@ -142,7 +138,7 @@ function Table2({onLoadData}){
                         <thead  >
                             <tr style={{backgroundColor:"#f6f5efb3"}} >
                                 <th className="px-1">번호</th>
-                                <th className="px-1">상품고유번호</th>
+                                <th className="px-1">카테고리</th>
                                 <th className="px-1">상품명</th>
                                 <th className="px-1">규격</th>
                                 <th className="px-1">단위</th>
@@ -158,9 +154,8 @@ function Table2({onLoadData}){
                                         <td className="px-1">
                                             {i+1}
                                         </td>
-    
-                                        <td className="px-1"> 
-                                            {r.product_code}
+                                        <td className="px-1">
+                                            {r.category_name}
                                         </td>
                                         <td className="px-1">
                                             {r.product_name}
