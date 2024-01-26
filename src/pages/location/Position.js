@@ -68,7 +68,7 @@ export default function Position() {
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll" >
                 <div style={{ margin: "2% auto", width: "70%" }}>
                     <Form method="POST">
-                        <table>
+                        <table className="w-full">
                             <thead>
                                 <tr className="flex items-center h-16 border-2 shadow-md rounded-sm">
                                     <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>보관유형</th>
@@ -76,14 +76,6 @@ export default function Position() {
                                     <th className="h-full w-full flex items-center justify-center px-5 text-lg" style={{ backgroundColor: "#f6f5efb3" }}>보관명칭</th>
                                 </tr>
                             </thead>
-                            <div className="w-full flex justify-center items-center">
-                                <div className="btn m-2 text-bold w-1/2" onClick={addRow}>
-                                    <button className="text-lg" >+</button>
-                                </div>
-                                <div className="btn m-2 text-bold w-1/2" onClick={deleteRow}>
-                                    <button className="text-lg" >-</button>
-                                </div>
-                            </div>
                             <tbody id="text">
                                 {rows.map((row, index) => (
                                     <tr key={index} className="tbody">
@@ -115,8 +107,14 @@ export default function Position() {
                                 ))}
                             </tbody>
                             <div className="my-14 flex justify-end items-center">
-                                <div><button className="btn_2 text-lg border-2" id="hoverBtn" onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button></div>
-                                <div><button className="btn_3 text-lg border-2" id="hoverBtn" type="reset" disabled={isSubmitting}>취소</button></div>
+                                <div className="mr-8">
+                                    <button className="text-lg border-2 w-28 h-10 rounded-md mx-1 shadow-md" id="hoverBtn" onClick={addRow}>행 추가</button>
+                                    <button className="text-lg border-2 w-28 h-10 rounded-md mx-1 shadow-md" id="hoverBtn" onClick={deleteRow}>행 삭제</button>
+                                </div>
+                                <div>
+                                    <button className="text-lg border-2 w-28 h-10 rounded-md mx-1 shadow-md" id="hoverBtn" onClick={handleRegisterLocation} disabled={isSubmitting}>저장</button>
+                                    <button className="text-lg border-2 w-28 h-10 rounded-md mx-1 shadow-md" id="hoverBtn" type="reset" disabled={isSubmitting}>취소</button>
+                                </div>
                                 <h2>{isSubmitting ? '전송중...' : null}</h2>
                             </div>
                         </table>
