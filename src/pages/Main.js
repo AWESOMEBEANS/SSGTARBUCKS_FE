@@ -69,7 +69,7 @@ const getLocationType = (area) => {
                             <th className="px-1">상품명</th>
                             <th className="px-1">규격</th>
                             <th className="px-1">단위</th>
-                            <th className="px-1">상세</th>
+                            <th className="px-1">옵션</th>
                             <th className="px-1">카테고리</th>
                             <th className="px-1">상품고유번호</th>
                             <th className="px-1">유통기한</th>
@@ -146,6 +146,7 @@ function Table2({onLoadData}){
                                 <th className="px-1">상품명</th>
                                 <th className="px-1">규격</th>
                                 <th className="px-1">단위</th>
+                                <th className="px-1">옵션</th>
                                 <th className="px-1">잔여수량</th>
                             </tr>
                         </thead>
@@ -169,6 +170,9 @@ function Table2({onLoadData}){
                                         </td>
                                         <td className="px-1">
                                             {r.product_unit}
+                                        </td>
+                                        <td className="px-1">
+                                            {r.product_spec}
                                         </td>
                                         <td className="px-1 flex justify-center">
                                             <p style={{boxShadow: "inset 0 -25px 0 rgb(200, 200, 255)"}} className="w-fit">{r.total_product_quantity}개</p>

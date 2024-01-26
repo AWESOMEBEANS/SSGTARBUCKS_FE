@@ -83,7 +83,7 @@ export default function Storageproduct() {
             console.error('Error during location deletion:', error);
         }
     };
-
+    //////////////////////////////////////////////////////////////////////////////////////
     /* 카테고리 정렬 */
     useEffect(() => {
         doFilter();
