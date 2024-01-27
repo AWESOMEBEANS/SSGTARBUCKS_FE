@@ -2,16 +2,15 @@ import React, {useState } from "react";
 import '../sources/css/modal.css';
 import QRScanner from "./QRScanner";
 
-export default function Modal_search({ onSubmit, onCancel}){
+export default function Modal_search({ onSubmit, onCancel, onScan, onType}){
 
     return(
         <div className="modal-container">
             <div className="madal-main">
-                <div style={{paddingBottom:"10px",
-                            textAlign:"center", 
-                            fontSize:"20px"}}>SSGTARBUCKS</div>
+                <h1 className="text-center text-3xl text-lime-800">SSGTARBUCKS</h1>
+                <h1 className="text-center text-lg my-3  font-bold">{onType} QR코드를 스캔해주세요. </h1>
                 <div style={{border:"2px solid rgba(106, 136, 30, 0.519)",borderRadius:"3px"}}>
-                    <QRScanner style={{width:"400px", height:"500px"}} />
+                    <QRScanner onScan={onScan}/>
                 </div>
                 <div style={{padding:"5%"}}>
                     <div style={{display:"flex",alignItems:"center"}}>

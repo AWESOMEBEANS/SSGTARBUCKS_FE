@@ -133,6 +133,8 @@ export default function Store() {
                 <Modal_search
                     onSubmit={handleclick}
                     onCancel={handleclick}
+                    onScan={handleScanWebCam}
+                    onType={"보관할 장소의"}
                 />
             )}
         </>

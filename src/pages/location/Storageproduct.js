@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import Nav from "../../commons/Nav";
 import Search from "../../commons/Search";
 import '../../sources/css/storageproduct.css'
-import Modal from "../../commons/Modal_search";
+import Modal from "../../commons/Modal_list";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
+import ImageModal from "../../commons/ImageModal";
 
 export default function Storageproduct() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -19,11 +20,15 @@ export default function Storageproduct() {
     const [selectedLocationAlias, setSelectedLocationAlias] = useState('');
     const [locationList, setLocationList] = useState([]);
     const [aliasList, setAliasList] = useState([]);
+    const [scanResult, setScanResult] = useState('');
 
     console.log("stockList>>>", stockList);
 
     const handleButtonClick = () => {
         setModalOpen(false);
+    };
+    const handleScanWebCam = (result) => {
+        setScanResult(result);
     };
 
     const getLocationType = (area) => {
@@ -254,10 +259,11 @@ export default function Storageproduct() {
                 </div>
             </div>
             {modalOpen && (
-                <Modal
+                <ImageModal
                     onSubmit={handleButtonClick}
-                    onCancel={handleButtonClick}>
-                </Modal>)}
+                    onCancel={handleButtonClick}
+                    onScan={handleScanWebCam} />
+                )}
         </>
     );
 }

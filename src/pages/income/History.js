@@ -4,11 +4,14 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
+import Modal_search from "../../commons/Modal_search";
 
 export default function History() {
     let [toggle, setToggle] = useState([]);
     const [incomeId, setIncomeId] = useState(0);
     const initialIncomeList = useLoaderData();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [scanResult, setScanResult] = useState('');
     
     let groupedList = initialIncomeList.reduce((acc, curr) => {
         const { income_id } = curr;
@@ -20,6 +23,16 @@ export default function History() {
     console.log("groupedList >>>", groupedList);
     let groupedListkeys = Object.keys(groupedList).reverse();
     const resultArray = groupedListkeys.map(key => groupedList[key][0]);
+
+    const handleButtonClick = () => {
+        setModalOpen(false);
+    };
+    const handleScanWebCam = (result) => {
+        setScanResult(result);
+    };
+    const handleScannerClick = () =>{
+        setModalOpen(!modalOpen);
+    };
 
     return (
         <>
@@ -57,16 +70,24 @@ export default function History() {
                                 <span className="w-1/12">{groupedList[key][0].income_status}</span>
 
                             </div>
-                            {isToggled && <Detail id={groupedList[key][0].income_id} />} {/* 토글된 경우에만 Detail 컴포넌트 렌더링 */}
+                            {isToggled && <Detail id={groupedList[key][0].income_id} modalHandler={handleScannerClick}/>} {/* 토글된 경우에만 Detail 컴포넌트 렌더링 */}
                         </>
                     )
                 })}
             </div>
+            {modalOpen && (
+                <Modal_search
+                    onSubmit={handleButtonClick}
+                    onCancel={handleButtonClick}
+                    onScan={handleScanWebCam}
+                    onType={"검수할 상품의"}
+                />
+            )}
         </>
     )
 }
 
-function Detail({id}) {
+function Detail({id, modalHandler}) {
     const incomeDetailList = useLoaderData();
     let groupedDetailList = incomeDetailList.reduce((acc, curr) => {
         const { income_id } = curr;
@@ -84,7 +105,7 @@ function Detail({id}) {
                     <span className="w-2/6">상품명</span>
                     <span className="w-1/6">유통기한</span>
                     <span className="w-1/6">승인여부</span>
-                    <span className="w-1/12">QR</span>
+                    <span className="w-1/12" >QR</span>
                 </div>
                 {true && groupedDetailList[id].map((row, index) => 
                     <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
@@ -93,7 +114,7 @@ function Detail({id}) {
                         <span className="w-2/6">{row.product_name}({row.product_standard}, {row.product_unit})</span>
                         <span className="w-1/6">{row.item_exp}</span>
                         <span className="w-1/6">{row.income_list_result}</span>
-                        <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm">스캔</button>
+                        <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={modalHandler}>스캔</button>
                     </div>
                 )}
             </div>

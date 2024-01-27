@@ -1,6 +1,6 @@
 import React, {useState } from "react";
 import '../sources/css/modal.css';
-import code from '../sources/image/code.png';
+import code from '../sources/image/code-1.png';
 
 export default function ImageModal({ onSubmit, onCancel}){
 
