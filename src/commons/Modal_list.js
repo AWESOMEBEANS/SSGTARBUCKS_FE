@@ -14,17 +14,18 @@ export default function Modal_list({ onSubmit, onCancel}){
                     <QRScanner style={{width:"400px", height:"500px"}}/>
                 </div>
                 <div style={{padding:"5%"}}>
-                    <div style={{display:"flex",alignItems:"cent"}}>
-                    
-                    <div style={{width:"100%",textAlign:"center"}}>
-                        <button style={{fontSize:"18px",
-                                        width:"40%",
-                                        height:"50px",
-                                        boxShadow:"0px 5px 5px #ccc",
-                                        border:"2px solid rgba(106, 136, 30, 0.519)",
-                                        borderRadius:"3px",borderRadius:"10px"}}
-                                        onClick={()=> onCancel()}
-                                        >취소</button></div>
+                    <div style={{display:"flex",alignItems:"center"}}>
+                        <div style={{width:"100%",textAlign:"center"}}>
+                            <button style={{fontSize:"18px",
+                                            width:"40%",
+                                            height:"50px",
+                                            boxShadow:"0px 5px 5px #ccc",
+                                            border:"2px solid rgba(106, 136, 30, 0.519)",
+                                            borderRadius:"3px",borderRadius:"10px"}}
+                                            onClick={()=> onCancel()}
+                                            className="hoverBtn_white"
+                                            >취소</button>
+                        </div>
                     </div>
                 </div>
             </div>

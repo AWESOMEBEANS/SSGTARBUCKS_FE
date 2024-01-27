@@ -18,3 +18,9 @@
 .btn_salelist:hover, .btn_delete:hover{
     background-color:#f3f0e1
 }
+.hoverBtn_white{
+    background-color: white;
+}
+.hoverBtn_white:hover{
+    background-color: #f3f0e1;
+}
