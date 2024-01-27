@@ -9,6 +9,7 @@ import Modal_search from "./Modal_search";
 
 export default function Searching(){
     const [modalOpen, setModalOpen] = useState(false);
+    const [scanResult, setScanResult] = useState('');
 
     const handleButtonClick = () => {
         setModalOpen(false);
@@ -28,6 +29,10 @@ export default function Searching(){
             handleSearch();
         }
     }
+
+    const handleScanWebCam = (result) => {
+        setScanResult(result);
+    };
 
     return(
         <>
@@ -52,7 +57,10 @@ export default function Searching(){
             {modalOpen &&(
                 <Modal_search
                     onSubmit={handleButtonClick}
-                    onCancel={handleButtonClick}>
+                    onCancel={handleButtonClick}
+                    onScan={handleScanWebCam}
+                    onType={"검색할 상품의"}
+                    >
                 </Modal_search>)}
         </>
     )

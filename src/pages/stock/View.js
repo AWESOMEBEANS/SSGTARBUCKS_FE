@@ -8,7 +8,7 @@ import { getAuthToken } from "../../util/auth";
 import { json, useLoaderData } from "react-router";
 import dayjs from "dayjs";
 import Modal from '../../commons/Modal_moveItem';
-import Modal_search from "../../commons/Modal_search";
+import Modal_list from "../../commons/Modal_list";
 
 export default function View() {
     const [datas, setDatas] = useState(useLoaderData());
@@ -16,6 +16,7 @@ export default function View() {
     const [itemsPerPage] = useState(8); // 페이지 당 아이템 수
     const [modalOpen, setModalOpen] = useState(false);
     const [qrModalOpen, setQrModalOpen] = useState(false);
+    const [scanResult, setScanResult] = useState('');
     //////////////////////////////////////////////////////////////////////////
     const loaderDataStorage = useLoaderData();
     //DB에서 조회한 전체 StockList(변경되면안됨)
@@ -30,6 +31,10 @@ export default function View() {
     //선택한 상품
     const [selectedItems, setSelectedItems] = useState([]);
     //console.log("stockList>>>", stockList);
+
+    const handleScanWebCam = (result) => {
+        setScanResult(result);
+    };
 
     /*보관개수 수정*/
     const handleQuantityChange = async (index, delta, itemId) => {
@@ -345,9 +350,11 @@ export default function View() {
                 <Modal  onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />
             }
             {qrModalOpen && (
-                <Modal_search
+                <Modal_list
                     onSubmit={handleModalOpen}
                     onCancel={handleModalOpen}
+                    onScan={handleScanWebCam}
+                    onType={"이동할 상품의"}
                 />
             )}
         </>

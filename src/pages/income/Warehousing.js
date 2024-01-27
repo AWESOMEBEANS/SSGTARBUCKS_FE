@@ -5,7 +5,7 @@ import "../../sources/css/scanner.css"
 import axios from "axios";
 import { json, useNavigate } from "react-router";
 import { getAuthToken } from "../../util/auth";
-import Modal from "../../commons/Modal_search";
+import Modal_search from "../../commons/Modal_search";
 
 
 export default function Warehousing() {
@@ -87,11 +87,13 @@ export default function Warehousing() {
             </div>
             {scanResult}
             {modalOpen && (
-                <Modal
+                <Modal_search
                     onSubmit={handleModalOpen}
                     onCancel={handleModalOpen}
+                    onScan={handleScanWebCam}
+                    onType={"입고내역서"}
                 >
-                </Modal>)}
+                </Modal_search>)}
         </>
 
     )
