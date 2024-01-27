@@ -163,7 +163,7 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
                         </div>
                     </div>
                     <div className="madal-footer">
-                        <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => action({ selectedStorageType, selectedLocationAlias, selectedItems })}>이동</button>
+                        <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel})}>이동</button>
                         <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => onCancel()}>취소</button>
                     </div>
                 </div>
@@ -173,7 +173,7 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
 };
 export default Modal_moveItem;
 
-export async function action({ selectedStorageType, selectedLocationAlias, selectedItems }) {
+export async function action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel }) {
     console.log("MoveItem.action");
     console.log(` "유형 ${selectedStorageType} 소분류 ${selectedLocationAlias}아아템  ${selectedItems}`);
 
@@ -212,7 +212,7 @@ export async function action({ selectedStorageType, selectedLocationAlias, selec
 
         console.log("response>>>>>>", response);
         resData = response.data;
-
+        onCancel();
     } catch (error) {
         console.log("error:", error);
         throw new Error("error 발생되었습니다");
