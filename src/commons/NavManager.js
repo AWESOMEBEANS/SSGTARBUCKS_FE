@@ -1,16 +1,26 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useLocation } from "react-router-dom";
 import "../sources/css/nav.css";
 import { useState } from "react";
 
 
 export default function Nav(){
     let [isActive, setIsActive] = useState(false);
+    let location = useLocation();
+
+    let navIndex = (path) => {
+        if(location.pathname.includes(path)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     return(
         <>
             <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
                     <div className="w-full flex flex-col justify-center">
+                        <div className={navIndex("branch") && "bg-green-700 rounded-e-full"}>
                         <Link to="/admin/branch/list" className="w-full flex justify-center">
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-house fa-lg my-7"></i>
@@ -21,6 +31,8 @@ export default function Nav(){
                                 }
                             </div>
                         </Link>
+                        </div>
+                        <div className={navIndex("mypage") && "bg-green-700 rounded-e-full"}>
                         <Link to="/admin/mypage" className="w-full flex justify-center"> 
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-user fa-lg my-7"></i>
@@ -31,6 +43,7 @@ export default function Nav(){
                                 }
                             </div>
                         </Link>
+                        </div>
                     </div>
                     <hr style={{width:"100%", margin:"30px 0px"}}></hr>
                     <div onClick={

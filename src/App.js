@@ -53,11 +53,11 @@ const router = createBrowserRouter([
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
-      {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
+      {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
-      {path: "info", element:<MyPage />, loader:myDataLoader},
+      {path: "mypage", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
     ]
   },

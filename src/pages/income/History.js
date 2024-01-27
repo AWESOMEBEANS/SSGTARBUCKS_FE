@@ -67,7 +67,9 @@ export default function History() {
                                 <span className="w-1/12">{groupedList[key][0].income_code}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
-                                <span className="w-1/12">{groupedList[key][0].income_status}</span>
+                                <span className="w-1/12"
+                                    style={groupedList[key][0].income_status === "입고완료" ? { boxShadow: 'inset 0 -30px 0 #41ACDB', color:"white" } : { boxShadow: 'inset 0 -30px 0 #D9DB62', color:"white" }}
+                                    >{groupedList[key][0].income_status}</span>
 
                             </div>
                             {isToggled && <Detail id={groupedList[key][0].income_id} modalHandler={handleScannerClick}/>} {/* 토글된 경우에만 Detail 컴포넌트 렌더링 */}
