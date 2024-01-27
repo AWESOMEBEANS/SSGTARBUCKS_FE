@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 export default function Inventory() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
-
     const initialProductList = useLoaderData(); //DB에서 조회한 상품 리스트
     const [productList, setProductList] = useState(initialProductList); //필터링된 Product List
     const [selectedProductCategory, setSelectedProductCategory] = useState("카테고리");
@@ -120,7 +119,6 @@ export default function Inventory() {
                                         {r.item_exp}
                                     </span>
                                     <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_date}</span>
-                                   
                                 </div>
                             </div>
                         )
