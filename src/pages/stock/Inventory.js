@@ -77,7 +77,8 @@ export default function Inventory() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+                <div className="h-full">
                 <div className="w-5/6 mx-auto flex justify-between items-center font-bold h-14 my-4">
                     <div className="text-center text-lg w-40 flex justify-center items-center shadow-lg h-full border rounded-md"
                         style={{ backgroundColor: "#f6f5efb3" }}>
@@ -123,14 +124,17 @@ export default function Inventory() {
                             </div>
                         )
                     })}
-                <Pagination
-                    itemsPerPage={itemsPerPage}
-                    totalItems={productList.length}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                    onPrevClick={handlePrevClick}
-                    onNextClick={handleNextClick}
-                />
+                    </div>
+                    <div className="mb-3">
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={productList.length}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        onPrevClick={handlePrevClick}
+                        onNextClick={handleNextClick}
+                    />
+                </div>
             </div>
         </>
     )

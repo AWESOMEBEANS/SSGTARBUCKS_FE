@@ -91,7 +91,8 @@ export default function Store() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+                <div className="h-full">
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                         <span className="w-14">번호</span>
@@ -118,16 +119,19 @@ export default function Store() {
                         </div>
                     )
                 })}
-                { datas.length === 0  ? <h1 className="text-3xl mt-20">불러올 데이터가 없습니다.</h1> : 
-                <Pagination
-                    itemsPerPage={itemsPerPage}
-                    totalItems={datas.length}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                    onPrevClick={handlePrevClick}
-                    onNextClick={handleNextClick}
-                /> 
-                }
+                </div>
+                <div className="mb-3">
+                    { datas.length === 0  ? <h1 className="text-3xl mt-20">불러올 데이터가 없습니다.</h1> : 
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={datas.length}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        onPrevClick={handlePrevClick}
+                        onNextClick={handleNextClick}
+                    /> 
+                    }
+                </div>
             </div>
             {modalOpen && (
                 <Modal_search

@@ -267,7 +267,8 @@ export default function View() {
     //
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+                <div className="h-full">
                 <div style={{ height: "7%" }}
                     className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl">
                     <div className="w-4/6 flex justify-around h-12">
@@ -337,14 +338,17 @@ export default function View() {
                             </div>
                         )
                     })}
-                <Pagination
-                    itemsPerPage={itemsPerPage}
-                    totalItems={tmpStockList.length}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                    onPrevClick={handlePrevClick}
-                    onNextClick={handleNextClick}
-                />
+                    </div>
+                    <div className="mb-3">
+                        <Pagination
+                            itemsPerPage={itemsPerPage}
+                            totalItems={tmpStockList.length}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                            onPrevClick={handlePrevClick}
+                            onNextClick={handleNextClick}
+                        />
+                </div>
             </div>
             {modalOpen &&
                 <Modal  onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />
