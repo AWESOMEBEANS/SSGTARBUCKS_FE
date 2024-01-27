@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import Nav from "../../commons/Nav";
 import Search from "../../commons/Search";
 import '../../sources/css/storageproduct.css'
-import Modal from "../../commons/Modal_list";
+import Modal from "../../commons/Modal_QRViewer";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
-import ImageModal from "../../commons/ImageModal";
 
 export default function Storageproduct() {
+    /*장소 QR코드 이미지 모달*/
     const [modalOpen, setModalOpen] = useState(false);
+    const [selectedLocationCode, setSelectedLocationCode] = useState('');
+
+    /*필터링*/
     const loaderDataStorage = useLoaderData().stockLocationDataList;
     //DB에서 조회한 전체 StockList(변경되면안됨)
     const [stockList, setStockList] = useState(loaderDataStorage);
@@ -20,15 +23,18 @@ export default function Storageproduct() {
     const [selectedLocationAlias, setSelectedLocationAlias] = useState('');
     const [locationList, setLocationList] = useState([]);
     const [aliasList, setAliasList] = useState([]);
-    const [scanResult, setScanResult] = useState('');
 
     console.log("stockList>>>", stockList);
 
-    const handleButtonClick = () => {
+    const openModal = (location) => {
+        setSelectedLocationCode(location.location_code);
+        console.log("openModal", location.location_code);
+        setModalOpen(true);
+      };
+
+    const closeModal = () => {
+        setSelectedLocationCode(null);
         setModalOpen(false);
-    };
-    const handleScanWebCam = (result) => {
-        setScanResult(result);
     };
 
     const getLocationType = (area) => {
@@ -249,7 +255,7 @@ export default function Storageproduct() {
                                     <td className="text-lg w-1/5 text-center">{row.location_alias}</td>
                                     <td className="text-lg w-1/5 text-center">{row.location_code}</td>
                                     <td className="text-lg w-1/5 pl-10 text-center flex items-center justify-around">
-                                        <button className="btn_3" id="hoverBtn" onClick={() => setModalOpen(true)} >QR</button>
+                                        <button className="btn_3" id="hoverBtn" onClick={() => openModal(row)} >QR</button>
                                         <button className="btn_3" id="hoverBtn" onClick={() => handleDeleteLocation(row.location_id)}>삭제</button>
                                     </td>
                                 </tr>
@@ -259,11 +265,10 @@ export default function Storageproduct() {
                 </div>
             </div>
             {modalOpen && (
-                <ImageModal
-                    onSubmit={handleButtonClick}
-                    onCancel={handleButtonClick}
-                    onScan={handleScanWebCam} />
-                )}
+                <Modal
+                    onCancel={closeModal} onSendLocationQRValue={selectedLocationCode}>
+                </Modal>)
+            }
         </>
     );
 }
