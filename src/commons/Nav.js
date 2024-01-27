@@ -14,68 +14,68 @@ export default function Nav(){
         <>
             <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
-                    <div id="menu">
-                        <a className="menu_link" onClick={()=>{setMasterData(!masterData)
+                    <div className="w-full flex flex-col justify-center">
+                        <p className="w-full flex justify-center" onClick={()=>{setMasterData(!masterData)
                                                                 setWareHousing(false)
                                                                 setInventory(false)
                                                                 setFactory(false)}}>
-                            <div className="menu_itm">
-                                <i className="fa-solid fa-qrcode fa-lg menu_icon"></i>
+                            <div className="flex items-center justify-evenly w-8/12 menu_item_color">
+                                <i className="fa-solid fa-qrcode fa-lg my-7 "></i>
                                 { !isActive && 
-                                <span className="menu_name" >
+                                <span className="text-lg font-semibold ">
                                     기준정보
                                 </span>
                                 }
                             </div>
-                        </a>
+                        </p>
                         {isActive ? null : (masterData ? <MasterData/> : null)}
-                        <a className="menu_link" onClick={()=>{setWareHousing(!wareHousing)
+                        <p className="w-full flex justify-center" onClick={()=>{setWareHousing(!wareHousing)
                                                                 setMasterData(false)
                                                                 setInventory(false)
                                                                 setFactory(false)}}>
-                            <div className="menu_itm">
-                                <i className="fa-solid fa-truck fa-lg menu_icon"></i>
+                            <div className="flex items-center justify-evenly w-8/12 menu_item_color">
+                                <i className="fa-solid fa-truck fa-lg  my-7"></i>
                                 { !isActive &&
-                                <span className="menu_name">
+                                <span className=" text-lg font-semibold">
                                     입고관리
                                 </span>
                                 }
                             </div>
-                        </a>
+                        </p>
                         {isActive ? null : (wareHousing ? <WareHousing/> : null)}
-                        <a className="menu_link" onClick={()=>{setInventory(!inventory)
+                        <p className="w-full flex justify-center" onClick={()=>{setInventory(!inventory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
                                                                 setFactory(false)}}>
-                            <div className="menu_itm">
-                                <i className="fa-solid fa-warehouse fa-lg menu_icon"></i>
+                            <div className="flex items-center justify-evenly w-8/12 menu_item_color">
+                                <i className="fa-solid fa-warehouse fa-lg  my-7"></i>
                                 { !isActive &&
-                                    <span className="menu_name">
+                                    <span className=" text-lg font-semibold">
                                         재고관리
                                     </span>
                                 }
                             </div>
-                        </a> 
+                        </p> 
                         {isActive ? null : (inventory ? <Inventory/> : null)}
-                        <a className="menu_link" onClick={()=>{setFactory(!factory)
+                        <p className="w-full flex justify-center" onClick={()=>{setFactory(!factory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
                                                                 setInventory(false)}}>
-                            <div className="menu_itm">
-                                <i className="fa-solid fa-arrow-left fa-lg menu_icon"></i>
+                            <div className="flex items-center justify-evenly w-8/12 menu_item_color">
+                                <i className="fa-solid fa-arrow-left fa-lg  my-7"></i>
                                 { !isActive &&
-                                    <span className="menu_name">
+                                    <span className=" text-lg font-semibold">
                                         출고관리
                                     </span>
                                 }
                             </div>
-                        </a>
+                        </p>
                         {isActive ? null : (factory ? <Factory/> : null)}
-                        <Link to="/branch/info" className="menu_link">
-                            <div className="menu_itm">
-                                <i className="fa-solid fa-user fa-lg menu_icon"></i>
+                        <Link to="/branch/info" className="w-full flex justify-center">
+                            <div className="flex items-center justify-evenly w-8/12 menu_item_color">
+                                <i className="fa-solid fa-user fa-lg  my-7"></i>
                                 { !isActive &&
-                                    <span className="menu_name">
+                                    <span className=" text-lg font-semibold">
                                         내 정보
                                     </span>
                                 }
@@ -89,15 +89,15 @@ export default function Nav(){
                             // parent.parentNode.setAttribute("style", "width : 3%");
                             setIsActive(isActive=>!isActive);
                         }
-                    } style={{ marginTop : "20px", backgroundColor:"#d5d5d5"}} className="shadow-lg w-7 h-7 text-center flex items-center justify-center rounded-full">
-                        <i className={`fa-solid fa-caret-${(isActive ? "right" : "left")} fa-lg toggle_icon` } style={{color:"#343e36"}} ></i>
+                    } style={{ marginTop : "20px"}} className="shadow-lg w-7 h-7 text-center flex items-center justify-center rounded-full toggle_icon hover:animate-bounce">
+                        <i className={`fa-solid fa-caret-${(isActive ? "right" : "left")} fa-lg` } style={{color:"#343e36"}} ></i>
                     </div>
                     { !isActive && !masterData && !wareHousing && !inventory && !factory &&
                     <>
                         <hr style={{width:"100%", margin:"42vh 0px 10px", color:"#d5d5d5" }}></hr>
                             <div>
-                                <Form action="/logout" method="POST">
-                                    <span className="menu_name">
+                                <Form action="/branch/logout" method="POST">
+                                    <span className="menu_item_color text-lg font-semibold">
                                         <button>로그아웃</button>
                                     </span>
                                 </Form>
@@ -115,8 +115,8 @@ function MasterData(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/location/new" className="menu_name menu_name_itms">장소등록</Link>
-                <Link to="/location/list" className="menu_name menu_name_itms">장소조회</Link>
+                <Link to="/branch/location/new" className="menu_item_color text-lg font-semibold menu_name_itms">장소등록</Link>
+                <Link to="/branch/location/list" className="menu_item_color text-lg font-semibold menu_name_itms">장소조회</Link>
             </div>
         </>
     )
@@ -126,9 +126,9 @@ function WareHousing(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/income/list" className="menu_name menu_name_itms">검수내역</Link>
-                <Link to="/income/inspection" className="menu_name menu_name_itms">검수하기</Link>
-                <Link to="/income/new" className="menu_name menu_name_itms">보관장소등록</Link>
+                <Link to="/branch/income/list" className="menu_item_color text-lg font-semibold menu_name_itms">검수내역</Link>
+                <Link to="/branch/income/inspection" className="menu_item_color text-lg font-semibold menu_name_itms">검수하기</Link>
+                <Link to="/branch/income/new" className="menu_item_color text-lg font-semibold menu_name_itms">보관장소등록</Link>
             </div>
         </>
     )
@@ -138,8 +138,8 @@ function Inventory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/stock/location/list" className="menu_name menu_name_itms">재고조회</Link>
-                <Link to="/stock/product/list" className="menu_name menu_name_itms">상품조회</Link>
+                <Link to="/branch/stock/location/list" className="menu_item_color text-lg font-semibold menu_name_itms">재고조회</Link>
+                <Link to="/branch/stock/product/list" className="menu_item_color text-lg font-semibold menu_name_itms">상품조회</Link>
             </div>
         </>
     )
@@ -149,8 +149,8 @@ function Factory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/discard/product" className="menu_name menu_name_itms">출고/폐기등록</Link>
-                <Link to="/sale/product" className="menu_name menu_name_itms">판매갱신</Link>
+                <Link to="/branch/discard/product" className="menu_item_color text-lg font-semibold menu_name_itms">출고/폐기등록</Link>
+                <Link to="/branch/sale/product" className="menu_item_color text-lg font-semibold menu_name_itms">판매갱신</Link>
             </div>
         </>
     )

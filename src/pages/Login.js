@@ -65,6 +65,11 @@ export async function action({ request }) {
       console.log("error:", error);
       throw new Error("error 발생되었습니다");
     }
-    return redirect('/main');
+    if(localStorage.getItem("user_type") === "manager"){
+      return redirect('/branch/main');
+    }else if(localStorage.getItem("user_type") === "admin"){
+      return redirect('/admin/main');
+    }
+    
   }
   

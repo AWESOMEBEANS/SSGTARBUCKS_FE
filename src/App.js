@@ -7,25 +7,29 @@ import Main ,{loader as mainLoader}from './pages/Main';
 import History, {loader as incomeLoader} from './pages/income/History';
 import Position, {action as RegisterLocationAction} from './pages/location/Position';
 import Warehousing from './pages/income/Warehousing';
-import Inventory from './pages/stock/Inventory';
+import Inventory, {loader as inventoryLoader} from './pages/stock/Inventory';
 import Release from './pages/Release';
-import Salelist from './pages/Salelist';
+import Salelist, {loader as salelistLoader} from './pages/Salelist';
 import Myshop, {loader as myDataLoader} from './pages/MyPage';
 import Register from './pages/income/Register';
-import View from './pages/stock/View';
+import View, {loader as stockLocationLoader} from './pages/stock/View';
 import Store, {loader as storeLoader} from './pages/stock/Store';
 import SearchList, {loader as searchListLoader} from './pages/SearchList';
-import Storageproduct, {loader as stockLocationLoader} from './pages/location/Storageproduct';
+import Storageproduct, {loader as storageLoader} from './pages/location/Storageproduct';
 import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
 import RootLayout from './commons/RootLayout';
 import {action as logoutAction} from "./pages/Logout";
 import MyPage from './pages/MyPage';
+import M_RootLayout from './commons/M_RootLayout';
+import Manager from './pages/manager/Manager';
+import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
+import Managershop from './pages/manager/Managershop';
 
 const router = createBrowserRouter([
-  {
-    path:"/auth",
+  { 
+    path:"/",
     element:<Login />,
     errorElement:<ErrorPage />,
     action: authAction
@@ -36,7 +40,7 @@ const router = createBrowserRouter([
     errorElement:<ErrorPage />
   },
   {
-    path:"/",
+    path:"/branch",
     element:<RootLayout />,
     errorElement:<ErrorPage />,
     loader: tokenLoader,
@@ -44,16 +48,28 @@ const router = createBrowserRouter([
       {path: "main", element:<Main />, loader:mainLoader, index:true},
       {path: "logout", action:logoutAction },
       {path: "location/new", element:<Position />,action:RegisterLocationAction },
-      {path: "location/list", element:<Storageproduct />, loader:stockLocationLoader},
+      {path: "location/list", element:<Storageproduct />, loader:storageLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
-      {path: "stock/location/list", element:<View />},
-      {path: "stock/product/list", element:<Inventory />},
+      {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
+      {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
-      {path: "sale/product", element:<Salelist />},
-      {path: "branch/info", element:<MyPage />, loader:myDataLoader},
+      {path: "sale/product", element:<Salelist />, loader:salelistLoader},
+      {path: "info", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
+    ]
+  },
+  {
+    path:"/admin",
+    element:<M_RootLayout />,
+    errorElement:<ErrorPage />,
+    loader:tokenLoader,
+    children : [
+      {path: "main", element:<Manager />},
+      {path: "branch/list", element:<Managersolstice />, loader:managerListLoader},
+      {path: "mypage", element:<Managershop />},
+      {path: "logout", action:logoutAction },
     ]
   }
 ])

@@ -19,7 +19,7 @@ export default function Searching(){
 
     function handleSearch(){
         console.log("search :", searchQuery);
-        const searchUrl = `/search/list/${searchQuery}`;
+        const searchUrl = `/branch/search/list/${searchQuery}`;
         navigate(searchUrl);
     };
 
@@ -32,7 +32,7 @@ export default function Searching(){
     return(
         <>
             <header>
-                <Link to="/main">
+                <Link to="/branch/main">
                     <div className="logo">
                         <img src={logo} alt="logo" id="logo_img" />
                         <h2 id="logo_title">SSGTARBUCKS</h2>

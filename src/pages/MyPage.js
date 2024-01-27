@@ -20,24 +20,28 @@ export default function MyPage() {
                             <label for="id">지점명</label>
                         </h4>
                         <input className="w-96 h-10" style={{ border: "1px solid #d5d5d5",textAlign:"center" }} disabled type="text" id="id" value={myData.branch_name}></input>
+
                     </div>
                     <div className="flex h-20 justify-around items-center rounded-2xl shadow-lg my-4" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-xl pl-4">
                             <label for="id">지점주소</label>
                         </h4>
                         <input className="w-96 h-10" style={{ border: "1px solid #d5d5d5",textAlign:"center" }} disabled type="text" id="address" value={myData.branch_address}></input>
+
                     </div>
                     <div className="flex h-20 justify-around items-center rounded-2xl shadow-lg my-4" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-xl pl-4">
                             <label for="e-mail">e-mail</label>
                         </h4>
                         <input className="w-96 h-10" style={{ border: "1px solid #d5d5d5",textAlign:"center" }} disabled type="e-mail" id="e-mail" value={myData.user_email}></input>
+
                     </div>
                     <div className="flex h-20 justify-around items-center rounded-2xl shadow-lg my-4" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-xl pl-4">
                             <label for="number">사원번호</label>
                         </h4>
                         <input className="w-96 h-10" style={{ border: "1px solid #d5d5d5",textAlign:"center" }} disabled type="text" id="number"></input>
+
                     </div>
                     <div className="flex h-20 justify-around items-center rounded-2xl shadow-lg my-4" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-xl pl-4">

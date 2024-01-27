@@ -8,7 +8,7 @@ export default function searching(){
     return(
         <>
             <header>
-                <Link to="/main">
+                <Link to="/admin/main">
                     <div className="logo">
                         <img src={logo} alt="logo" id="logo_img" />
                         <h2 id="logo_title">SSGTARBUCKS</h2>

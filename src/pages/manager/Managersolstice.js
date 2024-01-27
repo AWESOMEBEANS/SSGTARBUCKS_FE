@@ -1,51 +1,66 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import '../../sources/css/storageproductmanager.css'
 import NavManager from "../../commons/NavManager";
 import SearchManager from "../../commons/SearchManager";
-import { Link } from "react-router-dom";
+import { Link, json, useLoaderData } from "react-router-dom";
+import { getAuthToken } from "../../util/auth";
+import axios from "axios";
 
+export default function Managersolstice() {
+    const [ datas, setDatas ] = useState(useLoaderData());
+    const branchList = useLoaderData();
+    console.log("datas >>>", datas);
+    console.log("branchList >>>", branchList);
 
-
-
-
-export default function Managersolstice(){
-
-    return(
+    return (
         <>
-        {/* <SearchManager/> */}
-        
-        {/* <NavManager/> */}
-        <div style={{width:"100%",height:"80%"}}>
-            <div className="main" style={{margin:"5% auto",width:"85%"}}>
-                <div className="middle">
-                    <table>
-                        <thead>
-                            <div className="th_1">
-                                <tr className="thead">
-                                    <div className="head"><th className="h_2">지점이름</th></div>
-                                    <div className="head"><th className="h_3">지점주소</th></div>
-                                    <div className="head"><th className="h_4">사원이름</th></div>
-                                </tr>
-                            </div>
-                        </thead>
-                        <tbody>
-                            <div style={{height:"20%"}}>
-                                <button className="btn-body">
-                                    <Link className="btn-body" to="/manager/detail">
-                                    <tr className="tbody">
-                                        <div className="body"><td className="b_4">센텀그린타워점</td></div>
-                                        <div className="body"><td className="b_4">부산 해운대구 샌텀중앙로 78</td></div>
-                                        <div className="body"><td className="b_5">오승원</td></div>
-                                    </tr>
-                                    </Link>
-                                </button>
-                            </div>
-                        </tbody>
-                    </table>
-                </div>    
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
+                <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
+                    className="w-3/5 h-14 my-4 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center font-bold">
+                    <span className="w-16">번호</span>
+                    <span className="w-1/4">지점명</span>
+                    <span className="w-1/2">지점주소</span>
+                    <span className="w-1/4">매니저</span>
+                </div>
+                { branchList.map((row, index)=> {
+                    <div
+                    style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
+                    className="w-3/5 my-3 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center"
+                    >
+                        <span className="w-16">{index + 1}</span>
+                        <span className="w-1/4">{row.branch_name}</span>
+                        <span className="w-1/2">{row.branch_address}</span>
+                        <span className="w-1/4">{row.user_name}</span>
+                    </div>
+                })}
             </div>
-        </div>
-        
-</>
+        </>
     )
+}
+
+export async function loader({ request }) {
+    console.log("BranchListPage,loader>>>>>>>>>>>>.", request)
+    const token = getAuthToken();
+    const branch_id = localStorage.getItem("branch_id");
+    console.log("token:", token);
+    console.log("branch_id:", branch_id);
+
+    const response = await axios({
+        method: "GET",
+        url: "http://localhost:8000/api/v1/admin/branch/list",
+        headers: {
+            'Content-Type': 'application/json',
+            'jwtauthtoken': token
+        }
+    });
+
+    console.log("BranchListPage.response >>>>>>>>>>>..", response);
+
+    if (response.status !== 200) {
+        throw json({ message: 'Could not save event.' }, { status: 500 });
+    }
+
+    const resData = response.data;
+    console.log("resData", resData);
+    return resData;
 }

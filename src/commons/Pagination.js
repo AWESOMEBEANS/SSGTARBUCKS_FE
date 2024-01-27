@@ -1,19 +1,27 @@
 const Pagination = ({ itemsPerPage, totalItems, currentPage, onPageChange, onPrevClick, onNextClick }) => {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const pageGroupSize = 10;
+    const totalPageGroups = Math.ceil(totalPages / pageGroupSize);
+    const currentGroup = Math.ceil(currentPage / pageGroupSize);
+
+    const startPage = (currentGroup - 1) * pageGroupSize + 1;
+    const endPage = Math.min(currentGroup * pageGroupSize, totalPages);
+
     const pageNumbers = [];
 
-    for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
     }
 
     return (
-        <div className="flex mx-auto w-fit">
-            <button onClick={onPrevClick} hidden={currentPage === 1} className="w-16 text-xl border-none rounded-full mx-3 font-normal" id="hoverBtn">
-            Prev
+        <div className="flex mx-auto w-fit" style={{fontFamily: 'Pretendard-Regular'}}>
+            <button onClick={onPrevClick} className="w-16 text-xl border-none rounded-sm border shadow-md mx-3 font-normal" id="hoverBtn">
+                Prev
             </button>
-            <ul >
+            <ul>
                 {pageNumbers.map((number) => (
-                    <button onClick={() => onPageChange(number)}>
-                        <li key={number} className="w-10 text-xl border-none rounded-full mx-3 font-medium" id="hoverBtn">
+                    <button key={number} onClick={() => onPageChange(number)}>
+                        <li className={`w-8 text-xl border-none rounded-sm border shadow-md mx-3 font-normal ${currentPage === number ? 'bg-gray-300' : ''}`} id="hoverBtn">
                             {number}
                         </li>
                     </button>
@@ -21,8 +29,7 @@ const Pagination = ({ itemsPerPage, totalItems, currentPage, onPageChange, onPre
             </ul>
             <button
                 onClick={onNextClick}
-                hidden={currentPage === Math.ceil(totalItems / itemsPerPage)}
-                className="w-16 text-xl border-none rounded-full mx-3 font-normal" id="hoverBtn"
+                className="w-16 text-xl border-none rounded-sm border shadow-md mx-3 font-normal" id="hoverBtn"
             >
                 Next
             </button>

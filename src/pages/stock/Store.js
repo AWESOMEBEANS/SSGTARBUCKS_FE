@@ -92,36 +92,28 @@ export default function Store() {
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
-                    className="w-5/6 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
+                    className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                         <span className="w-14">번호</span>
-                        <span className="w-16">입고번호</span>
+                        <span className="w-16">입고코드</span>
                         <span className="w-1/12">입고일자</span>
-                        <span className="w-1/12">입고총개수</span>
-                        <span className="w-1/12">입고상태</span>
+                        <span className="w-2/12">입고상품명</span>
                         <span className="w-1/12">입고상품개수</span>
-                        <span className="w-1/12">입고상품번호</span>
                         <span className="w-1/12">유통기한</span>
-                        <span className="w-1/12">입고상품명</span>
-                        <span className="w-1/12">보관장소</span>
-                        <span className="w-1/12">장소등록</span>
+                        <span className="w-16">보관장소</span>
                 </div>
                 {datas.map(function (r, i) {
                     return (
                         <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
-                        className="w-5/6 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
+                        className="w-4/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
                                 <span className="w-14">{i+1}</span>
-                                <span className="w-16">{r.income_id}</span>
+                                <span className="w-16">{r.income_code}</span>
                                 <span className="w-1/12">{r.income_date}</span>
-                                <span className="w-1/12">{r.income_amount}</span>
-                                <span className="w-1/12">{r.income_list_result}</span>
+                                <span className="w-2/12">{r.product_name} ({r.product_standard},&nbsp;{r.product_unit})</span>
                                 <span className="w-1/12">{r.income_list_quantity}</span>
-                                <span className="w-1/12">{r.item_id}</span>
                                 <span className="w-1/12">{r.item_exp}</span>
-                                <span className="w-1/12">{r.product_name}</span>
-                                <button className="w-1/12" id="hoverBtn" onClick={handleclick} >
+                                <button className="w-16 h-10 border shadow-md rounded-md" id="hoverBtn" onClick={handleclick} >
                                     <i className="fa-solid fa-expand fa-xl" ></i>
                                 </button>
-                                <span className="w-1/12">{scanResult}</span>
                         </div>
                     )
                 })}

@@ -1,15 +1,15 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import QRCode from 'qrcode';
 
-const QRImgReader = ({ onSendLocationQRValue }) => {
+const QRViewer = ({ onSendLocationQRValue }) => {
     const [qrcodeValue, setQrcodeValue] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    
+
     useEffect(() => {
         setQrcodeValue(onSendLocationQRValue);
         console.log("qrcodeValue : " + qrcodeValue);
         generateQrCode();
-    }, [onSendLocationQRValue,qrcodeValue]);
+    }, [onSendLocationQRValue, qrcodeValue]);
 
     const generateQrCode = async () => {
         try {
@@ -23,7 +23,7 @@ const QRImgReader = ({ onSendLocationQRValue }) => {
     const downloadQrCode = () => {
         const link = document.createElement('a');
         link.href = imageUrl;
-        link.download = qrcodeValue+'.png';
+        link.download = qrcodeValue + '.png';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -33,7 +33,7 @@ const QRImgReader = ({ onSendLocationQRValue }) => {
     return (
         <>
             <div>
-            {/*<h3>벨류값 : {qrcodeValue}</h3>*/}
+                {/*<h3>벨류값 : {qrcodeValue}</h3>*/}
                 {imageUrl ? (
                     <>
                         <a href={imageUrl} download="qrcode.png">
@@ -47,4 +47,4 @@ const QRImgReader = ({ onSendLocationQRValue }) => {
         </>
     );
 };
-export default QRImgReader;
+export default QRViewer;
