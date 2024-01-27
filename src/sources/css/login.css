@@ -75,9 +75,9 @@
     color: #114c16;
     transition: all 0.375s;
 }
-.form_login>input:hover{
+/* .form_login>input:hover{
     border: 2px solid #000;
-}
+} */
 .form_login>input::placeholder{
     color: #114c16;
     font-size: 13px;

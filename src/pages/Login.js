@@ -11,7 +11,7 @@ export default function Login(){
         <div className="circle shadow-lg"></div>
         <div className="card_login shadow-lg">
             <h2>SSGTARBUCKS</h2><br/>
-            <h4>안녕하세요 환영합니다</h4>
+            <h4>상품관리시스템</h4>
             <Form method="POST" className="form_login">
                 <input type="text" placeholder="사원번호" name="user_id" required/>
                 <input type="password" placeholder="password" name="user_pw" required/>
