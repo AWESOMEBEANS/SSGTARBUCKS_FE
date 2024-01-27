@@ -5,6 +5,7 @@ import Pagination from "../../commons/Pagination.js";
 import axios from "axios";
 import { getAuthToken } from "../../util/auth.js";
 import { json, useLoaderData, useNavigate } from "react-router";
+import Modal_search from "../../commons/Modal_search.js";
 
 
 export default function Store() {
@@ -128,6 +129,12 @@ export default function Store() {
                 /> 
                 }
             </div>
+            {modalOpen && (
+                <Modal_search
+                    onSubmit={handleclick}
+                    onCancel={handleclick}
+                />
+            )}
         </>
     )
 }
