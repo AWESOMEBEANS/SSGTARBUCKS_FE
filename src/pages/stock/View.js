@@ -105,6 +105,7 @@ export default function View() {
     const onCancel = () => {
         setModalOpen(false);
         setSelectedItems([]);
+        window.location.reload();
     }
     /////////////////////////////////////////////////////////////////////////////////
     /* 카테고리 필터 */
