@@ -5,7 +5,7 @@ import "../../sources/css/scanner.css"
 import axios from "axios";
 import { json, useNavigate } from "react-router";
 import { getAuthToken } from "../../util/auth";
-import QRScanner from "../../commons/QRScanner";
+import Modal from "../../commons/Modal_search";
 
 
 export default function Warehousing() {
@@ -90,20 +90,9 @@ export default function Warehousing() {
                 <Modal
                     onSubmit={handleModalOpen}
                     onCancel={handleModalOpen}
-                    onScan={handleScanWebCam}>
+                >
                 </Modal>)}
         </>
 
-    )
-}
-
-function Modal({ onSubmit, onCancel, onScan}){
-
-    return(
-        <div className="modal-container">
-            <div className="madal-main">
-                <QRScanner onScan={onScan} style={{width:"400px", height:"500px"}}/>
-            </div>
-        </div>
     )
 }

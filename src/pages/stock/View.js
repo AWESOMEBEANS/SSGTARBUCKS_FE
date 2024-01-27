@@ -8,12 +8,14 @@ import { getAuthToken } from "../../util/auth";
 import { json, useLoaderData } from "react-router";
 import dayjs from "dayjs";
 import Modal from '../../commons/Modal_moveItem';
+import Modal_search from "../../commons/Modal_search";
 
 export default function View() {
     const [datas, setDatas] = useState(useLoaderData());
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(8); // 페이지 당 아이템 수
     const [modalOpen, setModalOpen] = useState(false);
+    const [qrModalOpen, setQrModalOpen] = useState(false);
     //////////////////////////////////////////////////////////////////////////
     const loaderDataStorage = useLoaderData();
     //DB에서 조회한 전체 StockList(변경되면안됨)
@@ -253,6 +255,11 @@ export default function View() {
         setSelectedItems([]);
     };
     /////////////////////////////////////////////////////////////////////////////////
+    // QR 모달 
+    const handleModalOpen = () => {
+        setQrModalOpen(!qrModalOpen);
+    };
+    //
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
@@ -282,7 +289,7 @@ export default function View() {
                         </select>
                     </div>
                     <input type="button" value="QR이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn"
-                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
+                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} onClick={handleModalOpen}/>
                     <input type="button" value="선택이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={() => { setModalOpen(true) }}
                         style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
                     <input type="button" value="선택해제" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={resetSelectedItems}
@@ -337,6 +344,12 @@ export default function View() {
             {modalOpen &&
                 <Modal  onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />
             }
+            {qrModalOpen && (
+                <Modal_search
+                    onSubmit={handleModalOpen}
+                    onCancel={handleModalOpen}
+                />
+            )}
         </>
     )
 }
