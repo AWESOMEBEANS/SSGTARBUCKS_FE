@@ -66,7 +66,7 @@ export default function Position() {
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll" >
-                <div style={{ margin: "2% auto", width: "70%" }}>
+                <div className="my-4" style={{ margin: "0 auto", width: "70%" }}>
                     <Form method="POST">
                         <table className="w-full">
                             <thead>

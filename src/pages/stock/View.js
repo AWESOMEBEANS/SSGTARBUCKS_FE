@@ -270,7 +270,7 @@ export default function View() {
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
                 <div className="h-full">
                 <div style={{ height: "7%" }}
-                    className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl">
+                    className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl my-4">
                     <div className="w-4/6 flex justify-around h-12">
                         <select className="text-center text-xl w-56 shadow-lg "
                             style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}

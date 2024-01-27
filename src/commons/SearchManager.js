@@ -14,19 +14,7 @@ export default function searching(){
                         <h2 id="logo_title">SSGTARBUCKS</h2>
                     </div>
                 </Link>
-                <div className="header_inn">
-                    <div id="search" >
-                        <input type="text" id="search_inn" name="search"/>
-                        <a href="#">
-                            {/* <i className="fa-solid fa-magnifying-glass fa-2xl icon magnifier"></i> */}
-                            <img src={magnifier} width={35} className="icon magnifier"/>
-                        </a>
-                    </div>
-                    <a href="#">
-                        {/* <i className="fa-solid fa-expand fa-2xl icon" ></i> */}
-                        <img src={scanner} width={35} className="icon"/>
-                    </a>
-                </div>
+
             </header>
         </>
     )

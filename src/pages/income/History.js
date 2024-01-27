@@ -39,7 +39,7 @@ export default function History() {
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
 
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
-                    className="w-3/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
+                    className="w-2/3 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                     <i className="w-8"></i>
                     <span className="w-16">번호</span>
                     <span className="w-1/12">입고코드</span>
@@ -54,7 +54,7 @@ export default function History() {
                         <>
                             <div
                                 style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
-                                className="w-3/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center"
+                                className="w-2/3 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center"
                             >
                                 <i
                                     className={`fa-solid fa-angle-${isToggled ? 'up' : 'down'} fa-fade fa-lg grow-0 w-8`}
