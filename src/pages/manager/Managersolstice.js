@@ -5,34 +5,80 @@ import SearchManager from "../../commons/SearchManager";
 import { Link, json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
+import Pagination from "../../commons/Pagination";
 
 export default function Managersolstice() {
     const [ datas, setDatas ] = useState(useLoaderData());
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+    const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
     const branchList = useLoaderData();
     console.log("datas >>>", datas);
     console.log("branchList >>>", branchList);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+    /* 페이지네이션 */
+    // 현재 페이지의 데이터 계산
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
+
+    // 페이지 변경 핸들러
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // 이전 페이지로 이동
+    const handlePrevClick = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    // 다음 페이지로 이동
+    const handleNextClick = () => {
+        const totalPages = Math.ceil(datas.length / itemsPerPage);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    /////////////////////////////////////////////////////////////////////////////////
+
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
-                <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
-                    className="w-3/5 h-14 my-4 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center font-bold">
-                    <span className="w-16">번호</span>
-                    <span className="w-1/4">지점명</span>
-                    <span className="w-1/2">지점주소</span>
-                    <span className="w-1/4">매니저</span>
-                </div>
-                { branchList.map((row, index)=> {
-                    <div
-                    style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
-                    className="w-3/5 my-3 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center"
-                    >
-                        <span className="w-16">{index + 1}</span>
-                        <span className="w-1/4">{row.branch_name}</span>
-                        <span className="w-1/2">{row.branch_address}</span>
-                        <span className="w-1/4">{row.user_name}</span>
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll flex flex-col justify-between">
+                <div className="h-full"> 
+                    <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
+                        className="w-3/5 h-14 my-4 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center font-bold">
+                        <span className="w-16">번호</span>
+                        <span className="w-1/4">지점명</span>
+                        <span className="w-1/2">지점주소</span>
+                        <span className="w-1/4">매니저</span>
                     </div>
-                })}
+                    { datas.map((row, index)=> {
+                        return(
+                            <Link to={`/admin/branch/detail/${row.branch_id}`}
+                            style={{ border: "1px solid #d5d5d5", borderRadius: "3px", height: "6.5%" }}
+                            className="w-3/5 my-3 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center page_itms"
+                            >
+                                <span className="w-16">{index + 1}</span>
+                                <span className="w-1/4">{row.branch_name}</span>
+                                <span className="w-1/2">{row.branch_address}</span>
+                                <span className="w-1/4">{row.user_name}</span>
+                            </Link>
+                        )
+                    })}
+                </div>
+                <div className="mb-3">
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={datas.length}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        onPrevClick={handlePrevClick}
+                        onNextClick={handleNextClick}
+                    />
+                </div>
             </div>
         </>
     )

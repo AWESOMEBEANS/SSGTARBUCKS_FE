@@ -18,10 +18,10 @@ a{
 input:focus{
     outline: none;
 }
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+#search_inn:-webkit-autofill,
+#search_inn:-webkit-autofill:hover,
+#search_inn:-webkit-autofill:focus,
+#search_inn:-webkit-autofill:active {
 	-webkit-text-fill-color: white;
     -webkit-box-shadow: 0 0 0px 1000px #343e36 inset;
     transition: background-color 5000s ease-in-out 0s;
@@ -76,8 +76,8 @@ header{
     padding: 0px 20px;
 }
 
-#search_inn:hover{
-    box-shadow: 0 0 1px 1px #738b78;
+#search_inn:focus{
+    border: 2px solid #749240;
 }
 
 .icon{
