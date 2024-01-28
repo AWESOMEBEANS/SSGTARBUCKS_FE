@@ -43,7 +43,7 @@ export default function History() {
                     <i className="w-8"></i>
                     <span className="w-16">번호</span>
                     <span className="w-1/12">입고코드</span>
-                    <span className="w-1/12">입고총량</span>
+                    <span className="w-1/12">입고수량</span>
                     <span className="w-2/12">입고일자</span>
                     <span className="w-1/12">입고상태</span>
 
