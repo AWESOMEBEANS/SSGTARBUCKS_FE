@@ -98,10 +98,10 @@ export default function Store() {
                         <span className="w-14">번호</span>
                         <span className="w-16">입고코드</span>
                         <span className="w-1/12">입고일자</span>
-                        <span className="w-2/12">입고상품명</span>
-                        <span className="w-1/12">입고상품개수</span>
+                        <span className="w-2/12">상품명</span>
+                        <span className="w-1/12">입고수량</span>
                         <span className="w-1/12">유통기한</span>
-                        <span className="w-16">보관장소</span>
+                        <span className="w-16">보관장소 등록</span>
                 </div>
                 {datas.map(function (r, i) {
                     return (

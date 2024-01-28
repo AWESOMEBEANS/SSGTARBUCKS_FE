@@ -42,11 +42,11 @@ export default function Salelist() {
         <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-xl h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
                     <span className="w-1/12">번호</span>
-                    <span className="w-1/12">판매코드</span>
-                    <span className="w-2/12">상품명</span>
-                    <span className="w-1/12">판매개수</span>
-                    <span className="w-2/12">판매날짜</span>
-                    <span className="w-1/12">판매상태</span>
+                    <span className="w-2/12">판매코드</span>
+                    <span className="w-4/12">상품명</span>
+                    <span className="w-1/12">수량</span>
+                    <span className="w-2/12">판매일자</span>
+                    <span className="w-1/12">갱신상태</span>
                 </div>
                 { datas.length === 0 ? <h1 className="text-3xl mt-20">갱신할 판매목록이 없습니다.</h1> : 
                 <>
@@ -59,7 +59,7 @@ export default function Salelist() {
                                 className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
                                 <span className="w-1/12">{i+1}</span>
                                 <span className="w-2/12">{r.sale_code}</span>
-                                <span className="w-2/12">  {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}</span>
+                                <span className="w-4/12">  {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}</span>
                                 <span className="w-1/12">{r.sale_list_quantity}</span>
                                 <span className="w-2/12">{r.sale_date}</span>
                                 <span className="w-1/12">{r.sale_status}</span>
