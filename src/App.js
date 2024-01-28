@@ -25,7 +25,8 @@ import MyPage from './pages/MyPage';
 import M_RootLayout from './commons/M_RootLayout';
 import Manager from './pages/manager/Manager';
 import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
-import Managershop from './pages/manager/Managershop';
+import Managershop, {loader as adminMyPageLoader} from './pages/manager/Managershop';
+import ManagerDetail from './pages/manager/ManagerDetail';
 
 const router = createBrowserRouter([
   { 
@@ -52,11 +53,11 @@ const router = createBrowserRouter([
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/inspection", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
-      {path: "stock/location/list", element:<View />, loader:stockLocationLoader},
+      {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
       {path: "discard/product", element:<Release />},
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
-      {path: "info", element:<MyPage />, loader:myDataLoader},
+      {path: "mypage", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
     ]
   },
@@ -68,7 +69,8 @@ const router = createBrowserRouter([
     children : [
       {path: "main", element:<Manager />},
       {path: "branch/list", element:<Managersolstice />, loader:managerListLoader},
-      {path: "mypage", element:<Managershop />},
+      {path: "branch/detail/:branch_id", element:<ManagerDetail />, loader:managerListLoader},
+      {path: "mypage", element:<Managershop />, loader:adminMyPageLoader},
       {path: "logout", action:logoutAction },
     ]
   }

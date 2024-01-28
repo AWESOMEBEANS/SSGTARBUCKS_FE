@@ -1,4 +1,4 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useLocation } from "react-router-dom";
 import "../sources/css/nav.css";
 import { useState } from "react";
 
@@ -9,12 +9,22 @@ export default function Nav(){
     let [wareHousing, setWareHousing] = useState(false);
     let [inventory, setInventory] = useState(false);
     let [factory, setFactory] = useState(false);
+    let location = useLocation();
+
+    let navIndex = (path) => {
+        if(location.pathname.includes(path)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     return(
         <>
             <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
                     <div className="w-full flex flex-col justify-center">
+                        <div className={navIndex("location") && "bg-green-700 rounded-e-full"}>
                         <p className="w-full flex justify-center" onClick={()=>{setMasterData(!masterData)
                                                                 setWareHousing(false)
                                                                 setInventory(false)
@@ -28,7 +38,9 @@ export default function Nav(){
                                 }
                             </div>
                         </p>
+                        </div>
                         {isActive ? null : (masterData ? <MasterData/> : null)}
+                        <div className={navIndex("income") && "bg-green-700 rounded-e-full"}>
                         <p className="w-full flex justify-center" onClick={()=>{setWareHousing(!wareHousing)
                                                                 setMasterData(false)
                                                                 setInventory(false)
@@ -42,7 +54,9 @@ export default function Nav(){
                                 }
                             </div>
                         </p>
+                        </div>
                         {isActive ? null : (wareHousing ? <WareHousing/> : null)}
+                        <div className={navIndex("stock") && "bg-green-700 rounded-e-full"}>
                         <p className="w-full flex justify-center" onClick={()=>{setInventory(!inventory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
@@ -56,7 +70,9 @@ export default function Nav(){
                                 }
                             </div>
                         </p> 
+                        </div>
                         {isActive ? null : (inventory ? <Inventory/> : null)}
+                        <div className={(navIndex("discard") || navIndex("sale")) && "bg-green-700 rounded-e-full"}>
                         <p className="w-full flex justify-center" onClick={()=>{setFactory(!factory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
@@ -70,8 +86,10 @@ export default function Nav(){
                                 }
                             </div>
                         </p>
+                        </div>
                         {isActive ? null : (factory ? <Factory/> : null)}
-                        <Link to="/branch/info" className="w-full flex justify-center">
+                        <div className={navIndex("mypage") && "bg-green-700 rounded-e-full"}>
+                        <Link to="/branch/mypage" className="w-full flex justify-center">
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-user fa-lg  my-7"></i>
                                 { !isActive &&
@@ -81,6 +99,7 @@ export default function Nav(){
                                 }
                             </div>
                         </Link>
+                        </div>
                     </div>
                     <hr style={{width:"100%", margin:"30px 0px"}}></hr>
                     <div onClick={
@@ -138,7 +157,7 @@ function Inventory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/branch/stock/location/list" className="menu_item_color text-lg font-semibold menu_name_itms">재고조회</Link>
+                <Link to="/branch/stock/inventory/list" className="menu_item_color text-lg font-semibold menu_name_itms">재고조회</Link>
                 <Link to="/branch/stock/product/list" className="menu_item_color text-lg font-semibold menu_name_itms">상품조회</Link>
             </div>
         </>

@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router';
 import logo1 from '../sources/image/logo1.png';
 
 
 export default function ErrorPage(){
-
+    let navigate = useNavigate();
 
 
     return(
@@ -23,7 +24,10 @@ export default function ErrorPage(){
                     </div>
                     <div>
                         <div style={{paddingTop:"10%"}}>
-                            <button style={{border:"1px solid #d5d5d5",width:"20%"}}>돌아가기</button>
+                            <button style={{border:"1px solid #d5d5d5",width:"20%"}} 
+                            className='h-10 bg-green-700 rounded-md text-white hover:bg-green-900 border'
+                            onClick={()=>navigate(-1)}
+                            >돌아가기</button>
                         </div>
                     </div>
                 </div>    
