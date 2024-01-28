@@ -5,7 +5,6 @@ import QRCode from 'qrcode';
 export default function Modal_QRViewer({  onCancel, onSendLocationQRValue}){
     const [qrcodeValue, setQrcodeValue] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [scanResultFile, setScanResultFile] = useState('');
     const qrRef = useRef(null);
 
     useEffect(() => {
@@ -17,7 +16,12 @@ export default function Modal_QRViewer({  onCancel, onSendLocationQRValue}){
 
     const generateQrCode = async () => {
         try {
-            const response = await QRCode.toDataURL(qrcodeValue);
+            const options = {
+                width: 500,  
+                height: 500, 
+            };
+    
+            const response = await QRCode.toDataURL(qrcodeValue, options);
             setImageUrl(response);
         } catch (error) {
             console.log(error);
@@ -42,7 +46,7 @@ export default function Modal_QRViewer({  onCancel, onSendLocationQRValue}){
                             textAlign:"center", 
                             fontSize:"20px"}}>SSGTARBUCKS</div>
                 <div style={{border:"1px solid rgba(106, 136, 30, 0.519)",borderRadius:"3px"}}>
-                    <img src={imageUrl} alt="png"  style={{width:"500px", height:"300px"}}/>
+                    <img src={imageUrl} alt="png" style={{width:"500px", height:"500px"}} />
                 </div>
                 <div style={{padding:"5%"}}>
                     <div style={{display:"flex",alignItems:"cent"}}>

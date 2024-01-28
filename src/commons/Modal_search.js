@@ -2,7 +2,7 @@ import React, {useState } from "react";
 import '../sources/css/modal.css';
 import QRScanner from "./QRScanner";
 
-export default function Modal_search({ onSubmit, onCancel, onScan, onType}){
+export default function Modal_search({onCancel, onScan, onType}){
 
     return(
         <div className="modal-container">

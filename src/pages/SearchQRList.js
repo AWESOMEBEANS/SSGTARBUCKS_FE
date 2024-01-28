@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { json, useLoaderData, useParams } from "react-router-dom";
+import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../util/auth.js";
 import dayjs from "dayjs";
+import { useLocation } from 'react-router-dom';
 
 
 
-export default function SearchList() {
+export default function SearchQRList() {
 
     //초기 키보드 검색 데이터(변경X)
-    const initialData = useLoaderData();
-    const {searchWord} = useParams();
+    const initialData= useLoaderData();
     //정렬을 위해 쓸 데이터 (변경O)
     const [sortedSearchResult, setSortedSearchResult] = useState(useLoaderData());
     const [isExpAscending, setIsExpAscending] = useState(true);
     const [isQtyAscending, setIsQtyAscending] = useState(true);
+    //QR value
+    const { state } = useLocation();
+    const qrValue = state?.qrValue;
+    console.log("QR value값 : ", qrValue);
 
     //console.log("현재시각 : ", dayjs());
     //console.log(dayjs().isAfter(dayjs("2024-01-23").format("YYYY-MM-DD")));
@@ -74,11 +78,12 @@ export default function SearchList() {
         setSortedSearchResult([...sortedResult]);
     };
 
+    ////////////////////////////////////////////////////////////////////////////////
     return (
 
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center ">
-                <h1 className="text-3xl mt-3 text-start ml-32">" {searchWord} " 검색결과</h1>
+                <h1 className="text-3xl mt-3 text-start ml-32">" {qrValue} " 검색결과</h1>
                 <div
                     className="w-5/6 mx-auto flex justify-between items-center mt-3 h-14">
                     <div className="text-center text-lg w-10 flex justify-center items-center shadow-lg font-bold"
@@ -157,29 +162,30 @@ export default function SearchList() {
 }
 
 export async function loader({ request, params }) {
-    console.log("SearchResultPage,loader>>>>>>>>>>>>.", request, params);
+    console.log("SearchQRResultPage,loader>>>>>>>>>>>>.", request, params);
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
     console.log("token:", token);
     console.log("branch_id:", branch_id);
-    const searchWord = params['searchWord'];
+    const searchQRValue = params['searchWord'];
 
-    if (searchWord == null) {
-        searchWord = '';
+    //QR값이 없으면
+    if (searchQRValue == null) {
+        searchQRValue = '';
+        return ;
     }
     const response = await axios({
         method: "GET",
-        url: "http://localhost:8000/api/v1/branch/integrate/search/",
+        url: `http://localhost:8000/api/v1/qrcode/search/${searchQRValue}`,
         headers: {
             'Content-Type': 'application/json',
             'jwtauthtoken': token
         },
         params: {
             branch_id: branch_id
-            , searchWord: searchWord
         }
     });
-    console.log("SearchResultPage.response >>>>>>>>>>>..", response);
+    console.log("SearchQRResultPage.response >>>>>>>>>>>..", response);
 
     if (response.status !== 200) {
         throw json({ message: 'Could not save event.' }, { status: 500 });
