@@ -6,18 +6,28 @@ import "../../sources/css/event.css"
 import Pagination from "../../commons/Pagination";
 import { getAuthToken } from "../../util/auth";
 import { json, useLoaderData } from "react-router";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Modal from '../../commons/Modal_moveItem';
-import Modal_list from "../../commons/Modal_list";
+import Modal_moveQRItem from "../../commons/Modal_moveQRItem";
 
 export default function View() {
     const [datas, setDatas] = useState(useLoaderData());
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(8); // 페이지 당 아이템 수
     const [modalOpen, setModalOpen] = useState(false);
-    const [qrModalOpen, setQrModalOpen] = useState(false);
     const [scanResult, setScanResult] = useState('');
+    ////////////////////////////////////////////////////////////////////////
+    /*QR 이동*/
+    const [qrMoveItemModalOpen, setQrMoveItemModalOpen] = useState(false);
+    const [qrMoveLocationModalOpen, setQrMoveLocationModalOpen] = useState(false);
+    const [moveItemQrvalue, setMoveItemQrvalue] = useState('');
+    const [moveLocationQrvalue, setMoveLocationQrvalue] = useState('');
+    const branch_id = localStorage.getItem("branch_id");
+    const navigate = useNavigate();
     //////////////////////////////////////////////////////////////////////////
+
+
     const loaderDataStorage = useLoaderData();
     //DB에서 조회한 전체 StockList(변경되면안됨)
     const [stockList, setStockList] = useState(loaderDataStorage);
@@ -31,10 +41,6 @@ export default function View() {
     //선택한 상품
     const [selectedItems, setSelectedItems] = useState([]);
     //console.log("stockList>>>", stockList);
-
-    const handleScanWebCam = (result) => {
-        setScanResult(result);
-    };
 
     /*보관개수 수정*/
     const handleQuantityChange = async (index, delta, itemId) => {
@@ -261,104 +267,195 @@ export default function View() {
     };
     /////////////////////////////////////////////////////////////////////////////////
     // QR 모달 
-    const handleModalOpen = () => {
-        setQrModalOpen(!qrModalOpen);
+    const handleQRMoveModalOpen = () => {
+        setQrMoveItemModalOpen(qrMoveItemModalOpen => !qrMoveItemModalOpen);
     };
+    const handleQRMoveModalCancel = () => {
+        setMoveItemQrvalue('');
+        setMoveLocationQrvalue('');
+        setQrMoveItemModalOpen(false);
+        setQrMoveLocationModalOpen(false);
+    }
+
+    const handleMoveItemQrValue = (result) => {
+        /* QR 유효성 검사 */
+        console.log("handleMoveItemQrValue (상품 QR값) : ", result);
+        // QR이 상품 QR이 맞으면
+        if (result.includes('@') && result.includes('-')) {
+            // 올바른 상품 QR이 스캔된 경우(QR저장-> Item모달 닫기 -> Location모달열기)
+            setMoveItemQrvalue(result);
+            setQrMoveItemModalOpen(false);
+            setQrMoveLocationModalOpen(true);
+        } else {
+            //올바르지 않은 상품 QR이 스캔된 경우(ex. 장소QR을 스캔함, 입고내역서 QR을 스캔함)
+            setQrMoveItemModalOpen(qrMoveLocationModalOpen => !qrMoveLocationModalOpen);
+            alert('입력된 값이 유효하지 않습니다. 상품 QR코드를 스캔해주세요.');
+        }
+    };
+
+    const handleMoveLocationQrValue = (result) => {
+        /* QR 유효성 검사 */
+        console.log("handleMoveLocationQrValue (장소 QR값) : ", result);
+        // 올바르지 않은 QR을 스캔된 경우 (팝업띄우기, 모달닫기, 기록된 스캔값 지우기)
+        if (result.includes('@') || !result.startsWith(branch_id)) {
+            alert('입력된 값이 유효하지 않습니다. 다시 시도하시기 바랍니다.');
+            handleQRMoveModalCancel();
+        } else {
+            // 올바른 장소 QR이 스캔된 경우(QR 저장->Location 모달 닫기 -> 상품이동실행(axios))
+            setQrMoveLocationModalOpen(false);
+            setMoveLocationQrvalue(result);
+        }
+
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!moveItemQrvalue || !moveLocationQrvalue) {
+                return; // 두 값 중 하나라도 없으면 함수를 빠져나갑니다.
+            }
+            const item_qrcode_value = moveItemQrvalue;
+            const location_qrcode_value = moveLocationQrvalue;
+
+            try {
+                const token = getAuthToken();
+                const response = await axios.get(
+                    `http://localhost:8000/api/v1/qrcode/stock/move/product/${item_qrcode_value}/${location_qrcode_value}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'jwtauthtoken': token,
+                        }
+                        , params: {
+                            branch_id: branch_id
+                        },
+                    }
+                );
+                console.log("response >>>>>>>>>>>..", response);
+
+                if (response.status !== 200) {
+                    throw json({ message: '이동에 실패했습니다.' }, { status: 500 });
+                }
+
+                const resData = response.data;
+                console.log("resData", resData);
+                alert("정상적으로 상품을 이동하였습니다.");
+                handleQRMoveModalCancel();
+                window.location.reload();
+            } catch (error) {
+                console.error("Error during fetchData:", error);
+                navigate('/error', { state: { errorMessage: '조회시 없음' } });
+            }
+        };
+
+        if (moveItemQrvalue && moveLocationQrvalue) {
+            fetchData();
+        }
+
+    }, [moveItemQrvalue, moveLocationQrvalue, navigate]);
+
+
+
     //
     return (
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
                 <div className="h-full">
-                <div style={{ height: "7%" }}
-                    className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl my-4">
-                    <div className="w-4/6 flex justify-around h-12">
-                        <select className="text-center text-xl w-56 shadow-lg "
-                            style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
-                            onChange={(e) => handleSelectedStorageTypeChange(e.target.value)}>
-                            <option value="보관유형">보관유형</option>
-                            <option value="매장">매장</option>
-                            <option value="창고">창고</option>
-                        </select>
-                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
-                            onChange={(e) => handleSelectedLocationChange(e.target.value === '구역선택' ? '' : e.target.value)}>
-                            <option value="보관구역">보관구역 </option>
-                            {locationList.map((row, index) => (
-                                <option key={index}>{row}</option>
-                            ))}
-                        </select>
-                        <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
-                            onChange={(e) => handleSelectedLocationAliasChange(e.target.value)}>
-                            <option>보관명칭</option>
-                            {aliasList.map((alias, index) => (
-                                <option key={index}>{alias}</option>
-                            ))}
-                        </select>
+                    <div style={{ height: "7%" }}
+                        className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl my-4">
+                        <div className="w-4/6 flex justify-around h-12">
+                            <select className="text-center text-xl w-56 shadow-lg "
+                                style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
+                                onChange={(e) => handleSelectedStorageTypeChange(e.target.value)}>
+                                <option value="보관유형">보관유형</option>
+                                <option value="매장">매장</option>
+                                <option value="창고">창고</option>
+                            </select>
+                            <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
+                                onChange={(e) => handleSelectedLocationChange(e.target.value === '구역선택' ? '' : e.target.value)}>
+                                <option value="보관구역">보관구역 </option>
+                                {locationList.map((row, index) => (
+                                    <option key={index}>{row}</option>
+                                ))}
+                            </select>
+                            <select className="text-center text-xl w-56 shadow-lg" style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "100%" }}
+                                onChange={(e) => handleSelectedLocationAliasChange(e.target.value)}>
+                                <option>보관명칭</option>
+                                {aliasList.map((alias, index) => (
+                                    <option key={index}>{alias}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <input type="button" value="QR이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn"
+                            style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} onClick={handleQRMoveModalOpen} />
+                        <input type="button" value="선택이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={() => { setModalOpen(true) }}
+                            style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
+                        <input type="button" value="선택해제" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={resetSelectedItems}
+                            style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
                     </div>
-                    <input type="button" value="QR이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn"
-                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} onClick={handleModalOpen}/>
-                    <input type="button" value="선택이동" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={() => { setModalOpen(true) }}
-                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
-                    <input type="button" value="선택해제" className="text-center text-lg w-28 shadow-lg" id="hoverBtn" onClick={resetSelectedItems}
-                        style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", height: "70%" }} />
-                </div>
-                <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
-                    className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center font-bold">
-                    <span className="w-10"></span>
-                    <span className="w-1/12">보관유형</span>
-                    <span className="w-1/12">보관구역</span>
-                    <span className="w-2/12">보관명칭</span>
-                    <span className="w-4/12">상품명</span>
-                    <span className="w-2/12">유통기한</span>
-                    <span className="w-1/12">수량</span>
-                </div>
-                {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
-                    currentItems.map(function (r, i) {
-                        return (
-                            <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
-                                className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center"
-                                key={i} >
-                                <input type="checkbox" className="w-10" checked={selectedItems.includes(r)} onChange={() => handleCheckboxChange(r)} />
-                                <span className="w-1/12">{r.location_area === 'FR' ? '매장' : (r.location_area === 'BA' ? '창고' : '')}</span>
-                                <span className="w-1/12">{r.location_section_name}</span>
-                                <span className="w-2/12">{r.location_alias}</span>
-                                <span className="w-4/12"
-                                    style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>
-                                    {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}
-                                </span>
-                                <span className="w-2/12"
-                                    style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
-                                    {r.item_exp}
-                                </span>
-                                <div className="w-1/12">
-                                    <input type='hidden' value={r.item_id} />
-                                    <button onClick={() => handleQuantityChange(i, -1, r.item_id)} className="border w-8 h-8 mr-2 shadow-md page_itms">-</button>
-                                    <span>{r.stock_quantity}</span>
-                                    <button onClick={() => handleQuantityChange(i, 1, r.item_id)} className="border w-8 h-8 ml-2 shadow-md page_itms">+</button>
+                    <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
+                        className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center font-bold">
+                        <span className="w-10"></span>
+                        <span className="w-1/12">보관유형</span>
+                        <span className="w-1/12">보관구역</span>
+                        <span className="w-2/12">보관명칭</span>
+                        <span className="w-4/12">상품명</span>
+                        <span className="w-2/12">유통기한</span>
+                        <span className="w-1/12">수량</span>
+                    </div>
+                    {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
+                        currentItems.map(function (r, i) {
+                            return (
+                                <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
+                                    className="w-3/4 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center"
+                                    key={i} >
+                                    <input type="checkbox" className="w-10" checked={selectedItems.includes(r)} onChange={() => handleCheckboxChange(r)} />
+                                    <span className="w-1/12">{r.location_area === 'FR' ? '매장' : (r.location_area === 'BA' ? '창고' : '')}</span>
+                                    <span className="w-1/12">{r.location_section_name}</span>
+                                    <span className="w-2/12">{r.location_alias}</span>
+                                    <span className="w-4/12"
+                                        style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>
+                                        {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}
+                                    </span>
+                                    <span className="w-2/12"
+                                        style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
+                                        {r.item_exp}
+                                    </span>
+                                    <div className="w-1/12">
+                                        <input type='hidden' value={r.item_id} />
+                                        <button onClick={() => handleQuantityChange(i, -1, r.item_id)} className="border w-8 h-8 mr-2 shadow-md page_itms">-</button>
+                                        <span>{r.stock_quantity}</span>
+                                        <button onClick={() => handleQuantityChange(i, 1, r.item_id)} className="border w-8 h-8 ml-2 shadow-md page_itms">+</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                    </div>
-                    <div className="mb-3">
-                        <Pagination
-                            itemsPerPage={itemsPerPage}
-                            totalItems={tmpStockList.length}
-                            currentPage={currentPage}
-                            onPageChange={handlePageChange}
-                            onPrevClick={handlePrevClick}
-                            onNextClick={handleNextClick}
-                        />
+                            )
+                        })}
+                </div>
+                <div className="mb-3">
+                    <Pagination
+                        itemsPerPage={itemsPerPage}
+                        totalItems={tmpStockList.length}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                        onPrevClick={handlePrevClick}
+                        onNextClick={handleNextClick}
+                    />
                 </div>
             </div>
             {modalOpen &&
-                <Modal  onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />
+                <Modal onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />
             }
-            {qrModalOpen && (
-                <Modal_list
-                    onSubmit={handleModalOpen}
-                    onCancel={handleModalOpen}
-                    onScan={handleScanWebCam}
+            {qrMoveItemModalOpen && (
+                <Modal_moveQRItem
+                    onCancel={handleQRMoveModalCancel}
+                    onScan={handleMoveItemQrValue}
                     onType={"이동할 상품의"}
+                />
+            )}
+            {qrMoveLocationModalOpen && (
+                <Modal_moveQRItem
+                    onCancel={handleQRMoveModalCancel}
+                    onScan={handleMoveLocationQrValue}
+                    onType={"이동할 장소의"}
                 />
             )}
         </>
