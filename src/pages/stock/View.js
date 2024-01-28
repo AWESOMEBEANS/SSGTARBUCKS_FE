@@ -1,6 +1,4 @@
-import Search from "../../commons/Search"
-import Nav from "../../commons/Nav"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "../../sources/css/event.css"
 import Pagination from "../../commons/Pagination";
@@ -16,7 +14,6 @@ export default function View() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(8); // 페이지 당 아이템 수
     const [modalOpen, setModalOpen] = useState(false);
-    const [scanResult, setScanResult] = useState('');
     ////////////////////////////////////////////////////////////////////////
     /*QR 이동*/
     const [qrMoveItemModalOpen, setQrMoveItemModalOpen] = useState(false);
