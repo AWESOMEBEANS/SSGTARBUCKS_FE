@@ -30,7 +30,7 @@ export default function Salelist() {
 
             console.log("Update Quantity Response:", response.data);
 
-            // Reload the page
+            alert("정상적으로 판매내역이 업데이트되었습니다.");
             window.location.reload();
         } catch (error) {
             console.error('Error updating quantity:', error);
@@ -42,9 +42,8 @@ export default function Salelist() {
         <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
                 <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-xl h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
                     <span className="w-1/12">번호</span>
+                    <span className="w-1/12">판매코드</span>
                     <span className="w-2/12">상품명</span>
-                    <span className="w-1/12">상품번호</span>
-                    <span className="w-2/12">판매번호</span>
                     <span className="w-1/12">판매개수</span>
                     <span className="w-2/12">판매날짜</span>
                     <span className="w-1/12">판매상태</span>
@@ -59,9 +58,8 @@ export default function Salelist() {
                             <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "7px", background: "#f6f5efb3", height: "100%" }}
                                 className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
                                 <span className="w-1/12">{i+1}</span>
-                                <span className="w-2/12">{r.product_name}</span>
-                                <span className="w-1/12">{r.item_id}</span>
                                 <span className="w-2/12">{r.sale_code}</span>
+                                <span className="w-2/12">  {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}</span>
                                 <span className="w-1/12">{r.sale_list_quantity}</span>
                                 <span className="w-2/12">{r.sale_date}</span>
                                 <span className="w-1/12">{r.sale_status}</span>
@@ -70,7 +68,9 @@ export default function Salelist() {
                     )
                 })}
                 <div className="w-3/5 my-5 mx-auto flex justify-center items-center text-2xl h-10">
-                    <input type="button" value="갱신하기" className="text-center text-xl w-28 shadow-lg border rounded-md h-full btn_salelist "/>
+                    <input type="button" value="갱신하기" className="text-center text-xl w-28 shadow-lg border rounded-md h-full btn_salelist "
+                        onClick={() => handleSaleListUpdate()} 
+                    />
                 </div>
                 </>
                 }
