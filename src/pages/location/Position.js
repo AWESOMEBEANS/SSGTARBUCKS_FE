@@ -82,21 +82,23 @@ export default function Position() {
                                         <td className="w-1/3 text-center text-lg">
                                             <select className="table_select border text-center" name="location_area" value={row.location_area} onChange={(e) => handleInputChange(index, 'location_area', e.target.value)}>
                                                 <option value="보관유형">보관유형</option>
-                                                <option value="매장">매장</option>
-                                                <option value="창고">창고</option>
+                                                <option value="FR">매장</option>
+                                                <option value="BA">창고</option>
                                             </select>
                                         </td>
                                         <td className="w-1/3 text-center">
                                             <select className="table_select text-lg border text-center" name="location_section_name" value={row.location_section_name} onChange={(e) => handleInputChange(index, 'location_section_name', e.target.value)}>
                                                 <option value="보관장소">보관장소 </option>
-                                                <option value="상부장">상부장</option>
-                                                <option value="하부장">하부장</option>
-                                                <option value="냉장고">냉장고</option>
                                                 <option value="냉동고">냉동고</option>
-                                                <option value="쇼케이스">쇼케이스</option>
+                                                <option value="냉장고">냉장고</option>
                                                 <option value="다용도렉">다용도렉</option>
-                                                <option value="진열대">진열대</option>
                                                 <option value="매대">매대</option>
+                                                <option value="상부장">상부장</option>
+                                                <option value="쇼케이스">쇼케이스</option>
+                                                <option value="진열대">진열대</option>
+                                                <option value="서랍">서랍</option>
+                                                <option value="수납장">수납장</option>
+                                                <option value="하부장">하부장</option>
                                                 <option value="기타">기타</option>
                                             </select>
                                         </td>
@@ -139,12 +141,13 @@ export async function action({ request }) {
         "다용도렉": "C",
         "매대": "D",
         "상부장": "E",
-        "진열대": "F",
-        "서랍": "G",
-        "수납장": "H",
-        "하부장": "I",
-        "기타": "J"
-    };
+        "쇼케이스": "F",
+        "진열대": "G",
+        "서랍": "H",
+        "수납장": "I",
+        "하부장": "J",
+        "기타": "K"
+      }
 
     const getLocationArea = (area) => {
         return area === LOCATION_TYPES.STORE ? "FR" : area === LOCATION_TYPES.WAREHOUSE ? "BA" : area;
@@ -192,11 +195,11 @@ export async function action({ request }) {
 
         console.log("response>>>>>>", response);
         resData = response.data;
-
+        alert("보관장소를 정상적으로 등록하셨습니다.");
     } catch (error) {
         console.log("error:", error);
         throw new Error("error 발생되었습니다");
     }
 
-    return redirect('/main');
+    return redirect('/branch/location/list');
 }

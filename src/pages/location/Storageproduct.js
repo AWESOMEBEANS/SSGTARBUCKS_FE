@@ -53,11 +53,12 @@ export default function Storageproduct() {
         "C": "다용도렉",
         "D": "매대",
         "E": "상부장",
-        "F": "진열대",
-        "G": "서랍",
-        "H": "수납장",
-        "I": "하부장",
-        "J": "기타",
+        "F": "쇼케이스",
+        "G": "진열대",
+        "H": "서랍",
+        "I": "수납장",
+        "J": "하부장",
+        "K": "기타"
     };
     const getLocationSection = (section) => {
         const firstLetter = section.charAt(0).toUpperCase();

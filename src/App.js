@@ -15,6 +15,7 @@ import Register from './pages/income/Register';
 import View, {loader as stockLocationLoader} from './pages/stock/View';
 import Store, {loader as storeLoader} from './pages/stock/Store';
 import SearchList, {loader as searchListLoader} from './pages/SearchList';
+import SearchQRList, {loader as searchQRListLoader} from './pages/SearchQRList';
 import Storageproduct, {loader as storageLoader} from './pages/location/Storageproduct';
 import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
       {path: "mypage", element:<MyPage />, loader:myDataLoader},
       {path: "search/list/:searchWord", element:<SearchList/>, loader:searchListLoader },
+      {path: "qrcode/search/list/:searchWord", element:<SearchQRList/>, loader:searchQRListLoader},
     ]
   },
   {
