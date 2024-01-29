@@ -150,7 +150,7 @@ const Modal_change_pwd = ({  onCancel }) => {
                                     <input className="w-2/3 h-10 border text-center text-xl" type="password" id="number" onInput={(e)=>setCheckPwdConfirm(e.target.value)}></input>
                                 </div>
                             </div>
-                            {checkPwd && (checkPwd == checkPwdConfirm) ? <h1 className="text-md text-red-500">비밀번호가 일치합니다.</h1> : <h1 className="text-md text-red-500">비밀번호가 일치하지 않습니다.</h1>}
+                            {checkPwd && (checkPwd == checkPwdConfirm) ? <h1 className="text-md text-red-500">비밀번호가 일치합니다.</h1> : (checkPwd && checkPwdConfirm ? <h1 className="text-md text-red-500">비밀번호가 일치하지 않습니다.</h1> : null)}
                         </div>
                         <div className="flex justify-center items-center my-10 h-1/4">
                             <button className="border-2 w-28 h-11 rounded-md page_itms mx-4 ">비밀번호 변경</button>
