@@ -46,11 +46,9 @@ export default function Warehousing() {
                 }
                 const resData = response.data;
                 console.log("resData", resData);
-                //navigate('/income/list/inspection', { prams: { incomeId: resData } });
-                navigate(`/income/inspection/${resData}`);
+                navigate(`/branch/income/list/inspection/${resData}`);
             } catch (error) {
                 console.error("Error during fetchData:", error);
-                //navigate('/error', { state: { errorMessage: '조회시 없음' } });
             }
         };
         if (scanResult) {
