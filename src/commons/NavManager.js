@@ -20,7 +20,7 @@ export default function Nav(){
             <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
                     <div className="w-full flex flex-col justify-center">
-                        <div className={navIndex("branch") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("branch") && "bg-green-700"}>
                         <Link to="/admin/branch/list" className="w-full flex justify-center">
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-house fa-lg my-7"></i>
@@ -32,7 +32,7 @@ export default function Nav(){
                             </div>
                         </Link>
                         </div>
-                        <div className={navIndex("mypage") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("mypage") && "bg-green-700"}>
                         <Link to="/admin/mypage" className="w-full flex justify-center"> 
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-user fa-lg my-7"></i>

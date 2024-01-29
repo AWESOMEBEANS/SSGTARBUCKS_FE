@@ -24,7 +24,7 @@ export default function Nav(){
             <nav style={(isActive ? {width : "3%"} : {width : "11%"})}>
                 <div className="content">
                     <div className="w-full flex flex-col justify-center">
-                        <div className={navIndex("location") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("location") && "bg-green-700"}>
                         <p className="w-full flex justify-center" onClick={()=>{setMasterData(!masterData)
                                                                 setWareHousing(false)
                                                                 setInventory(false)
@@ -40,7 +40,7 @@ export default function Nav(){
                         </p>
                         </div>
                         {isActive ? null : (masterData ? <MasterData/> : null)}
-                        <div className={navIndex("income") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("income") && "bg-green-700"}>
                         <p className="w-full flex justify-center" onClick={()=>{setWareHousing(!wareHousing)
                                                                 setMasterData(false)
                                                                 setInventory(false)
@@ -56,7 +56,7 @@ export default function Nav(){
                         </p>
                         </div>
                         {isActive ? null : (wareHousing ? <WareHousing/> : null)}
-                        <div className={navIndex("stock") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("stock") && "bg-green-700"}>
                         <p className="w-full flex justify-center" onClick={()=>{setInventory(!inventory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
@@ -72,7 +72,7 @@ export default function Nav(){
                         </p> 
                         </div>
                         {isActive ? null : (inventory ? <Inventory/> : null)}
-                        <div className={(navIndex("discard") || navIndex("sale")) && "bg-green-700 rounded-e-full"}>
+                        <div className={(navIndex("discard") || navIndex("sale")) && "bg-green-700"}>
                         <p className="w-full flex justify-center" onClick={()=>{setFactory(!factory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
@@ -88,7 +88,7 @@ export default function Nav(){
                         </p>
                         </div>
                         {isActive ? null : (factory ? <Factory/> : null)}
-                        <div className={navIndex("mypage") && "bg-green-700 rounded-e-full"}>
+                        <div className={navIndex("mypage") && "bg-green-700"}>
                         <Link to="/branch/mypage" className="w-full flex justify-center">
                             <div className="flex items-center justify-evenly w-8/12 menu_item_color">
                                 <i className="fa-solid fa-user fa-lg  my-7"></i>
