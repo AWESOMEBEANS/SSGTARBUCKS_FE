@@ -24,9 +24,9 @@ export default function PopUp({ onType, onClose, onComment }) {
     return (
         <>
             (
-                <div className="modal-container">
-                    <div className="madal-main" style={{ border: "3.5px solid rgba(106, 136, 30, 0.519)", width: "30%", padding: "20px" }}>
-                    <div style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
+                <div className="modal-container ">
+                    <div className="madal-main " style={{ border: "5px solid rgb(77 124 15)", width: "30%", padding: "20px" }}>
+                    <div  style={{ marginTop: "10px", display: "flex", justifyContent: "center" }}>
                         {type === "check" && (
                             <img src={checkImage} alt="Check Image" style={{ width: "45px", height: "45px" }} />
                         )}
