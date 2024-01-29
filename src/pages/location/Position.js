@@ -5,13 +5,28 @@ import Search from "../../commons/Search.js";
 import axios from "axios";
 import { Form, redirect, useNavigation } from "react-router-dom";
 import { getAuthToken } from "../../util/auth.js";
+import PopUp from "../../commons/PopUp.js";
 
 
 export default function Position() {
     const [rows, setRows] = useState([{ location_area: '', location_section_name: '', location_column: '', location_row: '', location_alias: '' }]);
     const navigation = useNavigation();
     const isSubmitting = navigation.state === 'registering...';
-
+    //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+       
+    };
+    //////////////////////////////////////////////////////////////////////
     const handleInputChange = (index, name, value) => {
         const newRows = [...rows];
         newRows[index][name] = value;
@@ -35,22 +50,18 @@ export default function Position() {
     const handleRegisterLocation = (event) => {
         //console.log('유효성 검사');
         for (const row of rows) {
-            if (!row.location_area || !row.location_section_name || !row.location_alias) {
-                alert('필수 정보를 입력하세요.');
-                event.preventDefault(); // 폼 전송 방지
-                return;
-            }
             if (row.location_area === "보관유형") {
-                alert("보관유형을 선택해주세요.");
+                openPopUp("check", "보관유형을 선택해주세요.");
+                event.preventDefault(); 
             }
-            if (row.location_section_name === "보관장소") {
-                alert("보관장소를 선택해주세요.");
+            else if (row.location_section_name === "보관장소") {
+                setComment();
+                openPopUp("check","보관장소를 선택해주세요.");
+                event.preventDefault(); 
             }
-
-            if (!/^[가-힣a-zA-Z0-9]+$/.test(row.location_alias)) {
-                alert('입력 형식이 올바르지 않습니다. 한글, 영어, 숫자만 입력해주세요.');
-                event.preventDefault(); // 폼 전송 방지
-                return;
+            else if (!/^[가-힣a-zA-Z0-9\s]+$/.test(row.location_alias)) {
+                openPopUp("check","보관명칭을 입력해주세요.");
+                event.preventDefault(); 
             }
         }
         const locations = rows.map(row => {
@@ -65,6 +76,10 @@ export default function Position() {
 
     return (
         <>
+            {isPopUpOpen && (
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
+
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll" >
                 <div className="my-4" style={{ margin: "0 auto", width: "70%" }}>
                     <Form method="POST">
@@ -129,7 +144,6 @@ export default function Position() {
 
 export async function action({ request }) {
     console.log("RegisterLocationPage.action");
-
     const LOCATION_TYPES = {
         STORE: '매장',
         WAREHOUSE: '창고',
@@ -195,11 +209,14 @@ export async function action({ request }) {
 
         console.log("response>>>>>>", response);
         resData = response.data;
-        alert("보관장소를 정상적으로 등록하셨습니다.");
+
+       alert("보관장소를 정상적으로 등록하셨습니다.");
     } catch (error) {
         console.log("error:", error);
+        
         throw new Error("error 발생되었습니다");
     }
 
     return redirect('/branch/location/list');
 }
+
