@@ -53,7 +53,7 @@ export default function Managersolstice() {
                         <span className="w-16">번호</span>
                         <span className="w-1/4">지점명</span>
                         <span className="w-1/2">지점주소</span>
-                        <span className="w-1/4">매니저</span>
+                        <span className="w-1/4">담당직원</span>
                     </div>
                     { datas.map((row, index)=> {
                         return(
@@ -63,7 +63,7 @@ export default function Managersolstice() {
                             >
                                 <span className="w-16">{index + 1}</span>
                                 <span className="w-1/4">{row.branch_name}</span>
-                                <span className="w-1/2">{row.branch_address}</span>
+                                <span className="w-1/2">{row.branch_address.match(/([^(]*)/)[0].trim()}</span>
                                 <span className="w-1/4">{row.user_name}</span>
                             </Link>
                         )
