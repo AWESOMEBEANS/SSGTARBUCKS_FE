@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import Modal from '../../commons/Modal_moveItem';
 import Modal_moveQRItem from "../../commons/Modal_moveQRItem";
+import PopUp from "../../commons/PopUp.js";  
 
 export default function View() {
     const [datas, setDatas] = useState(useLoaderData());
@@ -23,7 +24,19 @@ export default function View() {
     const branch_id = localStorage.getItem("branch_id");
     const navigate = useNavigate();
     //////////////////////////////////////////////////////////////////////////
-
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+    //////////////////////////////////////////////////////////////////////
 
     const loaderDataStorage = useLoaderData();
     //DB에서 조회한 전체 StockList(변경되면안됨)
@@ -170,7 +183,7 @@ export default function View() {
 
         if (selectedStorageType && !selectedStorageLocation && selectedLocationAlias) {
             // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
-            alert('보관구역을 선택하세요.');
+            openPopUp("check","보관구역을 선택해주세요.");
             setSelectedLocationAlias('');
             return; // 필터링을 하지 않고 종료
         }
@@ -286,7 +299,7 @@ export default function View() {
         } else {
             //올바르지 않은 상품 QR이 스캔된 경우(ex. 장소QR을 스캔함, 입고내역서 QR을 스캔함)
             setQrMoveItemModalOpen(qrMoveLocationModalOpen => !qrMoveLocationModalOpen);
-            alert('입력된 값이 유효하지 않습니다. 상품 QR코드를 스캔해주세요.');
+            openPopUp("check","상품 QR코드를 스캔해주세요.");
         }
     };
 
@@ -295,7 +308,7 @@ export default function View() {
         console.log("handleMoveLocationQrValue (장소 QR값) : ", result);
         // 올바르지 않은 QR을 스캔된 경우 (팝업띄우기, 모달닫기, 기록된 스캔값 지우기)
         if (result.includes('@') || !result.startsWith(branch_id)) {
-            alert('입력된 값이 유효하지 않습니다. 다시 시도하시기 바랍니다.');
+            openPopUp("check",'이동할 보관장소 QR코드를 스캔해주세요.');
             handleQRMoveModalCancel();
         } else {
             // 올바른 장소 QR이 스캔된 경우(QR 저장->Location 모달 닫기 -> 상품이동실행(axios))
@@ -454,6 +467,9 @@ export default function View() {
                     onScan={handleMoveLocationQrValue}
                     onType={"이동할 장소의"}
                 />
+            )}
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
             )}
         </>
     )

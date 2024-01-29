@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../../commons/Nav.js";
-import Search from "../../commons/Search.js"
 import Pagination from "../../commons/Pagination.js";
 import axios from "axios";
 import { getAuthToken } from "../../util/auth.js";
@@ -98,10 +96,10 @@ export default function Store() {
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                         <span className="w-14">번호</span>
-                        <span className="w-16">입고코드</span>
+                        <span className="w-1/12">입고코드</span>
                         <span className="w-1/12">입고일자</span>
-                        <span className="w-2/12">상품명</span>
-                        <span className="w-1/12">입고수량</span>
+                        <span className="w-3/12">상품명</span>
+                        <span className="w-16">입고수량</span>
                         <span className="w-1/12">유통기한</span>
                         <span className="w-16">보관장소 등록</span>
                 </div>
@@ -110,10 +108,10 @@ export default function Store() {
                         <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
                         className="w-4/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
                                 <span className="w-14">{i+1}</span>
-                                <span className="w-16">{r.income_code}</span>
+                                <span className="w-1/12">{r.income_code}</span>
                                 <span className="w-1/12">{r.income_date}</span>
-                                <span className="w-2/12">{r.product_name} ({r.product_standard},&nbsp;{r.product_unit})</span>
-                                <span className="w-1/12">{r.income_list_quantity}</span>
+                                <span className="w-3/12">{r.product_name} ({r.product_standard},&nbsp;{r.product_unit})</span>
+                                <span className="w-16">{r.income_list_quantity}</span>
                                 <span className="w-1/12">{r.item_exp}</span>
                                 <button className="w-16 h-10 border shadow-md rounded-md" id="hoverBtn" onClick={() => handleclick(r.item_id)}>
                                     <i className="fa-solid fa-expand fa-xl" ></i>

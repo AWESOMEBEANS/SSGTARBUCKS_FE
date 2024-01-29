@@ -6,11 +6,25 @@ import axios from 'axios';
 import Pagination from "../commons/Pagination";
 import { getAuthToken } from "../util/auth";
 import { json, useLoaderData } from "react-router";
-
+import PopUp from "../commons/PopUp"; 
 
 export default function Salelist() {
     const [datas, setDatas] = useState(useLoaderData());
-
+    //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        window.location.reload();
+    };
+    //////////////////////////////////////////////////////////////////////
     const handleSaleListUpdate = async () => {
         try {
             const token = getAuthToken();
@@ -30,8 +44,8 @@ export default function Salelist() {
 
             console.log("Update Quantity Response:", response.data);
 
-            alert("정상적으로 판매내역이 업데이트되었습니다.");
-            window.location.reload();
+            openPopUp("success","정상적으로 판매내역이 업데이트되었습니다.");
+          
         } catch (error) {
             console.error('Error updating quantity:', error);
         }
@@ -74,7 +88,11 @@ export default function Salelist() {
                 </div>
                 </>
                 }
+
             </div>
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
     )
 }
