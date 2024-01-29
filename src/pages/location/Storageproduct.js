@@ -6,11 +6,27 @@ import Modal from "../../commons/Modal_QRViewer";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
+import PopUp from "../../commons/PopUp.js";    
 
 export default function Storageproduct() {
     /*장소 QR코드 이미지 모달*/
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLocationCode, setSelectedLocationCode] = useState('');
+
+     //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+    //////////////////////////////////////////////////////////////////////
 
     /*필터링*/
     const loaderDataStorage = useLoaderData().stockLocationDataList;
@@ -91,7 +107,7 @@ export default function Storageproduct() {
             window.location.reload();
 
         } catch (error) {
-            alert("보관장소가 삭제되지 않았습니다. \n 다시 시도하시기 바랍니다.");
+            alert("다시 시도하시기 바랍니다.");
             console.error('Error during location deletion:', error);
         }
     };
@@ -138,7 +154,7 @@ export default function Storageproduct() {
 
         if (selectedStorageType && !selectedStorageLocation &&selectedLocationAlias) {
             // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
-            alert('보관구역을 선택하세요.');
+            openPopUp("check","보관구역을 선택해주세요.");
             setSelectedLocationAlias('');
             return; // 필터링을 하지 않고 종료
         }
@@ -270,6 +286,9 @@ export default function Storageproduct() {
                     onCancel={closeModal} onSendLocationQRValue={selectedLocationCode}>
                 </Modal>)
             }
+            {isPopUpOpen &&(
+	            <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
     );
 }
