@@ -3,48 +3,34 @@ import SearchManager from "../../commons/SearchManager";
 import NavManager from "../../commons/NavManager";
 import axios from "axios";
 import { getAuthToken } from "../../util/auth";
-import { json, useLoaderData } from "react-router-dom";
+import { Form, json, useLoaderData } from "react-router-dom";
 
 export default function Managershop() {
     const [ datas, setDatas ] = useState(useLoaderData());
-    const [ editPwd, setEditPwd ] = useState(true);
+    const [ editPwd, setEditPwd ] = useState(false);
     console.log("myshop >>", datas);
 
     return (
         <>
             <div className="w-full " style={{ height: "100%", fontFamily: "Pretendard-Regular" }}>
-                <div className="w-2/5 h-fit mx-auto my-20">
+                <div className="w-2/5 h-fit mx-auto my-20 ">
                 <div className="flex h-14 justify-around items-center  my-2" >
                     <h4 className="text-3xl font-bold " style={{ fontFamily: "EASTARJET-Medium", textDecoration: "underline #eaeaea", textUnderlineOffset: "10px" }}>
                         내 정보
                     </h4>
                 </div>
-                <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold" >
                             <label for="e-mail">이름</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_name}></input>
                     </div>
-                <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">직원 코드</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_id}></input>
                     </div>
-                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
-                        <h4 className="text-lg font-bold">
-                            <label for="number">비밀번호</label>
-                        </h4>
-                        <input className="w-3/5 h-10 border text-xl text-center" disabled={editPwd} type="password" id="number"></input>
-                    </div>
-                    { !editPwd &&
-                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
-                        <h4 className="text-lg font-bold">
-                            <label for="number">비밀번호 확인</label>
-                        </h4>
-                        <input className="w-3/5 h-10 border text-xl text-center" disabled={editPwd} type="password" id="number"></input>
-                    </div>
-                    }
                     <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">이메일</label>
@@ -57,12 +43,12 @@ export default function Managershop() {
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_phone}></input>
                     </div>
-                   
-                    <div className="flex h-20 justify-center items-center my-4">
-                        <button className="text-lg h-3/5 w-1/4 border shadow-lg rounded-lg page_itms" onClick={()=>setEditPwd(!editPwd)}>{editPwd ? "비밀번호 변경" : "변경하기"}</button>
+                    <div className="flex h-10 justify-end items-center my-10">
+                        <button className="text-lg page_itms h-full w-32 border rounded-md shadow-md mx-3" onClick={() => setEditPwd(!editPwd)}>비밀번호 변경</button>
                     </div>
                 </div>
             </div>
+            {editPwd && <Modal_change_pwd onCancel={()=> setEditPwd(false)}/> }
         </>
     )
 }
@@ -97,3 +83,43 @@ export async function loader({ request }) {
     console.log("resData", resData);
     return resData;
 }
+
+const Modal_change_pwd = ({  onCancel }) => {
+    const [checkPwd, setCheckPwd] = useState(""); 
+    const [checkPwdConfirm, setCheckPwdConfirm] = useState(""); 
+
+    return (
+        <>
+            <Form>
+                <div className="modal-container" style={{ fontFamily: 'Pretendard-Regular' }}>
+                    <div className="bg-white h-3/5 w-6/12 flex flex-col items-center rounded-lg border-8 border-lime-700">
+                        <h1 className="text-2xl pt-10 pb-2 h-1/3 font-semibold" style={{textDecoration: "underline #eaeaea", textUnderlineOffset: "10px" }}>비밀번호 변경</h1>
+                        <div className="w-7/12 h-1/2">
+                            <div className="h-1/2">
+                                <div className="flex h-16 justify-between px-8 items-center rounded-lg shadow-lg " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                                    <h4 className="text-lg font-bold mr-4">
+                                        <label for="number">비밀번호</label>
+                                    </h4>
+                                    <input className="w-2/3 h-10 border text-center text-xl" type="password" id="number" onInput={(e)=>setCheckPwd(e.target.value)}></input>
+                                </div>
+                            </div>
+                            <div className="h-1/2">
+                                <div className="flex h-16 justify-between px-8 items-center rounded-lg shadow-lg" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                                    <h4 className="text-lg font-bold mr-4">
+                                        <label for="number">비밀번호 확인</label>
+                                    </h4>
+                                    <input className="w-2/3 h-10 border text-center text-xl" type="password" id="number" onInput={(e)=>setCheckPwdConfirm(e.target.value)}></input>
+                                </div>
+                            </div>
+                            {checkPwd && (checkPwd == checkPwdConfirm) ? <h1 className="text-md text-red-500">비밀번호가 일치합니다.</h1> : (checkPwd && checkPwdConfirm ? <h1 className="text-md text-red-500">비밀번호가 일치하지 않습니다.</h1> : null)}
+                        </div>
+                        <div className="flex justify-center items-center my-10 h-1/4">
+                            <button className="border-2 w-28 h-11 rounded-md page_itms mx-4 ">비밀번호 변경</button>
+                            <button className="border-2 w-28 h-11 rounded-md page_itms mx-4" onClick={onCancel}>취소</button>
+                        </div>
+                    </div>
+                </div>
+            </Form>
+        </>
+    );
+};
