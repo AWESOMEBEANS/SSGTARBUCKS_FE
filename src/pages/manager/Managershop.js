@@ -7,7 +7,6 @@ import { json, useLoaderData } from "react-router-dom";
 
 export default function Managershop() {
     const [ datas, setDatas ] = useState(useLoaderData());
-    const [ edit, setEdit ] = useState(true);
     const [ editPwd, setEditPwd ] = useState(true);
     console.log("myshop >>", datas);
 
@@ -15,52 +14,51 @@ export default function Managershop() {
         <>
             <div className="w-full " style={{ height: "100%", fontFamily: "Pretendard-Regular" }}>
                 <div className="w-2/5 h-fit mx-auto my-20">
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold" >
                             <label for="e-mail">이름</label>
                         </h4>
-                        <input className="w-3/5 h-10 border text-xl text-center" disabled={edit} type="e-mail" id="e-mail" value={datas.user_name}></input>
+                        <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_name}></input>
                     </div>
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">권한</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_type === "admin"? "관리자" : "매니저"}></input>
                     </div>
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">이메일</label>
                         </h4>
-                        <input className="w-3/5 h-10 border text-xl text-center" disabled={edit} type="e-mail" id="e-mail" value={datas.user_email}></input>
+                        <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_email}></input>
                     </div>
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">연락처</label>
                         </h4>
-                        <input className="w-3/5 h-10 border text-xl text-center" disabled={edit} type="e-mail" id="e-mail" value={datas.user_phone}></input>
+                        <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_phone}></input>
                     </div>
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="e-mail">고유번호</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled type="e-mail" id="e-mail" value={datas.user_id}></input>
                     </div>
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="number">비밀번호</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled={editPwd} type="password" id="number"></input>
                     </div>
                     { !editPwd &&
-                    <div className="flex h-16 justify-around items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
+                    <div className="flex h-16 justify-between px-20 items-center rounded-lg shadow-lg my-4 " style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                         <h4 className="text-lg font-bold">
                             <label for="number">비밀번호 확인</label>
                         </h4>
                         <input className="w-3/5 h-10 border text-xl text-center" disabled={editPwd} type="password" id="number"></input>
                     </div>
                     }
-                    <div className="flex h-20 justify-around items-center my-4">
-                        <button className="text-lg h-3/5 w-1/4 border shadow-lg rounded-lg page_itms" onClick={()=>setEdit(!edit)}>{edit ? "수정" : "저장"}</button>
+                    <div className="flex h-20 justify-center items-center my-4">
                         <button className="text-lg h-3/5 w-1/4 border shadow-lg rounded-lg page_itms" onClick={()=>setEditPwd(!editPwd)}>{editPwd ? "비밀번호 변경" : "변경하기"}</button>
                     </div>
                 </div>
