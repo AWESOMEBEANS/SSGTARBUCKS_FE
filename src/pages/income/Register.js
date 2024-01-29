@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import axios from "axios";
 import "../../sources/css/event.css"
 
-export default function Regiter(){
+export default function Register(){
     const [datas, setDatas] = useState([]);
 
     useEffect(()=>{

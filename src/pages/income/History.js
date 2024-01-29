@@ -2,7 +2,7 @@ import Search from "../../commons/Search"
 import Nav from "../../commons/Nav"
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { json, useLoaderData } from "react-router-dom";
+import { json, useLoaderData, NavLink, useNavigate } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
 import Modal_search from "../../commons/Modal_search";
 
@@ -12,6 +12,11 @@ export default function History() {
     const initialIncomeList = useLoaderData();
     const [modalOpen, setModalOpen] = useState(false);
     const [scanResult, setScanResult] = useState('');
+    const [itemCode, setItemCode] = useState('');
+    const [incomeStatus, setIncomeStatus] = useState('');
+
+    const [completeItemCode, setcompleteItemCode] = useState('');
+
     
     let groupedList = initialIncomeList.reduce((acc, curr) => {
         const { income_id } = curr;
@@ -30,9 +35,64 @@ export default function History() {
     const handleScanWebCam = (result) => {
         setScanResult(result);
     };
-    const handleScannerClick = () =>{
+    const handleScannerClick = (item_code) => {
         setModalOpen(!modalOpen);
+        console.log("스캔시작 with item_code:", item_code);
+        setItemCode(item_code);        
     };
+
+    //스캔값이 있으면
+    useEffect(() => {
+        const fetchData = async (itemCodeParam) => {
+          if (!scanResult || !itemCodeParam) {
+            return;
+          }
+          console.log("itemCode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", itemCodeParam);
+    
+          try {
+            const token = getAuthToken();
+            const response = await axios.get(
+              `http://localhost:8000/api/v1/income/inspection/product`,
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'jwtauthtoken': token
+                },
+                params: {
+                  scanResult: scanResult,
+                  itemCode: itemCodeParam
+                }
+              }
+            );
+    
+            console.log("ShowIncomeList.response >>>>>>>>>>>..", response);
+    
+            if (response.status !== 200) {
+              throw json({ message: '검색에 실패했습니다.' }, { status: 500 });
+            }
+    
+            const resData = response.data;
+            console.log("resData>>>>>>>>>>>>>>", resData);
+            if(resData === "성공") {
+                setModalOpen(false);
+                setcompleteItemCode(itemCodeParam);
+                //navigate(`/income/list/${incomeId}`);
+                //window.location.reload();
+            }
+
+            //navigate(`/income/list/inspection/${incomeId}`);
+          } catch (error) {
+            console.error("Error during fetchData:", error);
+            // navigate('/error', { state: { errorMessage: '조회시 없음' } });
+          }
+        };
+    
+        if (scanResult) {
+          // Fetch data with the updated itemCode
+          fetchData(itemCode);
+        }
+      }, [scanResult, itemCode, incomeId]);
+
 
     return (
         <>
@@ -42,10 +102,10 @@ export default function History() {
                     className="w-2/3 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                     <i className="w-8"></i>
                     <span className="w-16">번호</span>
-                    <span className="w-1/12">입고코드</span>
-                    <span className="w-1/12">입고수량</span>
-                    <span className="w-2/12">입고일자</span>
-                    <span className="w-1/12">입고상태</span>
+                    <span className="w-1/12">배송코드</span>
+                    <span className="w-1/12">수량</span>
+                    <span className="w-2/12">배송일자</span>
+                    <span className="w-1/12">처리상태</span>
 
                 </div>
                 {groupedListkeys.map((key, index) => {
@@ -61,18 +121,19 @@ export default function History() {
                                     onClick={() => {
                                         setToggle(isToggled ? null : key); // 클릭 시 현재 상태의 반대로 토글
                                         setIncomeId(isToggled ? 0 : groupedList[key][0].income_id);
+                                        setIncomeStatus(groupedList[key][0].income_status);
                                     }}
                                 ></i>
-                                <span className="w-16">{index+1}</span>
+                                <span className="w-1/16"><NavLink to={`inspection/${groupedList[key][0].income_id}`} >{index+1}</NavLink></span>
                                 <span className="w-1/12">{groupedList[key][0].income_code}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
                                 <span className="w-1/12"
-                                    style={groupedList[key][0].income_status === "입고완료" ? { boxShadow: 'inset 0 -30px 0 #41ACDB', color:"white" } : { boxShadow: 'inset 0 -30px 0 #D9DB62', color:"white" }}
+                                    style={groupedList[key][0].income_status === "재고등록완료" ? { boxShadow: 'inset 0 -30px 0 #41ACDB', color:"white" } : { boxShadow: 'inset 0 -30px 0 #D9DB62', color:"white" }}
                                     >{groupedList[key][0].income_status}</span>
 
                             </div>
-                            {isToggled && <Detail id={groupedList[key][0].income_id} modalHandler={handleScannerClick}/>} {/* 토글된 경우에만 Detail 컴포넌트 렌더링 */}
+                            {isToggled && <Detail id={groupedList[key][0].income_id} incomeStatus={groupedList[key][0].income_status} modalHandler={handleScannerClick} />}
                         </>
                     )
                 })}
@@ -89,40 +150,87 @@ export default function History() {
     )
 }
 
-function Detail({id, modalHandler}) {
+function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
+    const navigate = useNavigate();
+    const [resData, setResData] = useState('');
     const incomeDetailList = useLoaderData();
+    console.log(incomeStatus);
     let groupedDetailList = incomeDetailList.reduce((acc, curr) => {
         const { income_id } = curr;
-        if(acc[income_id]) acc[income_id].push(curr);
+        if (acc[income_id]) acc[income_id].push(curr);
         else acc[income_id] = [curr];
         return acc;
     }, {});
 
+    
+  //검수완료버튼
+  const handleInspectionComplete = async () => {
+    try {
+      const token = getAuthToken();
+      const branch_id = localStorage.getItem("branch_id");
+      const response = await axios.get(
+        `http://localhost:8000/api/v1/income/inspection/complete`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'jwtauthtoken': token
+          }, params: {
+            incomeId: id,
+            branch_id: branch_id
+          }
+        }
+      );
+
+      console.log("handleInspectionComplete.response >>>>>>>>>>>..", response);
+
+      if (response.status !== 200) {
+        throw json({ message: '검색에 실패했습니다.' }, { status: 500 });
+      }
+
+      const resData = response.data;
+      console.log("resData>>>>>>>>>>>>>>", resData);
+
+        alert(resData);
+        window.location.reload();
+
+    } catch (error) {
+      console.error("Error during fetchData:", error);
+    }
+
+  }
+
     return (
         <>
-            <div className= "w-3/5 p-2 mx-auto" style={{backgroundColor : "#f0f0f0aa"}}>
-                <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", }}
+            <div className="w-3/5 p-2 mx-auto" style={{ backgroundColor: "#f0f0f0aa" }}>
+                <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white" }}
                     className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 h-10 font-bold text-center">
                     <span className="w-1/12">번호</span>
+                    <span className="w-2/6">상품코드</span>
                     <span className="w-2/6">상품명</span>
                     <span className="w-1/6">유통기한</span>
-                    <span className="w-1/6">승인여부</span>
-                    <span className="w-1/12" >QR</span>
+                    <span className="w-1/6">검수여부</span>
+                    <span className="w-1/12">QR</span>
                 </div>
-                {true && groupedDetailList[id].map((row, index) => 
+                {true && groupedDetailList[id].map((row, index) =>
                     <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
                         className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center ">
-                        <span className="w-1/12">{index+1}</span>
+                        <span className="w-1/12">{index + 1}</span>
+                        <span className="w-1/6">{row.item_code}</span>
                         <span className="w-2/6">{row.product_name}({row.product_standard}, {row.product_unit})</span>
                         <span className="w-1/6">{row.item_exp}</span>
-                        <span className="w-1/6">{row.income_list_result}</span>
-                        <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={modalHandler}>스캔</button>
+                        <span className="w-1/6">
+                            {completeItemCode === row.item_code? "승인" : row.income_list_result}
+                        </span>                        
+                        <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={() => { modalHandler(row.item_code); }}>스캔</button>
                     </div>
                 )}
+                {incomeStatus === '재고등록완료'? <></> : <span><button onClick={handleInspectionComplete}>검수완료</button></span>}
+                
             </div>
         </>
     )
 }
+
 
 export async function loader({ request }) {
     console.log("IncomeListPage,loader>>>>>>>>>>>>.", request)

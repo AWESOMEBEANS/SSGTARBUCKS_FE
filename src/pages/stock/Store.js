@@ -20,22 +20,24 @@ export default function Store() {
     const handleScanWebCam = (result) => {
         setScanResult(result);
     };
+
     const handleclick = (itemId) => {
         setModalOpen(!modalOpen);
         setitemId(itemId);
+
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!scanResult) {
+        const fetchData = async (itemId) => {
+            if (!scanResult || !itemId) {
                 return;
-            }
+              }
             try {
                 console.log("스캔결과값----------------->", scanResult);
                 console.log("선택한 검수내역의 아이템 아이디---->", itemId);
                 const token = getAuthToken();
                 const response = await axios.get(
-                    `http://localhost:8000/api/v1/stock/checked/insert/location`,
+                    `http://localhost:8000/api/v1/stock/checked/insert/location/qr`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -52,15 +54,15 @@ export default function Store() {
                 }
                 const resData = response.data;
                 console.log("resData", resData);
-                //navigate('/income/list/inspection', { prams: { incomeId: resData } });
-                navigate(`/stock/checked/inspection`);
+                setModalOpen(false);
+                alert(response.data);
+                window.location.reload();
             } catch (error) {
                 console.error("Error during fetchData:", error);
-                //navigate('/error', { state: { errorMessage: '조회시 없음' } });
             }
         };
         if (scanResult) {
-            fetchData();
+            fetchData(itemId);
         }
     }, [scanResult, navigate]);
 
@@ -113,7 +115,7 @@ export default function Store() {
                                 <span className="w-2/12">{r.product_name} ({r.product_standard},&nbsp;{r.product_unit})</span>
                                 <span className="w-1/12">{r.income_list_quantity}</span>
                                 <span className="w-1/12">{r.item_exp}</span>
-                                <button className="w-16 h-10 border shadow-md rounded-md" id="hoverBtn" onClick={handleclick} >
+                                <button className="w-16 h-10 border shadow-md rounded-md" id="hoverBtn" onClick={() => handleclick(r.item_id)}>
                                     <i className="fa-solid fa-expand fa-xl" ></i>
                                 </button>
                         </div>

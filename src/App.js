@@ -5,13 +5,14 @@ import Login ,{action as authAction}from './pages/Login';
 import FindPwd from './pages/FindPwd';
 import Main ,{loader as mainLoader}from './pages/Main';
 import History, {loader as incomeLoader} from './pages/income/History';
-import Position, {action as RegisterLocationAction} from './pages/location/Position';
+import HistoryDetail,{loader as detailLoader} from './pages/income/HistoryDetail';
+import Register, {loader as registerRoader} from './pages/income/Register';
 import Warehousing from './pages/income/Warehousing';
+import Position, {action as RegisterLocationAction} from './pages/location/Position';
 import Inventory, {loader as inventoryLoader} from './pages/stock/Inventory';
 import Release from './pages/Release';
 import Salelist, {loader as salelistLoader} from './pages/Salelist';
 import Myshop, {loader as myDataLoader} from './pages/MyPage';
-import Register from './pages/income/Register';
 import View, {loader as stockLocationLoader} from './pages/stock/View';
 import Store, {loader as storeLoader} from './pages/stock/Store';
 import SearchList, {loader as searchListLoader} from './pages/SearchList';
@@ -52,7 +53,8 @@ const router = createBrowserRouter([
       {path: "location/new", element:<Position />,action:RegisterLocationAction },
       {path: "location/list", element:<Storageproduct />, loader:storageLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
-      {path: "income/inspection", element:<Warehousing />},
+      {path: "income/list/inspection/:incomeId", element: <HistoryDetail />, loader: detailLoader },
+      {path: "income/specification", element:<Warehousing />},
       {path: "income/new", element:<Store />, loader:storeLoader},
       {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
