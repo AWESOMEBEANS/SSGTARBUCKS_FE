@@ -40,7 +40,7 @@ export default function Salelist() {
     return (
         <>
         <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
-                <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-xl h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
+                <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-lg h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
                     <span className="w-1/12">번호</span>
                     <span className="w-2/12">판매코드</span>
                     <span className="w-4/12">상품명</span>
@@ -53,10 +53,10 @@ export default function Salelist() {
                 {datas.map(function (r, i) {
                     return (
                         <div style={{ height: "6.8%" }}
-                            className="w-2/3 my-3 mx-auto flex justify-center items-center text-2xl"
+                            className="w-2/3 my-3 mx-auto flex justify-center items-center"
                             key={i} >
                             <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "7px", background: "#f6f5efb3", height: "100%" }}
-                                className="w-11/12  flex justify-between items-center text-lg shadow-lg px-4">
+                                className="w-full flex justify-between items-center text-lg shadow-lg px-4">
                                 <span className="w-1/12">{i+1}</span>
                                 <span className="w-2/12">{r.sale_code}</span>
                                 <span className="w-4/12">  {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}</span>
@@ -67,8 +67,8 @@ export default function Salelist() {
                         </div>
                     )
                 })}
-                <div className="w-3/5 my-5 mx-auto flex justify-center items-center text-2xl h-10">
-                    <input type="button" value="갱신하기" className="text-center text-xl w-28 shadow-lg border rounded-md h-full btn_salelist "
+                <div className="w-3/5 my-5 mx-auto flex justify-center items-center text-lg h-10">
+                    <input type="button" value="갱신하기" className="text-center text-lg font-bold w-28 shadow-lg border rounded-md h-full btn_salelist "
                         onClick={() => handleSaleListUpdate()} 
                     />
                 </div>
