@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuthToken } from "../util/auth";
 import PopUp from "../commons/PopUp"; 
-export default function Release() {
+export default function Release({scanner}) {
     /*QR 사용 및 폐기 등록*/
     const [outcomeModalOpen, setOutcomeModalOpen] = useState(false);
     const [discardModalOpen, setDiscardModalOpen] = useState(false);
@@ -15,6 +15,15 @@ export default function Release() {
     const [discardQrvalue, setDiscardQrvalue] = useState('');
     const branch_id = localStorage.getItem("branch_id");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (scanner === "outcome") {
+            setOutcomeModalOpen(true);
+        } else if (scanner === "discard") {
+            setDiscardModalOpen(true);
+        }
+    }, [scanner]);
+
      //////////////////////////////////////////////////////////////////////
     /*팝업창*/
     const [comment, setComment] = useState('');
@@ -27,6 +36,7 @@ export default function Release() {
     };
     const closePopUp = () => {
         setPopUpOpen(false);
+        navigate('/branch/stock/inventory/list');
     };
     //////////////////////////////////////////////////////////////////////
     
@@ -36,6 +46,7 @@ export default function Release() {
         setDiscardQrvalue('');
         setOutcomeModalOpen(false);
         setDiscardModalOpen(false);
+        navigate('/branch/sale/product');
     }
 
     //모달 열기
@@ -97,6 +108,7 @@ export default function Release() {
                 setOutcomeModalOpen(false);
                 setOutcomeQrvalue('');
                 //window.location.reload();
+                
             } catch (error) {
                 setOutcomeModalOpen(false);
                 setOutcomeQrvalue('');
@@ -107,7 +119,9 @@ export default function Release() {
 
         if (outcomeQrvalue) {
             fetchData();
+            
         }
+
     }, [outcomeQrvalue, navigate]);
 
     //폐기등록
@@ -179,21 +193,6 @@ export default function Release() {
 
     return (
         <>
-            <div className="bg_btnpage" style={{ fontFamily: 'Pretendard-Regular' }}>
-                <div className="box_btn flex">
-                    <div className="box_btn_inn">
-                        <h1 className="text-3xl font-semibold">사용등록</h1>
-                        <button className="w-80 h-80 shadow-slate-700 shadow-md rounded-md" id="qrbtn" onClick={handleOutcomeModalOpen}></button>
-                        <h3 className="text-lg text-red-700 font-bold my-3">※ 카메라를 켜주세요</h3>
-                    </div>
-
-                    <div className="box_btn_inn">
-                        <h1 className="text-3xl font-semibold">폐기등록</h1>
-                        <button className="w-80 h-80 shadow-slate-700 shadow-md rounded-md" id="qrbtn" onClick={handleDiscardModalOpen}></button>
-                        <h3 className="text-lg text-red-700 font-bold my-3">※ 카메라를 켜주세요</h3>
-                    </div>
-                </div>
-            </div>
             {outcomeModalOpen && (
                 <Modal
                     onCancel={handleModalClose}
@@ -210,7 +209,7 @@ export default function Release() {
                 >
                 </Modal>)
             }
-            {isPopUpOpen &&(
+            {isPopUpOpen && (
                 <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
             )}
         </>

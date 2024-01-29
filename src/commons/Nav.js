@@ -168,7 +168,8 @@ function Factory(){
     return(
         <>
             <div className="menu_name_itm">
-                <Link to="/branch/discard/product" className="menu_item_color text-lg font-semibold menu_name_itms">출고/폐기등록</Link>
+                <Link to="/branch/outcome/product" className="menu_item_color text-lg font-semibold menu_name_itms">사용등록</Link>
+                <Link to="/branch/discard/product" className="menu_item_color text-lg font-semibold menu_name_itms">폐기등록</Link>
                 <Link to="/branch/sale/product" className="menu_item_color text-lg font-semibold menu_name_itms">판매갱신</Link>
             </div>
         </>
