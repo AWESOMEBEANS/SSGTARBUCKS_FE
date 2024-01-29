@@ -6,7 +6,7 @@ import { json } from "react-router";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuthToken } from "../util/auth";
-
+import PopUp from "../commons/PopUp"; 
 export default function Release() {
     /*QR 사용 및 폐기 등록*/
     const [outcomeModalOpen, setOutcomeModalOpen] = useState(false);
@@ -15,6 +15,21 @@ export default function Release() {
     const [discardQrvalue, setDiscardQrvalue] = useState('');
     const branch_id = localStorage.getItem("branch_id");
     const navigate = useNavigate();
+     //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+    //////////////////////////////////////////////////////////////////////
+    
     //QR 취소
     const handleModalClose = () => {
         setOutcomeQrvalue('');
@@ -45,7 +60,7 @@ export default function Release() {
             //올바르지 않은 상품 QR이 스캔된 경우(ex. 장소QR을 스캔함, 입고내역서 QR을 스캔함)
             setOutcomeModalOpen(false);
             setOutcomeQrvalue('');
-            alert('입력된 값이 유효하지 않습니다. 상품 QR코드를 스캔해주세요.');
+            openPopUp("check","상품 QR코드를 스캔해주세요.");
         }
     };
 
@@ -78,10 +93,10 @@ export default function Release() {
 
                 const resData = response.data;
                 console.log("resData", resData);
-                alert("정상적으로 사용등록되었습니다.");
+                openPopUp("success","정상적으로 사용등록되었습니다.");
                 setOutcomeModalOpen(false);
                 setOutcomeQrvalue('');
-                window.location.reload();
+                //window.location.reload();
             } catch (error) {
                 setOutcomeModalOpen(false);
                 setOutcomeQrvalue('');
@@ -108,7 +123,7 @@ export default function Release() {
             //올바르지 않은 상품 QR이 스캔된 경우(ex. 장소QR을 스캔함, 입고내역서 QR을 스캔함)
             setDiscardModalOpen(false);
             setDiscardQrvalue('');
-            alert('입력된 값이 유효하지 않습니다. 상품 QR코드를 스캔해주세요.');
+            openPopUp("check",'상품 QR코드를 스캔해주세요.');
         }
     };
 
@@ -141,10 +156,10 @@ export default function Release() {
 
                 const resData = response.data;
                 console.log("resData", resData);
-                alert("정상적으로 폐기등록되었습니다.");
+                openPopUp("success","정상적으로 폐기등록되었습니다.");
                 setDiscardModalOpen(false);
                 setDiscardQrvalue('');
-                window.location.reload();
+                //window.location.reload();
             } catch (error) {
                 setDiscardModalOpen(false);
                 setDiscardQrvalue('');
@@ -195,6 +210,9 @@ export default function Release() {
                 >
                 </Modal>)
             }
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
 
     )

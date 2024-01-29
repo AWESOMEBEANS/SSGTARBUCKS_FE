@@ -5,12 +5,28 @@ import magnifier from "../sources/image/magnifier.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useState ,useEffect } from "react";
 import Modal_search from "./Modal_search";
+import PopUp from "../commons/PopUp";    
 
 export default function Searching() {
     const [modalOpen, setModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const branch_id = localStorage.getItem("branch_id");
     const navigate = useNavigate();
+
+     //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+    //////////////////////////////////////////////////////////////////////
 
     function handleSearch() {
         console.log("search :", searchQuery);
@@ -30,10 +46,9 @@ export default function Searching() {
         //장소검색인 경우, branch_id가 일치해야 검색이 가능함
         if (!result.includes('@') && !result.startsWith(branch_id)) {
             setModalOpen(false);
-            alert('입력된 값이 유효하지 않습니다. 담당 지점의 QR코드를 스캔해주세요.');
+            openPopUp("check","담당 지점의 QR코드를 스캔해주세요.");
             return ;
         }
-
         setModalOpen(false);
         /* 검색 결과 전달 */;
         const searchUrl = `/branch/qrcode/search/list/${result}`;
@@ -71,6 +86,9 @@ return (
                 onType={"검색할 상품의"}
             >
             </Modal_search>)}
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
     </>
 )
 }
