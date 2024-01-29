@@ -29,7 +29,7 @@ export default function FindPwd(){
                 <input type="password" placeholder="비밀번호 확인"/><button type="submit" required>비밀번호 변경</button>
             </form>
             <footer>
-            <a className="backbutton " type="submit" href="/" >BACK</a>
+            <button className="backbutton" type="submit" href="/">BACK</button>
             </footer>
         </div>
         </div>
