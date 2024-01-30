@@ -13,10 +13,10 @@
 
 .madal-main{
     background-color: white;
-    border-radius: 10px;
+    border-radius: 3px;
     padding: 10px;
-    width: 50%;
-    border: 1.5px solid rgba(106, 136, 30, 0.519);
+    width: 32%;
+    border: 1px solid rgba(106, 136, 30, 0.519);
 }
 .madal-line{
     padding: 10px;
@@ -24,7 +24,6 @@
 
 .btn {
     border: none;
-    color: #000000;
     padding: 0.5rem 1.5rem;
     border-radius: 10px;
     cursor: pointer;
