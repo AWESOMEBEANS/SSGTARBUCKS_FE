@@ -1,10 +1,9 @@
-import Search from "../../commons/Search"
-import Nav from "../../commons/Nav"
 import { useEffect, useState } from "react"
 import axios from "axios";
 import { json, useLoaderData, NavLink, useNavigate } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
 import Modal_search from "../../commons/Modal_search";
+import PopUp from "../../commons/PopUp.js";
 
 export default function History() {
     let [toggle, setToggle] = useState([]);
@@ -14,10 +13,27 @@ export default function History() {
     const [scanResult, setScanResult] = useState('');
     const [itemCode, setItemCode] = useState('');
     const [incomeStatus, setIncomeStatus] = useState('');
-
     const [completeItemCode, setcompleteItemCode] = useState('');
 
-    
+    //////////////////////////////////////////////////////////////////////
+  /*팝업창*/
+  const navigate = useNavigate();
+  const [comment, setComment] = useState('');
+  const [popupType, setPopupType] = useState('');
+  const [isPopUpOpen, setPopUpOpen] = useState(false);
+  const openPopUp = (type, comment) => {
+    setModalOpen(false);
+    setPopUpOpen(true);
+    setComment(comment);
+    setPopupType(type);
+  };
+  const closePopUp = () => {
+    setPopUpOpen(false);
+    if(comment=="검수완료처리되었습니다.\n검수상품을 재고로 등록하시기 바랍니다."){
+    navigate('/branch/income/new');
+  }
+  };
+  //////////////////////////////////////////////////////////////////////
     let groupedList = initialIncomeList.reduce((acc, curr) => {
         const { income_id } = curr;
         if (acc[income_id]) acc[income_id].push(curr);
@@ -29,9 +45,9 @@ export default function History() {
     let groupedListkeys = Object.keys(groupedList).reverse();
     const resultArray = groupedListkeys.map(key => groupedList[key][0]);
 
-    const handleButtonClick = () => {
-        setModalOpen(false);
-    };
+    const handleModalClose = () => {
+      setModalOpen(false);
+  };
     const handleScanWebCam = (result) => {
         setScanResult(result);
     };
@@ -47,8 +63,28 @@ export default function History() {
           if (!scanResult || !itemCodeParam) {
             return;
           }
+          /* QR 유효성 검사 */
+      console.log("스캔한 QR값 : ", scanResult, "상품코드 : ", itemCodeParam);
+      // 올바르지 않은 상품 QR이 스캔된 경우(ex. 장소QR을 스캔함, 입고내역서 QR을 스캔함)
+      if (!scanResult.includes('@') || !scanResult.includes('-')) {
+        openPopUp("check", "상품 QR코드를 스캔해주세요.");
+        setModalOpen(false);
+        setItemCode('');
+        setScanResult('');
+        return;
+      } else if(!scanResult.includes(itemCodeParam)){
+        openPopUp("check", "해당 상품이 아닙니다. 다시 시도해주세요.");
+        setModalOpen(false);
+        setItemCode('');
+        setScanResult('');
+        return;
+      }
+
+
           console.log("itemCode >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", itemCodeParam);
-    
+
+
+
           try {
             const token = getAuthToken();
             const response = await axios.get(
@@ -91,7 +127,7 @@ export default function History() {
           // Fetch data with the updated itemCode
           fetchData(itemCode);
         }
-      }, [scanResult, itemCode, incomeId]);
+      }, [scanResult, incomeId]);
 
 
     return (
@@ -140,11 +176,13 @@ export default function History() {
             </div>
             {modalOpen && (
                 <Modal_search
-                    onSubmit={handleButtonClick}
-                    onCancel={handleButtonClick}
+                    onCancel={handleModalClose}
                     onScan={handleScanWebCam}
                     onType={"검수할 상품의"}
                 />
+            )}
+             {isPopUpOpen && (
+              <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
             )}
         </>
     )
