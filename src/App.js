@@ -28,7 +28,7 @@ import M_RootLayout from './commons/M_RootLayout';
 import Manager from './pages/manager/Manager';
 import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
 import Managershop, {loader as adminMyPageLoader} from './pages/manager/Managershop';
-import ManagerDetail from './pages/manager/ManagerDetail';
+import ManagerDetail, {loader as managerDetailLoader}  from './pages/manager/ManagerDetail';
 
 const router = createBrowserRouter([
   { 
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
     children : [
       {path: "main", element:<Manager />},
       {path: "branch/list", element:<Managersolstice />, loader:managerListLoader},
-      {path: "branch/detail/:branch_id", element:<ManagerDetail />, loader:managerListLoader},
+      {path: "branch/detail/:branch_id", element:<ManagerDetail />, loader:managerDetailLoader},
       {path: "mypage", element:<Managershop />, loader:adminMyPageLoader},
       {path: "logout", action:logoutAction },
     ]
