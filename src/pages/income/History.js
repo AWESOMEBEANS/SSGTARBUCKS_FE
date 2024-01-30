@@ -210,7 +210,7 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                     <span className="w-1/6">유통기한</span>
                     <span className="w-1/6">검수여부</span>
                     <span className="w-1/12">QR</span>
-                </div>
+                </div> 
                 {true && groupedDetailList[id].map((row, index) =>
                     <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
                         className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center ">
