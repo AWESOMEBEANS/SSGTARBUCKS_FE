@@ -25,6 +25,9 @@ export default function Storageproduct() {
     };
     const closePopUp = () => {
         setPopUpOpen(false);
+        if(comment==="보관장소가 삭제되었습니다."){
+            window.location.reload();
+         }
     };
     //////////////////////////////////////////////////////////////////////
 
@@ -103,8 +106,7 @@ export default function Storageproduct() {
             console.log(response.data);
 
             //화면 재랜더링
-            alert("정상적으로 삭제되었습니다.");
-            window.location.reload();
+            openPopUp("success", "보관장소가 삭제되었습니다.");
 
         } catch (error) {
             alert("다시 시도하시기 바랍니다.");

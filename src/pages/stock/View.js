@@ -35,6 +35,9 @@ export default function View() {
     };
     const closePopUp = () => {
         setPopUpOpen(false);
+        if(comment==="상품을 이동하였습니다."){
+        window.location.reload();
+        }
     };
     //////////////////////////////////////////////////////////////////////
 
@@ -348,9 +351,8 @@ export default function View() {
 
                 const resData = response.data;
                 console.log("resData", resData);
-                alert("정상적으로 상품을 이동하였습니다.");
                 handleQRMoveModalCancel();
-                window.location.reload();
+                openPopUp("success", "상품을 이동하였습니다.");
             } catch (error) {
                 console.error("Error during fetchData:", error);
                 navigate('/error', { state: { errorMessage: '조회시 없음' } });
