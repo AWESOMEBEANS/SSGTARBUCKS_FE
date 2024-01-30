@@ -28,11 +28,9 @@ import M_RootLayout from './commons/M_RootLayout';
 import Manager from './pages/manager/Manager';
 import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
 import Managershop, {loader as adminMyPageLoader} from './pages/manager/Managershop';
-import ManagerDetail from './pages/manager/ManagerDetail';
+import ManagerDetail, {loader as managerDetailLoader}  from './pages/manager/ManagerDetail';
 import ErrorPage_403 from './pages/ErrorPage_403';
 import ErrorPage_401 from './pages/ErrorPage_401';
-
-import ManagerDetail, {loader as managerDetailLoader}  from './pages/manager/ManagerDetail';
 
 const router = createBrowserRouter([
   { 
