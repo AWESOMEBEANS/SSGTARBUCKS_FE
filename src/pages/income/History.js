@@ -45,11 +45,7 @@ export default function History() {
     let groupedListkeys = Object.keys(groupedList).reverse();
     const resultArray = groupedListkeys.map(key => groupedList[key][0]);
 
-    const handleScannerOpen = () => {
-        setModalOpen(true);
-    };
-
-    const handleScannerClose = () => {
+    const handleModalClose = () => {
       setModalOpen(false);
   };
     const handleScanWebCam = (result) => {
