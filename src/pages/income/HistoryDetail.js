@@ -5,7 +5,7 @@ import axios from "axios";
 import { json, useLoaderData, useParams } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
 import Modal_search from "../../commons/Modal_search";
-
+//변경사항
 export default function HistoryDetail() {
   const [modalOpen, setModalOpen] = useState(false);
   const [scanResult, setScanResult] = useState('');
