@@ -209,8 +209,7 @@ export async function action({ request }) {
 
         console.log("response>>>>>>", response);
         resData = response.data;
-
-       alert("보관장소를 정상적으로 등록하셨습니다.");
+      //alert("보관장소를 정상적으로 등록하셨습니다.");
     } catch (error) {
         console.log("error:", error);
         

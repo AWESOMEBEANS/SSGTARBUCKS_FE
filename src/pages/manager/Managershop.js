@@ -14,7 +14,7 @@ export default function Managershop() {
         <>
             <div className="w-full " style={{ height: "100%", fontFamily: "Pretendard-Regular" }}>
                 <div className="w-2/5 h-fit mx-auto my-20 ">
-                <div className="flex h-14 justify-around items-center  my-2" >
+                <div className="flex h-14 justify-around items-center  mb-10" >
                     <h4 className="text-3xl font-bold " style={{ fontFamily: "EASTARJET-Medium", textDecoration: "underline #eaeaea", textUnderlineOffset: "10px" }}>
                         내 정보
                     </h4>

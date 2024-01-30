@@ -16,13 +16,13 @@ export default function MyPage() {
             
             <div className="w-full " style={{ height: "100%", fontFamily: 'Pretendard-Regular' }}>
                 <div className="w-8/12 h-3/6 mx-auto mt-10">
-                    <div className="text-center h-14 my-2" >
+                    <div className="text-center h-14 mt-20" >
                         <h4 className="text-3xl font-bold " style={{ fontFamily: "EASTARJET-Medium", textDecoration: "underline #eaeaea", textUnderlineOffset: "10px" }}>
                             내 정보
                         </h4>
                     </div>
                     <div >
-                        <div className="flex justify-around border-b mt-20 mb-4 pb-16">
+                        <div className="flex justify-around border-b mt-10 mb-4 pb-10">
                             <div >
                                 <div className="flex h-16 justify-between px-8 items-center rounded-lg shadow-lg my-4" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
                                     <h4 className="text-lg font-bold mr-4">
@@ -120,8 +120,6 @@ export async function loader({ request }) {
     console.log("resData", resData);
     return resData;
 }
-
-
 
 const Modal_change_pwd = ({  onCancel }) => {
     const [checkPwd, setCheckPwd] = useState(""); 

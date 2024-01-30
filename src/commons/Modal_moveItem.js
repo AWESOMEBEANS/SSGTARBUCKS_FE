@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getAuthToken } from '../util/auth';
+import PopUp from "../commons/PopUp.js";  
 
 const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
     const [tmpStockList, setTmpStockList] = useState(stockList);
@@ -9,6 +10,24 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
     const [selectedLocationAlias, setSelectedLocationAlias] = useState('');
     const [locationList, setLocationList] = useState([]);
     const [aliasList, setAliasList] = useState([]);
+
+     //////////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        if(comment==="상품을 이동하였습니다."){
+        window.location.reload();
+        }
+    };
+    //////////////////////////////////////////////////////////////////////
 
 
   /* 카테고리 필터 */
@@ -51,7 +70,7 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
 
         if (selectedStorageType && !selectedStorageLocation && selectedLocationAlias) {
             // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
-            alert('보관구역을 선택하세요.');
+            openPopUp("check","보관구역을 선택해주세요.");
             setSelectedLocationAlias('');
             return; // 필터링을 하지 않고 종료
         }
@@ -168,6 +187,9 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
                     </div>
                 </div>
             </div>
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
     );
 };

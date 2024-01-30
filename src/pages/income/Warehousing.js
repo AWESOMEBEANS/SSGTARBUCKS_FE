@@ -1,22 +1,46 @@
 import React, { useEffect, useState } from "react";
-import Nav from "../../commons/Nav";
-import Search from "../../commons/Search"
 import "../../sources/css/scanner.css"
 import axios from "axios";
 import { json, useNavigate } from "react-router";
 import { getAuthToken } from "../../util/auth";
 import Modal_search from "../../commons/Modal_search";
+import PopUp from "../../commons/PopUp.js";  
 
-
-export default function Warehousing() {
+export default function Warehousing({scanner}) {
     const [scanResult, setScanResult] = useState('');
     const [datas, setDatas] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
+    const branch_id = localStorage.getItem("branch_id");
+     //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        navigate('/branch/income/list');
+    };
+    //////////////////////////////////////////////////////////////////////
+
+    useEffect(() => {
+        setModalOpen(true);
+    }, [scanner]);
+
 
     const handleModalOpen = () => {
-        setModalOpen(!modalOpen);
+        setModalOpen(true);
     };
+    const handleModalClose = () => {
+        setModalOpen(false);
+        navigate('/branch/income/list');
+    };
+
     const handleScanWebCam = (result) => {
         setScanResult(result);
     };
@@ -26,6 +50,19 @@ export default function Warehousing() {
             if (!scanResult) {
                 return;
             }
+
+            
+            /* QR 유효성 검사 */
+            console.log("입고내역서 스캔값 : ", scanResult,"branch_id",branch_id);
+            // QR이 매장내역서인 경우 (매장 branch_id와 @가 있고 -가 없으면 , TODO 우리 지점 상품이 맞으면
+            if (!scanResult.startsWith(branch_id) || !scanResult.includes('@') || scanResult.includes('-')) {
+                console.log("!scanResult.startsWith(branch_id) : ",!scanResult.startsWith(branch_id));
+                console.log("!scanResult.includes('@') : ",!scanResult.includes('@'));
+                console.log("scanResult.includes('-') : ",scanResult.includes('-'));
+                openPopUp("check", "입고내역서 QR코드를 스캔해주세요.");
+                return;
+            } 
+
             try {
                 console.log("스캔결과값----------------->", scanResult);
                 const token = getAuthToken();
@@ -83,15 +120,17 @@ export default function Warehousing() {
                     )
                 })}
             </div>
-            {scanResult}
             {modalOpen && (
                 <Modal_search
                     onSubmit={handleModalOpen}
-                    onCancel={handleModalOpen}
+                    onCancel={handleModalClose}
                     onScan={handleScanWebCam}
                     onType={"입고내역서"}
                 >
                 </Modal_search>)}
+                {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
 
     )

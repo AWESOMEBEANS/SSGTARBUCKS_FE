@@ -32,6 +32,8 @@ import ManagerDetail from './pages/manager/ManagerDetail';
 import ErrorPage_403 from './pages/ErrorPage_403';
 import ErrorPage_401 from './pages/ErrorPage_401';
 
+import ManagerDetail, {loader as managerDetailLoader}  from './pages/manager/ManagerDetail';
+
 const router = createBrowserRouter([
   { 
     path:"/",
@@ -56,7 +58,7 @@ const router = createBrowserRouter([
       {path: "location/list", element:<Storageproduct />, loader:storageLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/list/inspection/:incomeId", element: <HistoryDetail />, loader: detailLoader },
-      {path: "income/specification", element:<Warehousing />},
+      {path: "income/inspection", element:<Warehousing scanner={"income"}/>},
       {path: "income/new", element:<Store />, loader:storeLoader},
       {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
@@ -76,7 +78,7 @@ const router = createBrowserRouter([
     children : [
       {path: "main", element:<Manager />},
       {path: "branch/list", element:<Managersolstice />, loader:managerListLoader},
-      {path: "branch/detail/:branch_id", element:<ManagerDetail />, loader:managerListLoader},
+      {path: "branch/detail/:branch_id", element:<ManagerDetail />, loader:managerDetailLoader},
       {path: "mypage", element:<Managershop />, loader:adminMyPageLoader},
       {path: "logout", action:logoutAction },
     ]
