@@ -29,12 +29,14 @@ import Manager from './pages/manager/Manager';
 import Managersolstice, {loader as managerListLoader} from './pages/manager/Managersolstice';
 import Managershop, {loader as adminMyPageLoader} from './pages/manager/Managershop';
 import ManagerDetail from './pages/manager/ManagerDetail';
+import ErrorPage_403 from './pages/ErrorPage_403';
+import ErrorPage_401 from './pages/ErrorPage_401';
 
 const router = createBrowserRouter([
   { 
     path:"/",
     element:<Login />,
-    errorElement:<ErrorPage />,
+    errorElement:<ErrorPage_401 />,
     action: authAction
   },
   {
@@ -45,7 +47,7 @@ const router = createBrowserRouter([
   {
     path:"/branch",
     element:<RootLayout />,
-    errorElement:<ErrorPage />,
+    errorElement:<ErrorPage/>,
     loader: tokenLoader,
     children : [
       {path: "main", element:<Main />, loader:mainLoader, index:true},
@@ -69,7 +71,7 @@ const router = createBrowserRouter([
   {
     path:"/admin",
     element:<M_RootLayout />,
-    errorElement:<ErrorPage />,
+    errorElement:<ErrorPage_403 />,
     loader:tokenLoader,
     children : [
       {path: "main", element:<Manager />},
