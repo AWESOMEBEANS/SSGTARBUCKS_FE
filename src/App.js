@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       {path: "location/list", element:<Storageproduct />, loader:storageLoader},
       {path: "income/list", element:<History />, loader:incomeLoader},
       {path: "income/list/inspection/:incomeId", element: <HistoryDetail />, loader: detailLoader },
-      {path: "income/specification", element:<Warehousing />},
+      {path: "income/inspection", element:<Warehousing scanner={"income"}/>},
       {path: "income/new", element:<Store />, loader:storeLoader},
       {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},

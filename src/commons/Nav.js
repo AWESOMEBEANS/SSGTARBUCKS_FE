@@ -146,7 +146,7 @@ function WareHousing(){
         <>
             <div className="menu_name_itm">
                 <Link to="/branch/income/list" className="menu_item_color text-lg font-semibold menu_name_itms">입고내역</Link>
-                <Link to="/branch/income/specification" className="menu_item_color text-lg font-semibold menu_name_itms">검수하기</Link>
+                <Link to="/branch/income/inspection" className="menu_item_color text-lg font-semibold menu_name_itms">검수하기</Link>
                 <Link to="/branch/income/new" className="menu_item_color text-lg font-semibold menu_name_itms">재고등록</Link>
             </div>
         </>

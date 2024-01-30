@@ -4,7 +4,7 @@ import axios from "axios";
 import { getAuthToken } from "../../util/auth.js";
 import { json, useLoaderData, useNavigate } from "react-router";
 import Modal_search from "../../commons/Modal_search.js";
-
+import PopUp from "../../commons/PopUp.js"; 
 
 export default function Store() {
     const [datas, setDatas] = useState(useLoaderData());
@@ -14,6 +14,23 @@ export default function Store() {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
     const navigate = useNavigate();
+
+     //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const branch_id = localStorage.getItem("branch_id");
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+    //////////////////////////////////////////////////////////////////////
+
 
     const handleScanWebCam = (result) => {
         setScanResult(result);
@@ -29,7 +46,18 @@ export default function Store() {
         const fetchData = async (itemId) => {
             if (!scanResult || !itemId) {
                 return;
-              }
+            }
+
+            /* QR 유효성 검사 */
+            console.log("handleMoveLocationQrValue (장소 QR값) : ", scanResult);
+            // 올바르지 않은 QR을 스캔된 경우 (팝업띄우기, 모달닫기, 기록된 스캔값 지우기)
+            if (scanResult.includes('@') || !scanResult.startsWith(branch_id)) {
+                openPopUp("check", '보관장소 QR코드를 스캔해주세요.');
+                setModalOpen(false);
+                setScanResult('');
+                return;
+            } 
+
             try {
                 console.log("스캔결과값----------------->", scanResult);
                 console.log("선택한 검수내역의 아이템 아이디---->", itemId);
@@ -53,8 +81,8 @@ export default function Store() {
                 const resData = response.data;
                 console.log("resData", resData);
                 setModalOpen(false);
-                alert(response.data);
-                window.location.reload();
+                setScanResult('');
+                openPopUp("success", "보관장소에 등록되었습니다.");
             } catch (error) {
                 console.error("Error during fetchData:", error);
             }
@@ -141,6 +169,10 @@ export default function Store() {
                     onType={"보관할 장소의"}
                 />
             )}
+            {isPopUpOpen && (
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
+
         </>
     )
 }
