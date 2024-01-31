@@ -132,15 +132,15 @@ export default function History() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-auto">
 
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-2/3 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
                     <i className="w-8"></i>
                     <span className="w-16">번호</span>
-                    <span className="w-1/12">배송코드</span>
+                    <span className="w-1/12">입고코드</span>
                     <span className="w-1/12">수량</span>
-                    <span className="w-2/12">배송일자</span>
+                    <span className="w-2/12">입고일자</span>
                     <span className="w-1/12">처리상태</span>
 
                 </div>
@@ -161,7 +161,7 @@ export default function History() {
                                         setIncomeStatus(groupedList[key][0].income_status);
                                     }}
                                 ></i>
-                                <span className="w-1/16"><NavLink to={`inspection/${groupedList[key][0].income_id}`} >{index+1}</NavLink></span>
+                                <span className="w-16"><NavLink to={`inspection/${groupedList[key][0].income_id}`} >{index+1}</NavLink></span>
                                 <span className="w-1/12">{groupedList[key][0].income_code}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
@@ -248,7 +248,7 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                     <span className="w-2/6">상품명</span>
                     <span className="w-1/6">유통기한</span>
                     <span className="w-1/6">검수여부</span>
-                    <span className="w-1/12">QR</span>
+                    <span className="w-1/12">스캔하기</span>
                 </div> 
                 {true && groupedDetailList[id].map((row, index) =>
                     <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
@@ -263,7 +263,7 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                         <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={() => { modalHandler(row.item_code); }}>스캔</button>
                     </div>
                 )}
-                {incomeStatus === '재고등록완료'? null :<button className="border w-2/12 h-11 rounded-md mx-auto hoverBtn_white shadow-md" onClick={handleInspectionComplete}>재고등록</button>}
+                {incomeStatus === '재고등록완료'? null :<button className="border w-2/12 h-11 rounded-md mx-auto hoverBtn_white shadow-md" onClick={handleInspectionComplete}>검수완료</button>}
                 
             </div>
         </>

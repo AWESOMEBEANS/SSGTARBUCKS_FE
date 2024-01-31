@@ -158,10 +158,10 @@ export default function HistoryDetail() {
         <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
           className="w-9/12 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
           <span className="w-1/12">번호</span>
-          <span className="w-1/6">품목명</span>
           <span className="w-1/12">상품코드</span>
-          <span className="w-1/12">입고상태</span>
+          <span className="w-1/6">상품명</span>
           <span className="w-1/6">유통기한</span>
+          <span className="w-1/12">검수여부</span>
           <span className="w-1/12">스캔하기</span>
         </div>
 
@@ -169,10 +169,10 @@ export default function HistoryDetail() {
           <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "#f6f5efb3", height: "6vh" }}
             className="w-9/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center ">
             <span className="w-1/12">{index + 1}</span>
-            <span className="w-1/6">{incomeItem.product_name}</span>
             <span className="w-1/12">{incomeItem.item_code}</span>
-            <span className="w-1/12">{incomeItem.income_list_result}</span>
+            <span className="w-1/6">{incomeItem.product_name}</span>
             <span className="w-1/6">{incomeItem.item_exp}</span>
+            <span className="w-1/12">{incomeItem.income_list_result}</span>
             <button className="w-1/12 border border-slate-400 h-8 shadow-md page_itms rounded-sm" onClick={() => handleclick(incomeItem.item_code)}>스캔</button>
           </div>
         ))}

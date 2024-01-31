@@ -53,7 +53,7 @@ export default function Salelist() {
 
     return (
         <>
-        <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center">
+        <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-auto text-center">
                 <div className="w-2/3 my-4 mx-auto flex justify-around items-center text-lg h-14 rounded-md border font-bold shadow-lg" style={{background: "#f6f5efb3"}}>
                     <span className="w-1/12">번호</span>
                     <span className="w-2/12">판매코드</span>

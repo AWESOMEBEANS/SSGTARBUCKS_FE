@@ -78,7 +78,7 @@ export default function Inventory() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  text-center flex flex-col justify-between">
                 <div className="h-full">
                 <div className="w-5/6 mx-auto flex justify-between items-center font-bold h-14 my-4">
                     <div className="text-center text-lg w-56 flex justify-center items-center shadow-lg h-full border rounded-md"

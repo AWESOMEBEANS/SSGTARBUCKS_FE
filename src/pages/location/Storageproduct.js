@@ -230,7 +230,7 @@ export default function Storageproduct() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-auto">
                 <div style={{ margin: "0 auto", width: "80%" }} className="my-4">
                     <table className="w-full">
                         <thead>
