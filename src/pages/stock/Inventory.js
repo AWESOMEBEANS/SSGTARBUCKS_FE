@@ -4,6 +4,7 @@ import axios from "axios";
 import { json, useLoaderData } from "react-router";
 import { getAuthToken } from "../../util/auth";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 
 export default function Inventory() {
@@ -80,7 +81,7 @@ export default function Inventory() {
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
                 <div className="h-full">
                 <div className="w-5/6 mx-auto flex justify-between items-center font-bold h-14 my-4">
-                    <div className="text-center text-lg w-2/12 flex justify-center items-center shadow-lg h-full border rounded-md"
+                    <div className="text-center text-lg w-56 flex justify-center items-center shadow-lg h-full border rounded-md"
                         style={{ backgroundColor: "#f6f5efb3" }}>
                         <select className="text-center" style={{ backgroundColor: "#f6f5efb3" }}
                             onChange={(e) => handleSelectedProductCategoryChange(e.target.value)}>
@@ -93,7 +94,7 @@ export default function Inventory() {
                         </select>
                     </div>
                     <div className="text-lg w-10/12 flex border rounded-md justify-around items-center shadow-lg h-full" style={{ background: "#f6f5efb3" }}>
-                        <span className="w-2/12">상품명</span>
+                        <span className="w-3/12">상품명</span>
                         <span className="w-1/12">규격</span>
                         <span className="w-1/12">단위</span>
                         <span className="w-1/12">옵션</span>
@@ -104,16 +105,16 @@ export default function Inventory() {
                     currentItems.map(function (r, i) {
                         return (
                             <div style={{ height: "6.5%" }} className="w-5/6 mx-auto flex justify-between items-center my-3">
-                                <div className="text-center text-lg w-2/12 flex justify-center items-center shadow-lg border rounded-md h-full" style={{ background: "#f6f5efb3" }}>
+                                <div className="text-center text-lg w-56 flex justify-center items-center shadow-lg border rounded-md h-full" style={{ background: "#f6f5efb3" }}>
                                     {r.category_name}
                                 </div>
-                                <div className="text-lg w-10/12 flex justify-around items-center shadow-lg border rounded-md text-center h-full" style={{ background: "#f6f5efb3" }}>
-                                    <span className="w-2/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_name}</span>
+                                <Link to={`/branch/stock/product/detail/${r.product_id}`} className="text-lg w-10/12 flex justify-around items-center shadow-lg border rounded-md text-center h-full page_itms">
+                                    <span className="w-3/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_name}</span>
                                     <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_standard}</span>
                                     <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null} >{r.product_unit}</span>
                                     <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.product_spec}</span>
-                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.stock_quantity}</span>
-                                </div>
+                                    <span className="w-1/12" style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.total_product_quantity}</span>
+                                </Link>
                             </div>
                         )
                     })}
