@@ -25,7 +25,7 @@ export default function Nav(){
                 <div className="content">
                     <div className="w-full flex flex-col justify-center">
                         <div className={navIndex("location") && "bg-green-700"}>
-                        <p className="w-full flex justify-center" onClick={()=>{setMasterData(!masterData)
+                        <div className="w-full flex justify-center" onClick={()=>{setMasterData(!masterData)
                                                                 setWareHousing(false)
                                                                 setInventory(false)
                                                                 setFactory(false)}}>
@@ -37,11 +37,11 @@ export default function Nav(){
                                 </span>
                                 }
                             </div>
-                        </p>
+                        </div>
                         </div>
                         {isActive ? null : (masterData ? <MasterData/> : null)}
                         <div className={navIndex("income") && "bg-green-700"}>
-                        <p className="w-full flex justify-center" onClick={()=>{setWareHousing(!wareHousing)
+                        <div className="w-full flex justify-center" onClick={()=>{setWareHousing(!wareHousing)
                                                                 setMasterData(false)
                                                                 setInventory(false)
                                                                 setFactory(false)}}>
@@ -53,11 +53,11 @@ export default function Nav(){
                                 </span>
                                 }
                             </div>
-                        </p>
+                        </div>
                         </div>
                         {isActive ? null : (wareHousing ? <WareHousing/> : null)}
                         <div className={navIndex("stock") && "bg-green-700"}>
-                        <p className="w-full flex justify-center" onClick={()=>{setInventory(!inventory)
+                        <div className="w-full flex justify-center" onClick={()=>{setInventory(!inventory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
                                                                 setFactory(false)}}>
@@ -69,11 +69,11 @@ export default function Nav(){
                                     </span>
                                 }
                             </div>
-                        </p> 
+                        </div> 
                         </div>
                         {isActive ? null : (inventory ? <Inventory/> : null)}
                         <div className={(navIndex("discard") || navIndex("sale")) && "bg-green-700"}>
-                        <p className="w-full flex justify-center" onClick={()=>{setFactory(!factory)
+                        <div className="w-full flex justify-center" onClick={()=>{setFactory(!factory)
                                                                 setMasterData(false)
                                                                 setWareHousing(false)
                                                                 setInventory(false)}}>
@@ -85,7 +85,7 @@ export default function Nav(){
                                     </span>
                                 }
                             </div>
-                        </p>
+                        </div>
                         </div>
                         {isActive ? null : (factory ? <Factory/> : null)}
                         <div className={navIndex("mypage") && "bg-green-700"}>

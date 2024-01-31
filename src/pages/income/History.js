@@ -240,11 +240,11 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
 
     return (
         <>
-            <div className="w-3/5 p-2 mx-auto" style={{ backgroundColor: "#f0f0f0aa" }}>
+            <div className="w-3/5 p-2 mx-auto text-center" style={{ backgroundColor: "#f0f0f0aa" }}>
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white" }}
                     className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 h-10 font-bold text-center">
                     <span className="w-1/12">번호</span>
-                    <span className="w-2/6">상품코드</span>
+                    <span className="w-1/6">상품코드</span>
                     <span className="w-2/6">상품명</span>
                     <span className="w-1/6">유통기한</span>
                     <span className="w-1/6">검수여부</span>
@@ -258,12 +258,12 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                         <span className="w-2/6">{row.product_name}({row.product_standard}, {row.product_unit})</span>
                         <span className="w-1/6">{row.item_exp}</span>
                         <span className="w-1/6">
-                            {completeItemCode === row.item_code? "승인" : row.income_list_result}
+                            {completeItemCode === row.item_code? "⭕" : (row.income_list_result === "승인" ? "⭕" : "❌")}
                         </span>                        
                         <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={() => { modalHandler(row.item_code); }}>스캔</button>
                     </div>
                 )}
-                {incomeStatus === '재고등록완료'? <></> : <span><button onClick={handleInspectionComplete}>검수완료</button></span>}
+                {incomeStatus === '재고등록완료'? null :<button className="border w-2/12 h-11 rounded-md mx-auto hoverBtn_white shadow-md" onClick={handleInspectionComplete}>재고등록</button>}
                 
             </div>
         </>

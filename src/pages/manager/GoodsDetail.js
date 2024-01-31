@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import { getAuthToken } from "../../util/auth";
+import { json, useLoaderData } from "react-router-dom";
+import axios from "axios";
 
-import btb from '../../sources/image/btb.png';
-import Nav from "../../commons/Nav";
-import Search from "../../commons/Search"
+
 export default function GoodsDetail(){
+    const [ datas, setDatas ] = useState(useLoaderData());
+    console.log("datas>>>", datas);
 
     return(
         <>
-        {/* <Search/> */}
         <div className="low-opacity-bg-image flex">
-            {/* <Nav/> */}
             <div style={{width:'50%', float:'left'}}>
             <div style={{padding:'30px'}}>
             <div className="w-1/1 h-fit mx-auto my-28">
                 <div style={{paddingLeft:"60px",paddingTop:"40px"}}>
                 {/* <h1 className="text-3xl font-semibold mx-auto w-fit text-lime-700" style={{fontFamily: 'SUITE-Regular'}}>상품이미지</h1> */}
                     <div style={{paddingTop:'30px'}}>
-                        <img style={{width:"450px",height:"400px"}} src={btb}/>
+                        <img style={{width:"450px",height:"400px"}} />
                     </div>
                 </div>
                 </div>
@@ -56,4 +57,35 @@ export default function GoodsDetail(){
         
         </>
     )
+}
+
+export async function loader({ request }) {
+    console.log("ProductDetailPage,loader>>>>>>>>>>>>.", request)
+    const token = getAuthToken();
+    const branch_id = localStorage.getItem("branch_id");
+    const product_id = 103;
+    console.log("token:", token);
+    console.log("branch_id:", branch_id);
+
+    const response = await axios({
+        method: "GET",
+        url: `http://localhost:8000/api/v1/product/detail/${product_id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'jwtauthtoken': token
+        },
+        params: {
+            branch_id: branch_id
+        }
+    });
+
+    console.log("ProductDetailPage.response >>>>>>>>>>>..", response);
+
+    if (response.status !== 200) {
+        throw json({ message: 'Could not save event.' }, { status: 500 });
+    }
+
+    const resData = response.data;
+    console.log("resData", resData);
+    return resData;
 }

@@ -1,24 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
-import { Routes, Route, Link, createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login ,{action as authAction}from './pages/Login';
 import FindPwd from './pages/FindPwd';
 import Main ,{loader as mainLoader}from './pages/Main';
 import History, {loader as incomeLoader} from './pages/income/History';
 import HistoryDetail,{loader as detailLoader} from './pages/income/HistoryDetail';
-import Register, {loader as registerRoader} from './pages/income/Register';
 import Warehousing from './pages/income/Warehousing';
 import Position, {action as RegisterLocationAction} from './pages/location/Position';
 import Inventory, {loader as inventoryLoader} from './pages/stock/Inventory';
 import Release from './pages/Release';
 import Salelist, {loader as salelistLoader} from './pages/Salelist';
-import Myshop, {loader as myDataLoader} from './pages/MyPage';
+import {loader as myDataLoader} from './pages/MyPage';
 import View, {loader as stockLocationLoader} from './pages/stock/View';
 import Store, {loader as storeLoader} from './pages/stock/Store';
 import SearchList, {loader as searchListLoader} from './pages/SearchList';
 import SearchQRList, {loader as searchQRListLoader} from './pages/SearchQRList';
 import Storageproduct, {loader as storageLoader} from './pages/location/Storageproduct';
-import ViewManager from './pages/manager/ViewManager';
 import ErrorPage from './pages/ErrorPage';
 import { tokenLoader } from './util/auth';
 import RootLayout from './commons/RootLayout';
@@ -31,6 +28,7 @@ import Managershop, {loader as adminMyPageLoader} from './pages/manager/Managers
 import ManagerDetail, {loader as managerDetailLoader}  from './pages/manager/ManagerDetail';
 import ErrorPage_403 from './pages/ErrorPage_403';
 import ErrorPage_401 from './pages/ErrorPage_401';
+import GoodsDetail, {loader as productDetailLoader} from './pages/manager/GoodsDetail';
 
 const router = createBrowserRouter([
   { 
@@ -60,6 +58,7 @@ const router = createBrowserRouter([
       {path: "income/new", element:<Store />, loader:storeLoader},
       {path: "stock/inventory/list", element:<View />, loader:stockLocationLoader},
       {path: "stock/product/list", element:<Inventory />, loader:inventoryLoader},
+      {path: "stock/product/detail/:product_id", element:<GoodsDetail />, loader:productDetailLoader},
       {path: "outcome/product", element:<Release  scanner={"outcome"}/>},
       {path: "discard/product", element:<Release scanner={"discard"} />},
       {path: "sale/product", element:<Salelist />, loader:salelistLoader},
