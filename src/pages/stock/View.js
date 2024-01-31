@@ -414,7 +414,7 @@ export default function View() {
                         <span className="w-2/12">유통기한</span>
                         <span className="w-1/12">수량</span>
                     </div>
-                    {currentItems.length === 0 ? <h1 className="text-3xl mt-20">불러올 재고가 없습니다.</h1> :
+                    {currentItems.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 재고가 없습니다.</h1> :
                         currentItems.map(function (r, i) {
                             return (
                                 <div style={{ border: "0.1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.8%" }}
@@ -442,6 +442,7 @@ export default function View() {
                             )
                         })}
                 </div>
+                {currentItems.length === 0 ? null :
                 <div className="mb-3">
                     <Pagination
                         itemsPerPage={itemsPerPage}
@@ -452,6 +453,7 @@ export default function View() {
                         onNextClick={handleNextClick}
                     />
                 </div>
+                }
             </div>
             {modalOpen &&
                 <Modal onCancel={onCancel} selectedItems={selectedItems} stockList={loaderDataStorage} />

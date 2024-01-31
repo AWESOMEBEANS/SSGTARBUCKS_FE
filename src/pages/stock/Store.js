@@ -131,7 +131,8 @@ export default function Store() {
                         <span className="w-1/12">유통기한</span>
                         <span className="w-16">보관장소 등록</span>
                 </div>
-                {datas.map(function (r, i) {
+                { datas.length === 0  ? <h1 className="text-3xl mt-20 text-center">재고로 등록할 상품이 없습니다.</h1> : 
+                datas.map(function (r, i) {
                     return (
                         <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "6.5%" }}
                         className="w-4/5 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center">
@@ -149,7 +150,7 @@ export default function Store() {
                 })}
                 </div>
                 <div className="mb-3">
-                    { datas.length === 0  ? <h1 className="text-3xl mt-20">불러올 데이터가 없습니다.</h1> : 
+                    { datas.length === 0  ? null : 
                     <Pagination
                         itemsPerPage={itemsPerPage}
                         totalItems={datas.length}
