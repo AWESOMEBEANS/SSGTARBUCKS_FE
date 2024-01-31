@@ -128,7 +128,7 @@ const Modal_change_pwd = ({  onCancel }) => {
     const user_id = localStorage.getItem("user_id");
 
     const handleChangePassword = async () => {
-        try {
+        try { 
             const token = getAuthToken();
             const response = await axios({
                 method: "POST",
