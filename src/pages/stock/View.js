@@ -370,7 +370,7 @@ export default function View() {
     //
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  text-center flex flex-col justify-between">
                 <div className="h-full">
                     <div style={{ height: "7%" }}
                         className="w-3/4 my-1 mx-auto flex justify-between items-center text-2xl my-4">
@@ -411,7 +411,7 @@ export default function View() {
                         <span className="w-1/12">보관구역</span>
                         <span className="w-2/12">보관명칭</span>
                         <span className="w-4/12">상품명</span>
-                        <span className="w-2/12">유통기한</span>
+                        <span className="w-1/12">유통기한</span>
                         <span className="w-1/12">수량</span>
                     </div>
                     {currentItems.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 재고가 없습니다.</h1> :
@@ -428,7 +428,7 @@ export default function View() {
                                         style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>
                                         {`${r.product_name} (${r.product_standard}, ${r.product_unit})`}
                                     </span>
-                                    <span className="w-2/12"
+                                    <span className="w-1/12"
                                         style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
                                         {r.item_exp}
                                     </span>

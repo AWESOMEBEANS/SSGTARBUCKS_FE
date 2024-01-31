@@ -119,7 +119,7 @@ export default function Store() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center flex flex-col justify-between">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto   text-center flex flex-col justify-between">
                 <div className="h-full">
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
@@ -129,7 +129,7 @@ export default function Store() {
                         <span className="w-3/12">상품명</span>
                         <span className="w-16">입고수량</span>
                         <span className="w-1/12">유통기한</span>
-                        <span className="w-16">보관장소 등록</span>
+                        <span className="w-16">재고등록</span>
                 </div>
                 { datas.length === 0  ? <h1 className="text-3xl mt-20 text-center">재고로 등록할 상품이 없습니다.</h1> : 
                 datas.map(function (r, i) {

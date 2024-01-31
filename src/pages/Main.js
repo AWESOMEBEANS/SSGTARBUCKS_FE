@@ -23,7 +23,7 @@ export default function Main(){
                         SSGTARBUCKS에 오신 것을 환영합니다 :)
                         <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{branch_name}</span> 입니다 </p>
                     </h1>
-                    <div className="w-11/12 h-1/3 text-start flex justify-center flex-col mt-20">
+                    <div className="w-11/12 h-72 text-start flex justify-center flex-col mt-20">
                         <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center"
                             >
                             유통기한 임박 목록
@@ -32,7 +32,7 @@ export default function Main(){
                         <Table1 onLoadData={loaderDataMain} />
                         : <h1 className="text-xl">불러올 목록이 없습니다.</h1>}
                     </div>
-                    <div className="w-11/12 h-1/3 text-start flex justify-center flex-col mt-5">
+                    <div className="w-11/12 h-72 text-start flex justify-center flex-col mt-5">
                         <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center">
                             발주추천 목록
                         </h3>
@@ -61,7 +61,7 @@ const getLocationType = (area) => {
 };
     return(
         <>
-            <div className="rounded-xl overflow-scroll h-full" >
+            <div className="rounded-xl overflow-auto h-full" >
                 <table className="w-full mx-auto text-lg shadow-lg" style={{borderRadius:"10px"}}>
                     <thead >
                         <tr className="text-center" style={{backgroundColor:"#f6f5efb3"}} >
@@ -133,7 +133,7 @@ function Table2({onLoadData}){
     let {expDataList, remainDataList} = onLoadData;
         return(
             <>
-                <div className="rounded-xl overflow-scroll h-full">
+                <div className="rounded-xl overflow-auto h-full">
                     <table className="w-full mx-auto text-lg text-center shadow-lg" style={{borderRadius:"10px"}}>
                         <thead  >
                             <tr style={{backgroundColor:"#f6f5efb3"}} >

@@ -77,7 +77,7 @@ export default function SearchList() {
     return (
 
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-scroll text-center ">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-auto text-center ">
                 <h1 className="text-3xl mt-3 text-start ml-32">" {searchWord} " 검색결과</h1>
                 <div
                     className="w-5/6 mx-auto flex justify-between items-center mt-3 h-14">
@@ -106,13 +106,13 @@ export default function SearchList() {
                     </div>
                     <div className="text-center text-lg w-2/6 flex justify-center items-center shadow-lg font-bold" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                         <span className="w-1/4">
-                            저장유형
+                            보관유형
                         </span>
                         <span className="w-1/4">
-                            저장장소
+                            보관장소
                         </span>
                         <span className="w-1/4">
-                            저장명칭
+                            보관명칭
                         </span>
                         <span className="w-1/4 mx-2" onClick={handleQtyButtonClick}>
                             수량

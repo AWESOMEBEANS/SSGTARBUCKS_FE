@@ -46,7 +46,7 @@ export default function Managersolstice() {
 
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll flex flex-col justify-between">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-auto flex flex-col justify-between">
                 <div className="h-full"> 
                     <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                         className="w-3/5 h-14 my-4 mx-auto flex justify-around items-center text-lg shadow-lg px-3 text-center font-bold">

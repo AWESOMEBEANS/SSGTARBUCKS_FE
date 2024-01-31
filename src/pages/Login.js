@@ -64,7 +64,8 @@ export async function action({ request }) {
     } catch (error) {
       console.log("error:", error);
       alert("아이디 또는 비밀번호가 올바르지 않습니다.")
-      throw new Error("error 발생되었습니다");
+      return redirect('/');
+      // throw new Error("error 발생되었습니다");
     }
     if(localStorage.getItem("user_type") === "manager"){
       return redirect('/branch/main');
