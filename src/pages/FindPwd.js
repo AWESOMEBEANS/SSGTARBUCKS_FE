@@ -106,7 +106,7 @@ export default function FindPwd() {
         <div className="bg">
             <div>
                 <div className="circle shadow-lg"></div>
-                <div className="card shadow-lg">
+                <div className="card_pwd shadow-lg">
                     <h2>SSGTARBUCKS</h2><br />
                     <h4>비밀번호 찾기</h4>
                     <div className="form">

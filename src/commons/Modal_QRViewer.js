@@ -41,35 +41,28 @@ export default function Modal_QRViewer({  onCancel, onSendLocationQRValue}){
 
     return(
         <div className="modal-container">
-            <div className="madal-main">
-                <div style={{paddingBottom:"10px",
-                            textAlign:"center", 
-                            fontSize:"20px"}}>SSGTARBUCKS</div>
-                <div style={{border:"1px solid rgba(106, 136, 30, 0.519)",borderRadius:"3px"}}>
-                    <img src={imageUrl} alt="png" style={{width:"500px", height:"500px"}} />
+            <div className="w-3/12 bg-white">
+                <div style={{margin:"30px", textAlign:"center", fontSize:"20px"}}>SSGTARBUCKS</div>
+                <div style={{border:"1px solid black",borderRadius:"3px", width:"fit-content", margin:"0px auto"}}>
+                    <img src={imageUrl} alt="png" style={{width:"400px", height:"400px", margin:"0px auto"}} />
                 </div>
                 <div style={{padding:"5%"}}>
-                    <div style={{display:"flex",alignItems:"cent"}}>
+
+                    <div style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
                     
-                    <div style={{width:"100%",textAlign:"center"}}>
-                        <button style={{fontSize:"18px",
-                                        width:"40%",
-                                        height:"50px",
-                                        boxShadow:"0px 5px 5px #ccc",
-                                        border:"2px solid rgba(106, 136, 30, 0.519)",
-                                        borderRadius:"3px",borderRadius:"10px"}}
-                                        onClick={downloadQrCode}>
-                                        다운로드</button></div>
-                    <div style={{width:"100%",textAlign:"center"}}>
-                        <button style={{fontSize:"18px",
-                                        width:"40%",
-                                        height:"50px",
-                                        boxShadow:"0px 5px 5px #ccc",
-                                        border:"2px solid rgba(106, 136, 30, 0.519)",
-                                        borderRadius:"3px",borderRadius:"10px"}}
-                                        onClick={()=> onCancel()}
-                                        >취소</button></div>
+                        <button style={{fontSize:"18px", width:"30%", margin:"0px 20px", height:"50px", boxShadow:"0px 5px 5px #ccc",  borderRadius:"3px",borderRadius:"10px"}}
+                            onClick={downloadQrCode}
+                            className="border hover:bg-gray-100">
+                            다운로드
+                        </button>
+                        <button style={{fontSize:"18px", width:"30%", margin:"0px 20px", height:"50px", boxShadow:"0px 5px 5px #ccc", borderRadius:"3px",borderRadius:"10px"}}
+                            onClick={()=> onCancel()}
+                            className="border hover:bg-gray-100"
+                            >취소
+                        </button>
+
                     </div>
+
                 </div>
             </div>
         </div>

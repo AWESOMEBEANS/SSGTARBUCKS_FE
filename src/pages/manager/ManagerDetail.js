@@ -156,8 +156,10 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
                 }
             });
             console.log('Data sent to /branch/user/modify:', selectedData);
+            alert("변경이 완료되었습니다.");
         } catch (error) {
             console.error('Error sending data to /branch/user/modify:', error);
+            alert("변경실패하였습니다.");
         }
     };
 

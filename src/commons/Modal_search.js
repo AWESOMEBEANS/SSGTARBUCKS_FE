@@ -7,9 +7,9 @@ export default function Modal_search({onCancel, onScan, onType}){
     return(
         <div className="modal-container">
             <div className="madal-main">
-                <h1 className="text-center text-3xl text-lime-800">SSGTARBUCKS</h1>
+                <h1 className="text-center text-3xl my-4 ">SSGTARBUCKS</h1>
                 <h1 className="text-center text-lg my-3  font-bold">{onType} QR코드를 스캔해주세요. </h1>
-                <div style={{border:"2px solid rgba(106, 136, 30, 0.519)",borderRadius:"3px"}}>
+                <div style={{border:"2px solid rgba(106, 136, 30, 0.519)",borderRadius:"3px"}} className="w-fit mx-auto">
                     <QRScanner onScan={onScan}/>
                 </div>
                 <div style={{padding:"5%"}}>
@@ -19,10 +19,10 @@ export default function Modal_search({onCancel, onScan, onType}){
                                             width:"40%",
                                             height:"50px",
                                             boxShadow:"0px 5px 5px #ccc",
-                                            border:"2px solid rgba(106, 136, 30, 0.519)",
-                                            borderRadius:"10px"}}
+                                            border:"1px solid rgba(106, 136, 30, 0.519)",
+                                            borderRadius:"3px"}}
                                             onClick={()=> onCancel()}
-                                            className="hoverBtn_white"
+                                            className="hover:bg-stone-100"
                                             >취소</button>
                         </div>
                     </div>

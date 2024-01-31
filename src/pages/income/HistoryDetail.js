@@ -152,33 +152,32 @@ export default function HistoryDetail() {
   }
   return (
     <>
-      <span><button onClick={handleInspectionComplete}>검수완료</button></span>
-
+      
       <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full my-auto overflow-scroll">
-        <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
-          className="w-2/3 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
-          <i className="w-8"></i>
-          <span className="w-16">번호</span>
-          <span className="w-1/12">품목명</span>
-          <span className="w-2/12">입고개수</span>
-          <span className="w-1/12">입고상태</span>
-          <span className="w-1/12">상품코드</span>
-          <span className="w-1/12">유통기한</span>
-          <span className="w-1/12">스캔하기</span>
 
+        <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
+          className="w-9/12 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
+          <span className="w-1/12">번호</span>
+          <span className="w-1/6">품목명</span>
+          <span className="w-1/12">상품코드</span>
+          <span className="w-1/12">입고상태</span>
+          <span className="w-1/6">유통기한</span>
+          <span className="w-1/12">스캔하기</span>
         </div>
 
         {incomeDetailList.map((incomeItem, index) => (
-          <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "white", height: "6vh" }}
-            className="w-11/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center ">
-            <span className="w-1/16">{index + 1}</span>
-            <span className="w-1/6">{incomeItem.item_code}</span>
+          <div style={{ border: "1px solid #d5d5d5", borderRadius: "5px", background: "#f6f5efb3", height: "6vh" }}
+            className="w-9/12 my-3 mx-auto flex justify-between items-center text-lg shadow-lg px-4 text-center ">
+            <span className="w-1/12">{index + 1}</span>
             <span className="w-1/6">{incomeItem.product_name}</span>
+            <span className="w-1/12">{incomeItem.item_code}</span>
+            <span className="w-1/12">{incomeItem.income_list_result}</span>
             <span className="w-1/6">{incomeItem.item_exp}</span>
-            <span className="w-1/6">{incomeItem.income_list_result}</span>
-            <span><button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={() => handleclick(incomeItem.item_code)}>스캔</button></span>
+            <button className="w-1/12 border border-slate-400 h-8 shadow-md page_itms rounded-sm" onClick={() => handleclick(incomeItem.item_code)}>스캔</button>
           </div>
         ))}
+
+        <button onClick={handleInspectionComplete} className="w-1/12 h-10 border page_itms shadow-md my-5 mx-auto">검수완료</button>
 
       </div>
 

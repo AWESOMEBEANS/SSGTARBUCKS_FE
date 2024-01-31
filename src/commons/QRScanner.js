@@ -12,7 +12,7 @@ const QRScanner = ({ onScan }) => {
 
     return (
         <>
-            <video ref={ref}/>
+            <video ref={ref} width={"500px"} className="mx-auto"/>
         </>
     );
 };
