@@ -26,7 +26,7 @@ export default function Nav(){
                                 <i className="fa-solid fa-house fa-lg my-7"></i>
                                 { !isActive && 
                                 <span className="text-lg font-semibold">
-                                    지점정보
+                                    지점관리
                                 </span>
                                 }
                             </div>

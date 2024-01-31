@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import '../sources/css/login.css';
 import { Form, Link, redirect } from "react-router-dom";
 import axios from "axios";
+import PopUp from "../commons/PopUp";
 
 export default function Login(){
 
+  const  checkLogin = localStorage.getItem("fail");
+  console.log("checkLogin >>>" ,checkLogin);
+
     return(
         <div className="bg">
-        <div>
-        <div className="circle shadow-lg"></div>
-        <div className="card_login shadow-lg">
-            <h2>SSGTARBUCKS</h2><br/>
-            <h4>재고관리시스템</h4>
-            <Form method="POST" className="form_login">
-                <input type="text" placeholder="직원코드" name="user_id" required/>
-                <input type="password" placeholder="비밀번호" name="user_pw" required/>
-                <button>SIGN IN</button>
-            </Form>
-            <footer>
-                <Link to="/find">비밀번호 찾기</Link>
-            </footer>
-        </div>
-        </div>
+          <div>
+          <div className="circle shadow-lg"></div>
+          <div className="card_login shadow-lg">
+              <h2>SSGTARBUCKS</h2><br/>
+              <h4>재고관리시스템</h4>
+              <Form method="POST" className="form_login">
+                  <input type="text" placeholder="직원코드" name="user_id" required/>
+                  <input type="password" placeholder="비밀번호" name="user_pw" required/>
+                  {checkLogin&& <p className="text-red-500 text-sm font-semibold">아이디 또는 비밀번호가 일치하지 않습니다.</p>}
+                  <button>SIGN IN</button>
+              </Form>
+              <footer>
+                  <Link to="/find">비밀번호 찾기</Link>
+              </footer>
+          </div>
+          </div>
         </div>
     )
 }
@@ -63,6 +68,8 @@ export async function action({ request }) {
       }
     } catch (error) {
       console.log("error:", error);
+      localStorage.setItem('fail', true);
+      localStorage.removeItem('fail');
       alert("아이디 또는 비밀번호가 올바르지 않습니다.")
       return redirect('/');
       // throw new Error("error 발생되었습니다");
