@@ -118,6 +118,7 @@ export default function Inventory() {
                         )
                     })}
                     </div>
+                    { currentItems.length === 0 ? null :
                     <div className="mb-3">
                     <Pagination
                         itemsPerPage={itemsPerPage}
@@ -127,7 +128,8 @@ export default function Inventory() {
                         onPrevClick={handlePrevClick}
                         onNextClick={handleNextClick}
                     />
-                </div>
+                    </div>
+                    }
             </div>
         </>
     )

@@ -55,7 +55,8 @@ export default function Managersolstice() {
                         <span className="w-1/2">지점주소</span>
                         <span className="w-1/4">담당직원</span>
                     </div>
-                    { datas.map((row, index)=> {
+                    {datas.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 지점정보가 없습니다.</h1> :
+                        datas.map((row, index)=> {
                         return(
                             <Link to={`/admin/branch/detail/${row.branch_id}`}
                             style={{ border: "1px solid #d5d5d5", borderRadius: "3px", height: "6.5%" }}
@@ -69,6 +70,7 @@ export default function Managersolstice() {
                         )
                     })}
                 </div>
+                {datas.length === 0 ? null :
                 <div className="mb-3">
                     <Pagination
                         itemsPerPage={itemsPerPage}
@@ -79,6 +81,7 @@ export default function Managersolstice() {
                         onNextClick={handleNextClick}
                     />
                 </div>
+                }
             </div>
         </>
     )

@@ -144,7 +144,8 @@ export default function History() {
                     <span className="w-1/12">처리상태</span>
 
                 </div>
-                {groupedListkeys.map((key, index) => {
+                { groupedListkeys.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 입고내역이 없습니다.</h1> :
+                groupedListkeys.map((key, index) => {
                     const isToggled = toggle === key; // 현재 키에 해당하는 아이템이 펼쳐져 있는지 여부
                     return (
                         <>

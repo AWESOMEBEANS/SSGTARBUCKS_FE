@@ -6,28 +6,28 @@ import Modal from "../../commons/Modal_QRViewer";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
-import PopUp from "../../commons/PopUp.js";    
+import PopUp from "../../commons/PopUp.js";
 
 export default function Storageproduct() {
     /*장소 QR코드 이미지 모달*/
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedLocationCode, setSelectedLocationCode] = useState('');
 
-     //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
     /*팝업창*/
     const [comment, setComment] = useState('');
     const [popupType, setPopupType] = useState('');
     const [isPopUpOpen, setPopUpOpen] = useState(false);
-    const openPopUp = (type,comment) => {
+    const openPopUp = (type, comment) => {
         setPopUpOpen(true);
         setComment(comment);
         setPopupType(type);
     };
     const closePopUp = () => {
         setPopUpOpen(false);
-        if(comment==="보관장소가 삭제되었습니다."){
+        if (comment === "보관장소가 삭제되었습니다.") {
             window.location.reload();
-         }
+        }
     };
     //////////////////////////////////////////////////////////////////////
 
@@ -49,7 +49,7 @@ export default function Storageproduct() {
         setSelectedLocationCode(location.location_code);
         console.log("openModal", location.location_code);
         setModalOpen(true);
-      };
+    };
 
     const closeModal = () => {
         setSelectedLocationCode(null);
@@ -143,7 +143,7 @@ export default function Storageproduct() {
         let filteredList = stockList;  // stockList로부터 필터링을 시작합니다.
         let filterTypeList = stockList; //보관유형까지 필터링된 데이터
         let filteredSectionList = stockList;  // 보관장소까지 필터링된 데이터
-        
+
         if (selectedStorageType === "보관유형") {
             setSelectedStorageType('');
         }
@@ -154,9 +154,9 @@ export default function Storageproduct() {
             setSelectedLocationAlias('');
         }
 
-        if (selectedStorageType && !selectedStorageLocation &&selectedLocationAlias) {
+        if (selectedStorageType && !selectedStorageLocation && selectedLocationAlias) {
             // 보관유형은 정하고 보관구역을 정하지 않고 보관명칭만 보는 것은 안됨
-            openPopUp("check","보관구역을 선택해주세요.");
+            openPopUp("check", "보관구역을 선택해주세요.");
             setSelectedLocationAlias('');
             return; // 필터링을 하지 않고 종료
         }
@@ -164,7 +164,7 @@ export default function Storageproduct() {
 
         if (selectedStorageType) {
             filteredList = filteredList.filter(stockItem => getLocationType(stockItem.location_area) === selectedStorageType);
-            filterTypeList =  filteredList.filter(stockItem => getLocationType(stockItem.location_area) === selectedStorageType);
+            filterTypeList = filteredList.filter(stockItem => getLocationType(stockItem.location_area) === selectedStorageType);
             console.log("유형 필터링된 리스트", filteredList);
             if (selectedStorageLocation) {
                 filteredList = filteredList.filter(stockItem => stockItem.location_section_name === selectedStorageLocation);
@@ -186,7 +186,7 @@ export default function Storageproduct() {
                 console.log("보관명칭 필터링된 리스트", filteredList);
             }
         }
-        
+
         else if (selectedLocationAlias) {
             filteredList = filteredList.filter(stockItem => stockItem.location_alias === selectedLocationAlias);
             console.log("보관명칭 필터링된 리스트", filteredList);
@@ -236,7 +236,7 @@ export default function Storageproduct() {
                         <thead>
                             <tr className="h-14 flex justify-between items-center border shadow-md" style={{ backgroundColor: "#f6f5efb3" }}>
                                 <th className="w-1/5 text-lg text-center">
-                                    <select className="text-lg text-center" style={{ backgroundColor: "#f6f5efb3" }} 
+                                    <select className="text-lg text-center" style={{ backgroundColor: "#f6f5efb3" }}
                                         onChange={(e) => handleSelectedStorageTypeChange(e.target.value)}>
                                         <option value="보관유형">보관유형</option>
                                         <option value="매장">매장</option>
@@ -266,19 +266,19 @@ export default function Storageproduct() {
                             </tr>
                         </thead>
                         <tbody>
-                            { tmpStockList.length === 0 ? <h1 className="text-3xl mt-20">불러올 데이터가 없습니다.</h1> :
-                            tmpStockList.map((row, index) => (
-                                <tr className="tbody flex justify-between items-center my-3" key={`${row.product_id}-${index}`}>
-                                    <td className="text-lg w-1/5 text-center">{getLocationType(row.location_area)}</td>
-                                    <td className="text-lg w-1/5 text-center">{getLocationSection(row.location_section)}</td>
-                                    <td className="text-lg w-1/5 text-center">{row.location_alias}</td>
-                                    <td className="text-lg w-1/5 text-center">{row.location_code}</td>
-                                    <td className="text-lg w-1/5 pl-10 text-center flex items-center justify-around">
-                                        <button className="btn_3" id="hoverBtn" onClick={() => openModal(row)} >QR</button>
-                                        <button className="btn_3" id="hoverBtn" onClick={() => handleDeleteLocation(row.location_id)}>삭제</button>
-                                    </td>
-                                </tr>
-                            ))}
+                            {tmpStockList.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 장소목록이 없습니다.</h1> :
+                                tmpStockList.map((row, index) => (
+                                    <tr className="tbody flex justify-between items-center my-3" key={`${row.product_id}-${index}`}>
+                                        <td className="text-lg w-1/5 text-center">{getLocationType(row.location_area)}</td>
+                                        <td className="text-lg w-1/5 text-center">{getLocationSection(row.location_section)}</td>
+                                        <td className="text-lg w-1/5 text-center">{row.location_alias}</td>
+                                        <td className="text-lg w-1/5 text-center">{row.location_code}</td>
+                                        <td className="text-lg w-1/5 pl-10 text-center flex items-center justify-around">
+                                            <button className="btn_3" id="hoverBtn" onClick={() => openModal(row)} >QR</button>
+                                            <button className="btn_3" id="hoverBtn" onClick={() => handleDeleteLocation(row.location_id)}>삭제</button>
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
                     </table>
                 </div>
@@ -288,8 +288,8 @@ export default function Storageproduct() {
                     onCancel={closeModal} onSendLocationQRValue={selectedLocationCode}>
                 </Modal>)
             }
-            {isPopUpOpen &&(
-	            <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            {isPopUpOpen && (
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
             )}
         </>
     );
