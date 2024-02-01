@@ -28,6 +28,9 @@ export default function Store() {
     };
     const closePopUp = () => {
         setPopUpOpen(false);
+        if(comment=="보관장소에 등록되었습니다."){
+        window.location.reload();
+         }
     };
     //////////////////////////////////////////////////////////////////////
 
