@@ -31,7 +31,11 @@ export default function Searching() {
     function handleSearch() {
         console.log("search :", searchQuery);
         const searchUrl = `/branch/search/list/${searchQuery}`;
-        navigate(searchUrl);
+        if(!searchQuery){
+            openPopUp("check","검색어를 입력해주세요.");
+        }else{
+            navigate(searchUrl);
+        }
     };
 
     function handleOnKeyPress(e) {
@@ -64,7 +68,7 @@ return (
         <header>
             <Link to="/branch/main">
                 <div className="logo">
-                    <img src={logo} alt="logo" id="logo_img" />
+                    <img src={logo} alt="logo" id="logo_img" className="hover:cursor-pointer"/>
                     <h2 id="logo_title">SSGTARBUCKS</h2>
                 </div>
             </Link>
@@ -73,22 +77,22 @@ return (
                     <input type="text" id="search_inn" name="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} onKeyDown={(e) => handleOnKeyPress(e)} />
                     <img src={magnifier} width={35} className="icon magnifier" onClick={handleSearch} />
                 </div>
-                <a href="#">
+                <p className="hover:cursor-pointer">
                     {/* <i className="fa-solid fa-expand fa-2xl icon" ></i> */}
                     <img src={scanner} width={35} className="icon" onClick={() => setModalOpen(true)} />
-                </a>
+                </p>
             </div>
         </header>
-        {modalOpen && (
+        {modalOpen && 
             <Modal_search
                 onCancel={handleModalClose}
                 onScan={handleScanWebCam}
                 onType={"검색할 상품의"}
-            >
-            </Modal_search>)}
-            {isPopUpOpen &&(
+            />
+            }
+            {isPopUpOpen &&
                 <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
-            )}
+            }
     </>
 )
 }

@@ -166,7 +166,7 @@ export default function History() {
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
                                 <span className="w-1/12"
-                                    style={groupedList[key][0].income_status === "재고등록완료" ? { boxShadow: 'inset 0 -30px 0 #41ACDB', color:"white" } : { boxShadow: 'inset 0 -30px 0 #D9DB62', color:"white" }}
+                                    style={groupedList[key][0].income_status === "재고등록완료" ? { boxShadow: 'inset 0 -30px 0 #dcffe4' } : ( groupedList[key][0].income_status === "검수완료" ? { boxShadow: 'inset 0 -30px 0 #fff5b1' } : { boxShadow: 'inset 0 -30px 0 #f5f0ff' } )}
                                     >{groupedList[key][0].income_status}</span>
 
                             </div>

@@ -106,7 +106,7 @@ export default function FindPwd() {
         <div className="bg">
             <div>
                 <div className="circle shadow-lg"></div>
-                <div className="card_pwd shadow-lg">
+                <div className="card_pwd shadow-lg" style={showAuthCodeInput ? {height : "500px"} : null}>
                     <h2>SSGTARBUCKS</h2><br />
                     <h4>비밀번호 찾기</h4>
                     <div className="form">
@@ -119,7 +119,7 @@ export default function FindPwd() {
                         <button onClick={handleVerificationButtonClick}>인증번호 확인</button>
                     </div>
                     <footer>
-                    <Link to="/"><button className="backbutton">BACK</button></Link>
+                        <Link to="/"><button className="backbutton">BACK</button></Link>
                     </footer>
                 </div>
             </div>
