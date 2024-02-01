@@ -4,16 +4,57 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { json, useLoaderData } from "react-router-dom";
 import { getAuthToken } from "../util/auth";
+import dayjs from "dayjs";
 
 export default function Main(){
+    const [radioCheck, setRadioCheck] = useState("date3");
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const loaderDataMain = useLoaderData();
-    console.log("loaderDataMain >>>>>" , loaderDataMain);
-    let {expDataList, remainDataList} = loaderDataMain;
+    const [datas, setDatas] = useState(useLoaderData());
+    const [ expData, setExpData ] = useState(datas);
+    console.log("loaderDataMain >>>>>" , datas);
+    let {expDataList, remainDataList} = datas;
 
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
     const branch_name = localStorage.getItem("branch_name");
+
+    const handleDateChange = (daysToAdd) => {
+        const newDate = new Date(selectedDate);
+        newDate.setDate(selectedDate.getDate() + daysToAdd);
+        setSelectedDate(newDate);
+        // onSelectDate(newDate);
+        handleRetrieve();
+    };
+
+    const handleRetrieve = async () => {
+        try {
+            // onSelectDate(selectedDate);
+            console.log("selectedDate>>>",selectedDate);
+
+            const token = getAuthToken();
+            const branch_id = localStorage.getItem("branch_id");
+
+            const response = await axios({
+                method: "GET",
+                url: `http://localhost:8000/api/v1/branch/main/exp`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'jwtauthtoken': token
+                },
+                params: {
+                    branch_id: branch_id,
+                    curDate: selectedDate
+                }
+            });
+
+            console.log("select exp date :", response.data);
+
+            setExpData(response.data); // expDataList 업데이트
+        } catch (error) {
+            console.error('Error selecting exp date:', error);
+        }
+    };
 
     return(
         <>
@@ -23,13 +64,23 @@ export default function Main(){
                         SSGTARBUCKS에 오신 것을 환영합니다 :)
                         <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{branch_name}</span> 입니다 </p>
                     </h1>
-                    <div className="w-11/12 h-72 text-start flex justify-center flex-col mt-20">
+                    <div className="w-11/12 h-32 flex flex-col justify-end items-center" style={{fontFamily: 'Pretendard-Regular'}}>
+                            <h3 className="mb-3 text-xl">{dayjs().format("YYYY년 M월")}</h3>
+                            <div className="">
+                                <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" onChange={()=>setRadioCheck("date1")}/><label for="date1" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date1" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(-2)}>{dayjs().subtract(2, "day").format("M월 D일")}</label>
+                                <input type="radio" id="date2" className="border mx-2 w-20 rounded-md h-8 hidden" value="date2" name="date" onChange={()=>setRadioCheck("date2")}/><label for="date2" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date2" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(-1)}>{dayjs().subtract(1, "day").format("M월 D일")}</label>
+                                <input type="radio" id="date3" className="border mx-2 w-20 rounded-md h-8 hidden" value="date3" name="date" onChange={()=>setRadioCheck("date3")}/><label for="date3" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date3" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={handleRetrieve}>{dayjs().format("M월 D일")}</label>
+                                <input type="radio" id="date4" className="border mx-2 w-20 rounded-md h-8 hidden" value="date4" name="date" onChange={()=>setRadioCheck("date4")}/><label for="date4" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date4" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(1)}>{dayjs().add(1, "day").format("M월 D일")}</label>
+                                <input type="radio" id="date5" className="border mx-2 w-20 rounded-md h-8 hidden" value="date5" name="date" onChange={()=>setRadioCheck("date5")}/><label for="date5" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date5" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(2)}>{dayjs().add(2, "day").format("M월 D일")}</label>
+                            </div>
+                    </div>
+                    <div className="w-11/12 h-72 text-start flex justify-center flex-col ">
                         <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center"
                             >
                             유통기한 임박 목록
                         </h3>
                         {expDataList.length ? 
-                        <Table1 onLoadData={loaderDataMain} />
+                        <Table1 onLoadData={datas} />
                         : <h1 className="text-xl">불러올 목록이 없습니다.</h1>}
                     </div>
                     <div className="w-11/12 h-72 text-start flex justify-center flex-col mt-5">
@@ -37,7 +88,7 @@ export default function Main(){
                             발주추천 목록
                         </h3>
                         {remainDataList.length ? 
-                        <Table2 onLoadData={loaderDataMain}/>
+                        <Table2 onLoadData={datas}/>
                         : <h1 className="text-xl">불러올 목록이 없습니다.</h1>}
                     </div>
                 </div>
@@ -49,6 +100,7 @@ export default function Main(){
 
 function Table1({onLoadData}){
 let {expDataList, remainDataList} = onLoadData;
+
 const getLocationType = (area) => {
     switch (area) {
         case 'FR':
