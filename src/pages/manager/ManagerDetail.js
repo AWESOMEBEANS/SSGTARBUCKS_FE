@@ -7,6 +7,7 @@ import { getAuthToken } from "../../util/auth";
 import axios from "axios";
 
 export default function ManagerDetail() {
+    const [showModifyRenderer, setShowModifyRenderer] = useState(false);
     const [datas, setDatas] = useState(useLoaderData());
     const [edit, setEdit] = useState(false);
     const [modifyList, setModifyList] = useState([]);
@@ -31,6 +32,7 @@ export default function ManagerDetail() {
             console.log('BranchIsNull=========================>', response.data);
 
             setModifyList(response.data);
+            setShowModifyRenderer(true);
 
         } catch (error) {
             console.error('Error :', error);
@@ -102,7 +104,7 @@ export default function ManagerDetail() {
                     </div>
                 </div>
             </div>
-            {edit && <Modal_change_manager onCancel={() => setEdit(!edit)} modifyList={modifyList} onUpdateDetails={handleUpdateDetails} initialUserId={initialUserId} />}
+            {edit && showModifyRenderer && <Modal_change_manager onCancel={() => setShowModifyRenderer(false)} modifyList={modifyList} onUpdateDetails={handleUpdateDetails} initialUserId={initialUserId} />}
         </>
     )
 }
@@ -131,16 +133,13 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
 
     const handleSelectChange = (event) => {
         selectedIndex = event.target.selectedIndex;
-        // console.log("selectedIndex", selectedIndex);
         selectedData = modifyList[selectedIndex - 1];
-        // console.log("selectedData", selectedData);
         setSelectedItem(selectedData);
-        // console.log("selectedItem >>>", selectedItem);
-        onUpdateDetails(selectedData, initialUserId);
-
-    console.log("initialUserId >>>", initialUserId);
-};
-    const handleSelectSubmit = async() => {
+    };
+    const handleSelectSubmit = async (selectedItem) => {
+        console.log("initialUserId >>>", initialUserId);
+        console.log("액시오스 ==>", selectedItem);
+    
         try {
             const token = getAuthToken();
             await axios({
@@ -150,18 +149,21 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
                     'Content-Type': 'application/json',
                     'jwtauthtoken': token
                 },
-                data: selectedData,
+                data: selectedItem,
                 params: {
                     initialUserId: initialUserId
                 }
             });
-            console.log('Data sent to /branch/user/modify:', selectedData);
+            console.log('Data sent to /branch/user/modify:', selectedItem);
             alert("변경이 완료되었습니다.");
+            onCancel();
+            window.location.reload();
         } catch (error) {
             console.error('Error sending data to /branch/user/modify:', error);
             alert("변경실패하였습니다.");
         }
     };
+    
 
     return (
         <>
@@ -175,7 +177,7 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
                 ))}
             </select>
             <div className="w-full flex justify-center">
-                <button onClick={handleSelectSubmit} className="border w-2/12 h-10 page_itms rounded-sm shadow-md mx-4">확인</button>
+                <button  onClick={() => { handleSelectSubmit(selectedItem); }} className="border w-2/12 h-10 page_itms rounded-sm shadow-md mx-4">확인</button>
                 <button onClick={onCancel} className="border w-2/12 h-10 page_itms rounded-sm shadow-md mx-4">취소</button>
             </div>
         </>
