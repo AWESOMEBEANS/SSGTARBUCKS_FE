@@ -12,25 +12,29 @@ export default function Main(){
 
     const [datas, setDatas] = useState(useLoaderData());
     const [ expData, setExpData ] = useState(datas);
-    console.log("loaderDataMain >>>>>" , datas);
     let {expDataList, remainDataList} = datas;
+    console.log("loaderDataMain >>>>>" , datas);
+    console.log("loaderDataMain >>>>>" , expDataList);
+    console.log("loaderDataMain >>>>>" , remainDataList);
 
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
     const branch_name = localStorage.getItem("branch_name");
 
     const handleDateChange = (daysToAdd) => {
+        console.log("~~~~~~~~~~~~~~~~~",daysToAdd);
         const newDate = new Date(selectedDate);
         newDate.setDate(selectedDate.getDate() + daysToAdd);
         setSelectedDate(newDate);
+        console.log("~~~~~~~~~~~~~~~~~",newDate);
         // onSelectDate(newDate);
-        handleRetrieve();
+        handleRetrieve(newDate);
     };
 
-    const handleRetrieve = async () => {
+    const handleRetrieve = async (newDate) => {
         try {
             // onSelectDate(selectedDate);
-            console.log("selectedDate>>>",selectedDate);
+            console.log("selectedDate>>>",newDate);
 
             const token = getAuthToken();
             const branch_id = localStorage.getItem("branch_id");
@@ -44,13 +48,13 @@ export default function Main(){
                 },
                 params: {
                     branch_id: branch_id,
-                    curDate: selectedDate
+                    curDate: newDate
                 }
             });
 
             console.log("select exp date :", response.data);
 
-            setExpData(response.data); // expDataList 업데이트
+            setDatas({ ...datas, expDataList: response.data }); // Update expDataList
         } catch (error) {
             console.error('Error selecting exp date:', error);
         }
