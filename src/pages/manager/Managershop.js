@@ -4,7 +4,7 @@ import NavManager from "../../commons/NavManager";
 import axios from "axios";
 import { getAuthToken } from "../../util/auth";
 import { Form, json, useLoaderData } from "react-router-dom";
-
+import PopUp from "../../commons/PopUp.js";   
 export default function Managershop() {
     const [ datas, setDatas ] = useState(useLoaderData());
     const [ editPwd, setEditPwd ] = useState(false);
@@ -87,6 +87,47 @@ export async function loader({ request }) {
 const Modal_change_pwd = ({  onCancel }) => {
     const [checkPwd, setCheckPwd] = useState(""); 
     const [checkPwdConfirm, setCheckPwdConfirm] = useState(""); 
+    const user_id = localStorage.getItem("user_id"); 
+    //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        onCancel();
+    };
+    //////////////////////////////////////////////////////////////////////
+
+      
+    const handleChangePassword = async () => {
+        try { 
+            const token = getAuthToken();
+            const response = await axios({
+                method: "POST",
+                url: "http://localhost:8000/api/v1/user/modify", 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'jwtauthtoken': token
+                },
+                data: {
+                    user_id: user_id,
+                    user_pw: checkPwd
+                }
+            });
+
+            console.log("Password Change Response:", response.data);
+            openPopUp("success","비밀번호가 변경되었습니다.");
+            
+        } catch (error) {
+            console.error("Password Change Error:", error);
+        }
+    };
 
     return (
         <>
@@ -114,12 +155,16 @@ const Modal_change_pwd = ({  onCancel }) => {
                             {checkPwd && (checkPwd == checkPwdConfirm) ? <h1 className="text-md text-red-500">비밀번호가 일치합니다.</h1> : (checkPwd && checkPwdConfirm ? <h1 className="text-md text-red-500">비밀번호가 일치하지 않습니다.</h1> : null)}
                         </div>
                         <div className="flex justify-center items-center my-10 h-1/4">
-                            <button className="border-2 w-28 h-11 rounded-md page_itms mx-4 ">비밀번호 변경</button>
+                            <button className="border-2 w-28 h-11 rounded-md page_itms mx-4 "onClick={handleChangePassword}  disabled={!checkPwd || (checkPwd !== checkPwdConfirm)}>비밀번호 변경</button>
                             <button className="border-2 w-28 h-11 rounded-md page_itms mx-4" onClick={onCancel}>취소</button>
                         </div>
                     </div>
                 </div>
             </Form>
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
+
         </>
     );
 };

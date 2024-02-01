@@ -29,7 +29,7 @@ export default function History() {
   };
   const closePopUp = () => {
     setPopUpOpen(false);
-    if(comment=="검수완료처리되었습니다.\n검수상품을 재고로 등록하시기 바랍니다."){
+    if(comment=="검수 완료 처리되었습니다.\n검수상품을 재고로 등록하시기 바랍니다."){
     navigate('/branch/income/new');
   }
   };
@@ -193,6 +193,18 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
     const navigate = useNavigate();
     const [resData, setResData] = useState('');
     const incomeDetailList = useLoaderData();
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+    };
+
     console.log(incomeStatus);
     let groupedDetailList = incomeDetailList.reduce((acc, curr) => {
         const { income_id } = curr;
@@ -229,7 +241,8 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
       const resData = response.data;
       console.log("resData>>>>>>>>>>>>>>", resData);
 
-        alert(resData);
+        //alert(resData);
+        openPopUp("success","검수 완료 처리되었습니다.\n검수상품을 재고로 등록하시기 바랍니다.");
         window.location.reload();
 
     } catch (error) {
@@ -260,7 +273,10 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                         <span className="w-1/6">
                             {completeItemCode === row.item_code? "⭕" : (row.income_list_result === "승인" ? "⭕" : "❌")}
                         </span>                        
-                        <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm" onClick={() => { modalHandler(row.item_code); }}>스캔</button>
+                        {incomeStatus === '재고등록완료'?
+                              <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm"  disabled onClick={() => { modalHandler(row.item_code); }}>스캔</button>
+                            : <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm"  onClick={() => { modalHandler(row.item_code); }}>스캔</button>
+                        }
                     </div>
                 )}
                 {incomeStatus === '재고등록완료'? null :<button className="border w-2/12 h-11 rounded-md mx-auto hoverBtn_white shadow-md" onClick={handleInspectionComplete}>검수완료</button>}

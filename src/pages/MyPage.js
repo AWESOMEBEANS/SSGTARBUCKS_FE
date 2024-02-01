@@ -4,13 +4,12 @@ import Search from "../commons/Search"
 import { getAuthToken } from "../util/auth";
 import axios from "axios";
 import { Form, json, useLoaderData, useNavigate } from "react-router-dom";
-import PopUp from "../commons/PopUp";
+import PopUp from "../commons/PopUp";   
 
 export default function MyPage() {
     const myData = useLoaderData();
     const [editPwd, setEditPwd] = useState(false);
-
-
+   
     return (
         <>
             
@@ -85,6 +84,7 @@ export default function MyPage() {
                 </div>
             </div>
             {editPwd && <Modal_change_pwd onCancel={()=> setEditPwd(false)}/> }
+
         </>
     )
 }
@@ -124,9 +124,24 @@ export async function loader({ request }) {
 const Modal_change_pwd = ({  onCancel }) => {
     const [checkPwd, setCheckPwd] = useState(""); 
     const [checkPwdConfirm, setCheckPwdConfirm] = useState(""); 
-    
     const user_id = localStorage.getItem("user_id");
+      //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        onCancel();
+    };
+    //////////////////////////////////////////////////////////////////////
 
+    
     const handleChangePassword = async () => {
         try { 
             const token = getAuthToken();
@@ -144,8 +159,8 @@ const Modal_change_pwd = ({  onCancel }) => {
             });
 
             console.log("Password Change Response:", response.data);
-
-            onCancel();
+            openPopUp("success","비밀번호가 변경되었습니다.");
+            
         } catch (error) {
             console.error("Password Change Error:", error);
         }
@@ -183,6 +198,9 @@ const Modal_change_pwd = ({  onCancel }) => {
                     </div>
                 </div>
             </Form>
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
     );
 };

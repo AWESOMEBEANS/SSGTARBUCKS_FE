@@ -5,6 +5,7 @@ import { useLoaderData, useNavigate, useParams } from "react-router";
 import { Form, Link, json } from "react-router-dom";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
+import PopUp from "../../commons/PopUp.js";  
 
 export default function ManagerDetail() {
     const [showModifyRenderer, setShowModifyRenderer] = useState(false);
@@ -16,7 +17,6 @@ export default function ManagerDetail() {
     const params = useParams();
     const navigate = useNavigate();
     // const targetObject = datas.find(item => item.branch_id === params.branch_id);
-
     const handleEditClick = async () => {
         console.log("버튼누름");
         try {
@@ -131,6 +131,22 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
     let selectedIndex;
     let selectedData;
 
+       //////////////////////////////////////////////////////////////////////
+    /*팝업창*/
+    const [comment, setComment] = useState('');
+    const [popupType, setPopupType] = useState('');
+    const [isPopUpOpen, setPopUpOpen] = useState(false);
+    const openPopUp = (type,comment) => {
+        setPopUpOpen(true);
+        setComment(comment);
+        setPopupType(type);
+    };
+    const closePopUp = () => {
+        setPopUpOpen(false);
+        onCancel();
+        window.location.reload();
+    };
+    //////////////////////////////////////////////////////////////////////
     const handleSelectChange = (event) => {
         selectedIndex = event.target.selectedIndex;
         selectedData = modifyList[selectedIndex - 1];
@@ -155,9 +171,7 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
                 }
             });
             console.log('Data sent to /branch/user/modify:', selectedItem);
-            alert("변경이 완료되었습니다.");
-            onCancel();
-            window.location.reload();
+            openPopUp("success","담당직원이 변경되었습니다.");
         } catch (error) {
             console.error('Error sending data to /branch/user/modify:', error);
             alert("변경실패하였습니다.");
@@ -180,7 +194,11 @@ const ModifyRenderer = ({ modifyList, onUpdateDetails, initialUserId, onCancel }
                 <button  onClick={() => { handleSelectSubmit(selectedItem); }} className="border w-2/12 h-10 page_itms rounded-sm shadow-md mx-4">확인</button>
                 <button onClick={onCancel} className="border w-2/12 h-10 page_itms rounded-sm shadow-md mx-4">취소</button>
             </div>
+            {isPopUpOpen &&(
+                <PopUp onClose={closePopUp} onComment={comment} onType={popupType} />
+            )}
         </>
+
     );
 };
 
