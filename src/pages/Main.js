@@ -74,7 +74,7 @@ export default function Main(){
                         <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{branch_name}</span> 입니다 </p>
                     </h1>
                     <div className="w-11/12 h-32 flex flex-col justify-end items-center" style={{fontFamily: 'Pretendard-Regular'}}>
-                            <h3 className="mb-3 text-xl ">{dayjs().format("YYYY년 M월 D일")} <button className=" page_itms w-14 border rounded-md text-lg" onClick={handleDateToday}>조회</button> </h3>
+                            <h3 className="mb-3 text-xl ">TODAY : {dayjs().format("YYYY년 M월 D일")} <button className=" page_itms w-14 border rounded-md text-lg ml-3" onClick={handleDateToday}>조회</button> </h3>
                             
                             <div className="">
                                 <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" onChange={()=>setRadioCheck("date1")}/><label for="date1" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(-2)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() - 2}일`}</label>
