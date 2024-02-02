@@ -112,6 +112,7 @@ export default function History() {
             if(resData === "성공") {
                 setModalOpen(false);
                 setcompleteItemCode(itemCodeParam);
+                console.log("6544444444444",itemCodeParam);                                  
                 //navigate(`/income/list/${incomeId}`);
                 //window.location.reload();
             }
@@ -170,7 +171,11 @@ export default function History() {
                                     >{groupedList[key][0].income_status}</span>
 
                             </div>
-                            {isToggled && <Detail id={groupedList[key][0].income_id} incomeStatus={groupedList[key][0].income_status} modalHandler={handleScannerClick} />}
+                            {isToggled && 
+                            <Detail id={groupedList[key][0].income_id} 
+                                    incomeStatus={groupedList[key][0].income_status} 
+                                    modalHandler={handleScannerClick} 
+                                    completeItemCode = {completeItemCode}/>}
                         </>
                     )
                 })}
@@ -271,7 +276,7 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                         <span className="w-2/6">{row.product_name}({row.product_standard}, {row.product_unit})</span>
                         <span className="w-1/6">{row.item_exp}</span>
                         <span className="w-1/6">
-                            {completeItemCode === row.item_code? "⭕" : (row.income_list_result === "승인" ? "⭕" : "❌")}
+                          {completeItemCode === row.item_code? "⭕" : (row.income_list_result === "승인" ? "⭕" : "❌")}
                         </span>                        
                         {incomeStatus === '재고등록완료'?
                               <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm"  disabled onClick={() => { modalHandler(row.item_code); }}>스캔</button>
