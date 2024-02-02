@@ -142,7 +142,7 @@ export default function History() {
                     <span className="w-1/12">입고코드</span>
                     <span className="w-1/12">수량</span>
                     <span className="w-2/12">입고일자</span>
-                    <span className="w-1/12">처리상태</span>
+                    <span className="w-32">처리상태</span>
 
                 </div>
                 { groupedListkeys.length === 0 ? <h1 className="text-3xl mt-20 text-center">불러올 입고내역이 없습니다.</h1> :
@@ -166,7 +166,7 @@ export default function History() {
                                 <span className="w-1/12">{groupedList[key][0].income_code}</span>
                                 <span className="w-1/12">{groupedList[key][0].income_amount}</span>
                                 <span className="w-2/12">{groupedList[key][0].income_date}</span>
-                                <span className="w-1/12"
+                                <span className="w-32"
                                     style={groupedList[key][0].income_status === "재고등록완료" ? { boxShadow: 'inset 0 -30px 0 #dcffe4' } : ( groupedList[key][0].income_status === "검수완료" ? { boxShadow: 'inset 0 -30px 0 #fff5b1' } : { boxShadow: 'inset 0 -30px 0 #f5f0ff' } )}
                                     >{groupedList[key][0].income_status}</span>
 
