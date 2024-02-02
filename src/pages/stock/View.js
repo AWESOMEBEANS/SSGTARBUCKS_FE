@@ -106,7 +106,9 @@ export default function View() {
     // 현재 페이지의 데이터 계산
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = tmpStockList.slice(indexOfFirstItem, indexOfLastItem);
+    //장소 null 값 제외
+    const filteredList = tmpStockList.filter(stockItem => stockItem.product_name !== null);
+    const currentItems = filteredList.slice(indexOfFirstItem, indexOfLastItem);
 
     // 페이지 변경 핸들러
     const handlePageChange = (pageNumber) => {
@@ -131,7 +133,7 @@ export default function View() {
     const onCancel = () => {
         setModalOpen(false);
         setSelectedItems([]);
-        window.location.reload();
+        //window.location.reload();
     }
     /////////////////////////////////////////////////////////////////////////////////
     /* 카테고리 필터 */

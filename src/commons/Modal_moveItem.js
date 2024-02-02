@@ -182,7 +182,7 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
                         </div>
                     </div>
                     <div className="madal-footer">
-                        <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel})}>이동</button>
+                        <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel,openPopUp})}>이동</button>
                         <button className="border-2 w-28 h-11 rounded-md page_itms" onClick={() => onCancel()}>취소</button>
                     </div>
                 </div>
@@ -195,7 +195,7 @@ const Modal_moveItem = ({  onCancel, selectedItems, stockList }) => {
 };
 export default Modal_moveItem;
 
-export async function action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel }) {
+export async function action({ selectedStorageType, selectedLocationAlias, selectedItems, onCancel,  openPopUp }) {
     console.log("MoveItem.action");
     console.log(` "유형 ${selectedStorageType} 소분류 ${selectedLocationAlias}아아템  ${selectedItems}`);
 
@@ -234,7 +234,12 @@ export async function action({ selectedStorageType, selectedLocationAlias, selec
 
         console.log("response>>>>>>", response);
         resData = response.data;
-        onCancel();
+        openPopUp("success", "상품을 이동하였습니다.");
+
+        // Execute onCancel after a delay or user interaction
+        setTimeout(() => {
+            onCancel();
+        }, 3000); // Adjust the delay as needed
     } catch (error) {
         console.log("error:", error);
         throw new Error("error 발생되었습니다");
