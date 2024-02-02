@@ -11,8 +11,6 @@ export default function Store() {
     const [scanResult, setScanResult] = useState('');
     const [itemId, setitemId] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const [itemsPerPage] = useState(10); // 페이지 당 아이템 수
     const navigate = useNavigate();
 
      //////////////////////////////////////////////////////////////////////
@@ -95,34 +93,9 @@ export default function Store() {
         }
     }, [scanResult, navigate]);
 
-    // 현재 페이지의 데이터 계산
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
-
-    // 페이지 변경 핸들러
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    // 이전 페이지로 이동
-    const handlePrevClick = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-
-    // 다음 페이지로 이동
-    const handleNextClick = () => {
-        const totalPages = Math.ceil(datas.length / itemsPerPage);
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
     return (
         <>
-            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto   text-center flex flex-col justify-between">
+            <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-auto text-center flex flex-col justify-between">
                 <div className="h-full">
                 <div style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3" }}
                     className="w-4/5 h-14 my-4 mx-auto flex justify-between items-center text-lg shadow-lg px-3 text-center font-bold">
@@ -151,18 +124,6 @@ export default function Store() {
                         </div>
                     )
                 })}
-                </div>
-                <div className="mb-3">
-                    { datas.length === 0  ? null : 
-                    <Pagination
-                        itemsPerPage={itemsPerPage}
-                        totalItems={datas.length}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                        onPrevClick={handlePrevClick}
-                        onNextClick={handleNextClick}
-                    /> 
-                    }
                 </div>
             </div>
             {modalOpen && (
