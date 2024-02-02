@@ -71,6 +71,7 @@ export default function Position() {
                 location_alias: row.location_alias,
             };
         });
+        openPopUp("success", "장소등록이 완료되었습니다.");
         console.log("입력 사항 완료: ", locations);
     };
 

@@ -5,7 +5,7 @@ import '../../sources/css/storageproduct.css'
 import Modal from "../../commons/Modal_QRViewer";
 import { getAuthToken } from "../../util/auth";
 import axios from "axios";
-import { json, useLoaderData } from "react-router-dom";
+import { json, redirect, useLoaderData } from "react-router-dom";
 import PopUp from "../../commons/PopUp.js";
 
 export default function Storageproduct() {
@@ -27,6 +27,7 @@ export default function Storageproduct() {
         setPopUpOpen(false);
         if (comment === "보관장소가 삭제되었습니다.") {
             window.location.reload();
+            // return redirect("/branch/main")
         }
     };
     //////////////////////////////////////////////////////////////////////
