@@ -7,9 +7,15 @@ import { getAuthToken } from "../util/auth";
 import dayjs from "dayjs";
 
 export default function Main(){
-    const [radioCheck, setRadioCheck] = useState("date3");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const newDate = new Date(selectedDate);
+    console.log("newDate : ", newDate);
+    // let changedDate =[new Date(newDate.setDate(newDate.getDate() -2)), new Date(newDate.setDate(newDate.getDate() -1)), new Date(newDate.setDate(newDate.getDate())) ,new Date(newDate.setDate(newDate.getDate() +1)), new Date(newDate.setDate(newDate.getDate() +2))];
+    let changedDate =[new Date(new Date(selectedDate).setDate(newDate.getDate() -2)), 
+                        new Date(new Date(selectedDate).setDate(newDate.getDate() -1)), 
+                        new Date(new Date(selectedDate).setDate(newDate.getDate() )),
+                        new Date(new Date(selectedDate).setDate(newDate.getDate() +1)), 
+                        new Date(new Date(selectedDate).setDate(newDate.getDate() +2))];
 
     const [datas, setDatas] = useState(useLoaderData());
     const [ expData, setExpData ] = useState(datas);
@@ -77,11 +83,12 @@ export default function Main(){
                             <h3 className="mb-3 text-xl ">TODAY : {dayjs().format("YYYY년 M월 D일")} <button className=" page_itms w-14 border rounded-md text-lg ml-3" onClick={handleDateToday}>조회</button> </h3>
                             
                             <div className="">
-                                <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" onChange={()=>setRadioCheck("date1")}/><label for="date1" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(-2)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() - 2}일`}</label>
-                                <input type="radio" id="date2" className="border mx-2 w-20 rounded-md h-8 hidden" value="date2" name="date" onChange={()=>setRadioCheck("date2")}/><label for="date2" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(-1)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() - 1}일`}</label>
-                                <input type="radio" id="date3" className="border mx-2 w-20 rounded-md h-8 hidden" value="date3" name="date" onChange={()=>setRadioCheck("date3")}/><label for="date3" className="border w-20 mr-2 rounded-md py-1 bg-lime-800 text-white " onClick={handleRetrieve}>{`${newDate.getMonth() + 1}월 ${newDate.getDate()}일`}</label>
-                                <input type="radio" id="date4" className="border mx-2 w-20 rounded-md h-8 hidden" value="date4" name="date" onChange={()=>setRadioCheck("date4")}/><label for="date4" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(1)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() + 1}일`}</label>
-                                <input type="radio" id="date5" className="border mx-2 w-20 rounded-md h-8 hidden" value="date5" name="date" onChange={()=>setRadioCheck("date5")}/><label for="date5" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(2)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() + 2}일`}</label>
+                                
+                                <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" /><label for="date1" className="border w-20 mr-2 rounded-md py-1 page_itms hover:cursor-pointer" onClick={()=>handleDateChange(-2)}>{`${changedDate[0].getMonth() +1}월 ${changedDate[0].getDate()}일`}</label>
+                                <input type="radio" id="date2" className="border mx-2 w-20 rounded-md h-8 hidden" value="date2" name="date" /><label for="date2" className="border w-20 mr-2 rounded-md py-1 page_itms hover:cursor-pointer" onClick={()=>handleDateChange(-1)}>{`${changedDate[1].getMonth() +1}월 ${changedDate[1].getDate()}일`}</label>
+                                <input type="radio" id="date3" className="border mx-2 w-20 rounded-md h-8 hidden" value="date3" name="date" /><label for="date3" className="border w-20 mr-2 rounded-md py-1 bg-lime-800 text-white " onClick={handleRetrieve}>{`${changedDate[2].getMonth() +1}월 ${changedDate[2].getDate()}일`}</label>
+                                <input type="radio" id="date4" className="border mx-2 w-20 rounded-md h-8 hidden" value="date4" name="date" /><label for="date4" className="border w-20 mr-2 rounded-md py-1 page_itms hover:cursor-pointer" onClick={()=>handleDateChange(1)}>{`${changedDate[3].getMonth() +1}월 ${changedDate[3].getDate()}일`}</label>
+                                <input type="radio" id="date5" className="border mx-2 w-20 rounded-md h-8 hidden" value="date5" name="date" /><label for="date5" className="border w-20 mr-2 rounded-md py-1 page_itms hover:cursor-pointer" onClick={()=>handleDateChange(2)}>{`${changedDate[4].getMonth() +1}월 ${changedDate[4].getDate()}일`}</label>
                             </div>
                     </div>
                     <div className="w-11/12 h-72 text-start flex justify-center flex-col ">
@@ -249,7 +256,7 @@ export async function loader({ request }) {
     const branch_id = localStorage.getItem("branch_id");
     const expResponse = await axios({
         method: "GET",
-        url: "http://localhost:8000/api/v1/branch/main/exp",
+        url: "http://10.10.10.101:8000/api/v1/branch/main/exp",
         headers: {
             'Content-Type': 'application/json',
             'jwtauthtoken': token
@@ -265,7 +272,7 @@ export async function loader({ request }) {
     }
     const remainResponse = await axios({
         method: "GET",
-        url: "http://localhost:8000/api/v1/branch/main/remain",
+        url: "http://10.10.10.101:8000/api/v1/branch/main/remain",
         headers: {
             'Content-Type': 'application/json',
             'jwtauthtoken': token

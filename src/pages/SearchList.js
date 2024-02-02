@@ -78,7 +78,7 @@ export default function SearchList() {
 
         <>
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-auto text-center ">
-                <h1 className="text-3xl mt-3 text-start ml-32">" {searchWord} " 검색결과</h1>
+                <h1 className="text-3xl mt-3 text-start ml-20">" {searchWord} " 검색결과</h1>
                 <div
                     className="w-11/12 mx-auto flex justify-between items-center mt-3 h-14">
                     <div className="text-center text-lg w-12 flex justify-center items-center shadow-lg font-bold"
