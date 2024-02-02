@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 export default function Main(){
     const [radioCheck, setRadioCheck] = useState("date3");
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const newDate = new Date(selectedDate);
 
     const [datas, setDatas] = useState(useLoaderData());
     const [ expData, setExpData ] = useState(datas);
@@ -23,13 +24,17 @@ export default function Main(){
 
     const handleDateChange = (daysToAdd) => {
         console.log("~~~~~~~~~~~~~~~~~",daysToAdd);
-        const newDate = new Date(selectedDate);
         newDate.setDate(selectedDate.getDate() + daysToAdd);
         setSelectedDate(newDate);
         console.log("~~~~~~~~~~~~~~~~~",newDate);
         // onSelectDate(newDate);
         handleRetrieve(newDate);
     };
+
+    const handleDateToday = () =>{
+        setSelectedDate(new Date());
+        handleRetrieve(null);
+    }
 
     const handleRetrieve = async (newDate) => {
         try {
@@ -69,13 +74,14 @@ export default function Main(){
                         <p>스타벅스 <span style={{boxShadow: "inset 0 -20px 0 #D9FCDB", fontFamily:"EASTARJET-Medium"}}>{branch_name}</span> 입니다 </p>
                     </h1>
                     <div className="w-11/12 h-32 flex flex-col justify-end items-center" style={{fontFamily: 'Pretendard-Regular'}}>
-                            <h3 className="mb-3 text-xl">{dayjs().format("YYYY년 M월")}</h3>
+                            <h3 className="mb-3 text-xl ">{dayjs().format("YYYY년 M월 D일")} <button className=" page_itms w-14 border rounded-md text-lg" onClick={handleDateToday}>조회</button> </h3>
+                            
                             <div className="">
-                                <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" onChange={()=>setRadioCheck("date1")}/><label for="date1" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date1" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(-2)}>{dayjs().subtract(2, "day").format("M월 D일")}</label>
-                                <input type="radio" id="date2" className="border mx-2 w-20 rounded-md h-8 hidden" value="date2" name="date" onChange={()=>setRadioCheck("date2")}/><label for="date2" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date2" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(-1)}>{dayjs().subtract(1, "day").format("M월 D일")}</label>
-                                <input type="radio" id="date3" className="border mx-2 w-20 rounded-md h-8 hidden" value="date3" name="date" onChange={()=>setRadioCheck("date3")}/><label for="date3" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date3" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={handleRetrieve}>{dayjs().format("M월 D일")}</label>
-                                <input type="radio" id="date4" className="border mx-2 w-20 rounded-md h-8 hidden" value="date4" name="date" onChange={()=>setRadioCheck("date4")}/><label for="date4" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date4" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(1)}>{dayjs().add(1, "day").format("M월 D일")}</label>
-                                <input type="radio" id="date5" className="border mx-2 w-20 rounded-md h-8 hidden" value="date5" name="date" onChange={()=>setRadioCheck("date5")}/><label for="date5" className={`border w-20 mr-2 rounded-md py-1 ${radioCheck === "date5" ? "bg-lime-800 text-white" : "page_itms"}`} onClick={()=>handleDateChange(2)}>{dayjs().add(2, "day").format("M월 D일")}</label>
+                                <input type="radio" id="date1" className="border mx-2 w-20 rounded-md h-8 hidden" value="date1" name="date" onChange={()=>setRadioCheck("date1")}/><label for="date1" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(-2)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() - 2}일`}</label>
+                                <input type="radio" id="date2" className="border mx-2 w-20 rounded-md h-8 hidden" value="date2" name="date" onChange={()=>setRadioCheck("date2")}/><label for="date2" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(-1)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() - 1}일`}</label>
+                                <input type="radio" id="date3" className="border mx-2 w-20 rounded-md h-8 hidden" value="date3" name="date" onChange={()=>setRadioCheck("date3")}/><label for="date3" className="border w-20 mr-2 rounded-md py-1 bg-lime-800 text-white " onClick={handleRetrieve}>{`${newDate.getMonth() + 1}월 ${newDate.getDate()}일`}</label>
+                                <input type="radio" id="date4" className="border mx-2 w-20 rounded-md h-8 hidden" value="date4" name="date" onChange={()=>setRadioCheck("date4")}/><label for="date4" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(1)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() + 1}일`}</label>
+                                <input type="radio" id="date5" className="border mx-2 w-20 rounded-md h-8 hidden" value="date5" name="date" onChange={()=>setRadioCheck("date5")}/><label for="date5" className="border w-20 mr-2 rounded-md py-1 page_itms" onClick={()=>handleDateChange(2)}>{`${newDate.getMonth() + 1}월 ${newDate.getDate() + 2}일`}</label>
                             </div>
                     </div>
                     <div className="w-11/12 h-72 text-start flex justify-center flex-col ">
@@ -121,17 +127,17 @@ const getLocationType = (area) => {
                 <table className="w-full mx-auto text-lg shadow-lg" style={{borderRadius:"10px"}}>
                     <thead >
                         <tr className="text-center" style={{backgroundColor:"#f6f5efb3"}} >
-                            <th className="px-1">번호</th>
-                            <th className="px-1">카테고리</th>
-                            <th className="px-1">상품명</th>
+                            <th className="px-1 w-14">번호</th>
+                            <th className="px-1 w-40">카테고리</th>
+                            <th className="px-1 w-2/12">상품명</th>
                             <th className="px-1">규격</th>
                             <th className="px-1">단위</th>
-                            <th className="px-1">옵션</th>
-                            <th className="px-1">유통기한</th>
-                            <th className="px-1">재고상태</th>
+                            <th className="px-1 w-1/12">옵션</th>
+                            <th className="px-1 w-28">유통기한</th>
+                            <th className="px-1 w-1/12">재고상태</th>
                             <th className="px-1">보관유형</th>
                             <th className="px-1">보관장소</th>
-                            <th className="px-1">보관명칭</th>
+                            <th className="px-1 w-2/12">보관명칭</th>
                             <th className="px-1">수량</th>
                         </tr>
                     </thead>
@@ -139,13 +145,13 @@ const getLocationType = (area) => {
                         {expDataList.map(function(r,i){
                             return(
                                 <tr className="h-10 text-center" style={{borderBottom:"1px dashed black", fontFamily:'Pretendard-Regular'}} key={`${r.product_id}-${i}`}>
-                                    <td className="px-1">
+                                    <td className="px-1 w-14">
                                         {i+1}
                                     </td>
-                                    <td className="px-1">
+                                    <td className="px-1 w-40">
                                         {r.category_name}
                                     </td>
-                                    <td className="px-1"> 
+                                    <td className="px-1 w-2/12"> 
                                         {r.product_name}
                                     </td>
                                     <td className="px-1">
@@ -154,13 +160,13 @@ const getLocationType = (area) => {
                                     <td className="px-1">
                                         {r.product_unit}
                                     </td>
-                                    <td className="px-1">
+                                    <td className="px-1 w-1/12">
                                         {r.product_spec}
                                     </td>
                                     <td className="px-1 w-28 ">
                                         <span style={{boxShadow: "inset 0 -20px 0 rgb(255, 200, 200)"}}className=" text-lg">{r.item_exp}</span>
                                     </td>
-                                    <td className="px-1">
+                                    <td className="px-1 w-1/12">
                                         <span className=" text-lg" style={{boxShadow: "inset 0 -20px 0 rgb(255, 245, 160)"}}>{r.item_status}</span>
                                     </td>
                                     <td className="px-1">
@@ -169,7 +175,7 @@ const getLocationType = (area) => {
                                     <td className="px-1">
                                         {r.location_section_name}
                                     </td>
-                                    <td className="px-1">
+                                    <td className="px-1 w-2/12">
                                         {r.location_alias}
                                     </td>
                                     <td className="px-1">
