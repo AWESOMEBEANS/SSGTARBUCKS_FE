@@ -100,7 +100,7 @@ export default function Main(){
                         <Table1 onLoadData={datas} />
                         : <h1 className="text-xl">불러올 목록이 없습니다.</h1>}
                     </div>
-                    <div className="w-11/12 h-72 text-start flex justify-center flex-col mt-5">
+                    <div className="w-11/12 h-72 text-start flex justify-center flex-col ">
                         <h3 className="text-xl h-10  bg-lime-800 text-white rounded-md w-fit px-4 my-2 flex items-center">
                             발주추천 목록
                         </h3>

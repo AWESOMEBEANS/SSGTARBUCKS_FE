@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuthToken } from "../../util/auth";
-import { Link, json, useLoaderData, useParams } from "react-router-dom";
+import { Link, json, useLoaderData, useNavigate } from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 export default function GoodsDetail() {
     const [datas, setDatas] = useState(useLoaderData());
     const imgPath = datas[0].image_path;
+    let navigate = useNavigate();
 
     // 유통기한 계산
     function isExpired(date) {
@@ -28,32 +29,30 @@ export default function GoodsDetail() {
                 </div>
                 <div className="w-full">
                     <div className="w-4/5 mx-auto flex h-16 justify-around items-center rounded-md shadow-lg mt-4 font-semibold text-center" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
-                        <span className="w-16 ">번호</span>
+                        <span className="w-1/12">번호</span>
                         <span className="w-2/12">카테고리</span>
                         <span className="w-3/12">상품명</span>
-                        <span className="w-1/12">상세</span>
-                        <span className="w-1/12">상품상태</span>
-                        <span className="w-1/12">보관유형</span>
+                        <span className="w-20 mx-3">상세</span>
+                        <span className="w-1/12 mx-3">상품상태</span>
+                        <span className="w-1/12 mx-3">보관유형</span>
                         <span className="w-1/12">보관장소</span>
                         <span className="w-2/12">보관명칭</span>
-                        <span className="w-1/12">유통기한</span>
-                        <span className="w-1/12">수량</span>
+                        <span className="w-1/12 mr-5">유통기한</span>
                     </div>
                     <div className="w-full  overflow-auto h-72">
-                        <div className="w-4/5 mx-auto">
+                        <div className="w-4/5 mx-auto ">
                             {datas.map((items, index) => {
                                 return (
                                     <div className="flex h-16 justify-around items-center rounded-md shadow-lg my-4 text-center" style={{ backgroundColor: "#f6f5efb3", border: "1px solid #d5d5d5" }}>
-                                        <span className="w-16">{index + 1}</span>
+                                        <span className="w-1/12">{index + 1}</span>
                                         <span className="w-2/12" style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{items.category_name}</span>
                                         <span className="w-3/12" style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{items.product_name} ({items.product_standard}, {items.product_unit})</span>
-                                        <span className="w-1/12" style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{items.product_spec}</span>
-                                        <span className="w-1/12" style={{ boxShadow: "inset 0 -30px 0 rgb(255, 245, 160)" }}>{items.item_status}</span>
-                                        <span className="w-1/12">{(items.location_area === "FR") ? "매장" : "창고"}</span>
+                                        <span className="w-20 mx-3 " style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{items.product_spec}</span>
+                                        <span className="w-1/12 mx-3" style={{ boxShadow: "inset 0 -30px 0 rgb(255, 245, 160)" }}>{items.item_status}</span>
+                                        <span className="w-1/12 mx-3">{(items.location_area === "FR") ? "매장" : "창고"}</span>
                                         <span className="w-1/12">{items.location_section_name}</span>
                                         <span className="w-2/12">{items.location_alias}</span>
-                                        <span className="w-1/12" style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(items.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>{items.item_exp}</span>
-                                        <span className="w-1/12">{items.stock_quantity}</span>
+                                        <span className="w-1/12 mr-5" style={isExpired(items.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(items.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>{items.item_exp}</span>
                                     </div>
                                 )
                             })}
