@@ -80,13 +80,13 @@ export default function SearchList() {
             <div style={{ height: "92vh", fontFamily: 'Pretendard-Regular' }} className="w-full mx-auto my-auto  overflow-auto text-center ">
                 <h1 className="text-3xl mt-3 text-start ml-32">" {searchWord} " 검색결과</h1>
                 <div
-                    className="w-5/6 mx-auto flex justify-between items-center mt-3 h-14">
-                    <div className="text-center text-lg w-10 flex justify-center items-center shadow-lg font-bold"
+                    className="w-11/12 mx-auto flex justify-between items-center mt-3 h-14">
+                    <div className="text-center text-lg w-12 flex justify-center items-center shadow-lg font-bold"
                         style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}
                     >
                         번호
                     </div>
-                    <div className="text-lg w-7/12 flex justify-around items-center shadow-lg font-bold text-center" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
+                    <div className="text-lg w-6/12 flex justify-around items-center shadow-lg font-bold text-center" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                         <span className="w-1/4">
                             카테고리
                         </span>
@@ -100,21 +100,24 @@ export default function SearchList() {
                             유통기한
                             <i className={`fa-solid fa-sort ml-2`}></i>
                         </span>
-                        <span className="w-1/6 mr-3">
-                            상품상태
+                        <span className="w-1/12 mr-3">
+                            상태
                         </span>
                     </div>
-                    <div className="text-center text-lg w-2/6 flex justify-center items-center shadow-lg font-bold" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
+                    <div className="text-center text-lg w-5/12 flex justify-center items-center shadow-lg font-bold" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                         <span className="w-1/4">
+                            장소코드
+                        </span>
+                        <span className="w-1/6">
                             보관유형
                         </span>
-                        <span className="w-1/4">
+                        <span className="w-1/6">
                             보관장소
                         </span>
                         <span className="w-1/4">
                             보관명칭
                         </span>
-                        <span className="w-1/4 mx-2" onClick={handleQtyButtonClick}>
+                        <span className="w-1/12 mx-2" onClick={handleQtyButtonClick}>
                             수량
                             <i className={`fa-solid fa-sort ml-2`}></i>
                         </span>
@@ -124,11 +127,11 @@ export default function SearchList() {
                     sortedSearchResult.map(function (r, i) {
                         return (
                             <div style={{ height: "8.5%" }}
-                                className="w-5/6 mx-auto flex justify-between items-center text-2xl" key={`${r.product_id}-${i}`}>
-                                <div className="text-center text-lg w-10 flex justify-center items-center shadow-lg" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
+                                className="w-11/12 mx-auto flex justify-between items-center text-2xl" key={`${r.product_id}-${i}`}>
+                                <div className="text-center text-lg w-12 flex justify-center items-center shadow-lg" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                                     {i + 1}
                                 </div>
-                                <div className="text-lg w-7/12 flex justify-around items-center shadow-lg text-center" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
+                                <div className="text-lg w-6/12 flex justify-around items-center shadow-lg text-center" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
                                     <span className="w-1/4"
                                         style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : null}>{r.category_name}</span>
                                     <span className="w-3/6"
@@ -139,13 +142,14 @@ export default function SearchList() {
                                         style={isExpired(r.item_exp) ? { textDecoration: 'line-through rgb(255, 80, 80) 2px' } : (imminentExpiration(r.item_exp) ? { boxShadow: 'inset 0 -30px 0 rgb(255, 200, 200)' } : null)}>
                                         {r.item_exp}
                                     </span>
-                                    <span className="w-1/6 mr-3" style={{ boxShadow: "inset 0 -30px 0 rgb(255, 245, 160)" }}>{r.item_status}</span>
+                                    <span className="w-1/12 mr-3" style={{ boxShadow: "inset 0 -30px 0 rgb(255, 245, 160)" }}>{r.item_status}</span>
                                 </div>
-                                <div className="text-center text-lg w-2/6 flex justify-center items-center shadow-lg" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
-                                    <span className="w-1/4">{r.location_area === "FR" ? "매장" : "창고"}</span>
-                                    <span className="w-1/4">{r.location_section_name}</span>
+                                <div className="text-center text-lg w-5/12 flex justify-center items-center shadow-lg" style={{ border: "1px solid #d5d5d5", borderRadius: "3px", background: "#f6f5efb3", height: "70%" }}>
+                                    <span className="w-1/4">{r.location_code}</span>
+                                    <span className="w-1/6">{r.location_area === "FR" ? "매장" : "창고"}</span>
+                                    <span className="w-1/6">{r.location_section_name}</span>
                                     <span className="w-1/4">{r.location_alias}</span>
-                                    <span className="w-1/4">{r.stock_quantity}</span>
+                                    <span className="w-1/12">{r.stock_quantity}</span>
                                 </div>
                             </div>
                         )
