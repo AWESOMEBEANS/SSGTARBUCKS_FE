@@ -72,14 +72,6 @@ export default function Managersolstice() {
                 </div>
                 {datas.length === 0 ? null :
                 <div className="mb-3">
-                    <Pagination
-                        itemsPerPage={itemsPerPage}
-                        totalItems={datas.length}
-                        currentPage={currentPage}
-                        onPageChange={handlePageChange}
-                        onPrevClick={handlePrevClick}
-                        onNextClick={handleNextClick}
-                    />
                 </div>
                 }
             </div>
