@@ -22,7 +22,7 @@ export default function Main(){
     let {expDataList, remainDataList} = datas;
     console.log("loaderDataMain >>>>>" , datas);
     console.log("loaderDataMain >>>>>" , expDataList);
-    console.log("loaderDataMain >>>>>" , remainDataList);
+    console.log("loaderDataMain2 >>>>>" , remainDataList);
 
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
@@ -250,13 +250,13 @@ function Table2({onLoadData}){
             </>
         )
     }
-    
+
 export async function loader({ request }) {
     const token = getAuthToken();
     const branch_id = localStorage.getItem("branch_id");
     const expResponse = await axios({
         method: "GET",
-        url: "http://10.10.10.101:8000/api/v1/branch/main/exp",
+        url: "http://localhost:8000/api/v1/branch/main/exp",
         headers: {
             'Content-Type': 'application/json',
             'jwtauthtoken': token
@@ -266,13 +266,14 @@ export async function loader({ request }) {
             , curDate: null
         }
     });
+
 
     if (expResponse.status !== 200) {
         throw json({ message: 'Could not save event.' }, { status: 500 });
     }
     const remainResponse = await axios({
         method: "GET",
-        url: "http://10.10.10.101:8000/api/v1/branch/main/remain",
+        url: "http://localhost:8000/api/v1/branch/main/remain",
         headers: {
             'Content-Type': 'application/json',
             'jwtauthtoken': token
@@ -287,8 +288,9 @@ export async function loader({ request }) {
         throw json({ message: 'Could not save event.' }, { status: 500 });
     }
 
+
     const expDataList = expResponse.data;
     const remainDataList = remainResponse.data;
+    console.log("remainDataList>>>",remainDataList);
     return { expDataList, remainDataList };
 }
-    
