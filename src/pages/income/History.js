@@ -13,7 +13,7 @@ export default function History() {
     const [scanResult, setScanResult] = useState('');
     const [itemCode, setItemCode] = useState('');
     const [incomeStatus, setIncomeStatus] = useState('');
-    const [completeItemCode, setcompleteItemCode] = useState('');
+    const [completeItemCode, setcompleteItemCode] = useState([]);
 
     //////////////////////////////////////////////////////////////////////
   /*팝업창*/
@@ -111,8 +111,11 @@ export default function History() {
             console.log("resData>>>>>>>>>>>>>>", resData);
             if(resData === "성공") {
                 setModalOpen(false);
-                setcompleteItemCode(itemCodeParam);
-                console.log("6544444444444",itemCodeParam);                                  
+                setcompleteItemCode(prevCompleteItemCode => [
+                  ...prevCompleteItemCode,
+                  itemCodeParam
+                ]);
+                console.log("6544444444444",completeItemCode);                                  
                 //navigate(`/income/list/${incomeId}`);
                 //window.location.reload();
             }
@@ -201,6 +204,8 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
     const [comment, setComment] = useState('');
     const [popupType, setPopupType] = useState('');
     const [isPopUpOpen, setPopUpOpen] = useState(false);
+
+    console.log("!!!!!!!!!!!!!",completeItemCode);
     const openPopUp = (type,comment) => {
         setPopUpOpen(true);
         setComment(comment);
@@ -276,7 +281,7 @@ function Detail({ id, modalHandler,completeItemCode,incomeStatus}) {
                         <span className="w-2/6">{row.product_name}({row.product_standard}, {row.product_unit})</span>
                         <span className="w-1/6">{row.item_exp}</span>
                         <span className="w-1/6">
-                          {completeItemCode === row.item_code? "⭕" : (row.income_list_result === "승인" ? "⭕" : "❌")}
+                        {row.income_list_result === "승인"? "⭕" :  completeItemCode? ( completeItemCode.includes(row.item_code) ? "⭕" :  "❌" ) : ""}
                         </span>                        
                         {incomeStatus === '재고등록완료'?
                               <button className="w-1/12 border-2 h-8 shadow-md page_itms rounded-sm"  disabled onClick={() => { modalHandler(row.item_code); }}>스캔</button>
